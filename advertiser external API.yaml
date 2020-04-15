@@ -1,0 +1,129 @@
+---
+swagger: "2.0"
+info:
+  description: The API provides an MDM platform for Advertiser & Agency
+  version: 2018.2.0
+  title: MDM service
+  license:
+    name: (C) Copyright Operative.
+host: dev-mdm-service01.cloud.operative.com:9191
+basePath: /
+tags:
+- name: Advertiser
+  description: Advertiser Controller
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /service/url:
+/v1/{apiKey}/internal/advertiser/{name}:
+    get:
+      tags:
+      - Advertiser
+      summary: listAdvertiserByName
+      operationId: listAdvertiserByNameUsingGET
+      parameters:
+      - name: Authorization
+        in: header
+        description: Authorization
+        required: true
+        type: string
+      - name: active
+        in: query
+        description: active
+        required: false
+        type: boolean
+      - name: apiKey
+        in: path
+        description: apiKey
+        required: true
+        type: string
+      - name: name
+        in: path
+        description: name
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Advertiser'
+      deprecated: false
+definitions:
+  Advertiser:
+    type: object
+    properties:
+      accountExecutives:
+        type: array
+        items:
+          $ref: '#/definitions/AccountExecutive'
+      accountType1:
+        type: string
+      accountType2:
+        type: string
+      active:
+        type: boolean
+      brands:
+        type: array
+        items:
+          type: string
+      businessClassOne:
+        type: string
+      businessClassThree:
+        type: string
+      businessClassTwo:
+        type: string
+      clientType:
+        type: string
+      contacts:
+        type: array
+        items:
+          $ref: '#/definitions/Contact'
+      createdBy:
+        type: string
+      createdDate:
+        type: string
+        format: date-time
+      creditBalance:
+        type: number
+      creditStatus:
+        type: string
+      directBuy:
+        type: boolean
+      expiryDate:
+        type: string
+      externalTrafficSystems:
+        type: array
+        items:
+          $ref: '#/definitions/ExternalTrafficSystem'
+      id:
+        type: string
+      lastModifiedBy:
+        type: string
+      lastModifiedDate:
+        type: string
+        format: date-time
+      mdmId:
+        type: string
+      name:
+        type: string
+      parentAdvertiserId:
+        type: string
+      priorityCode:
+        type: string
+      productCodes:
+        type: array
+        items:
+          $ref: '#/definitions/ProductCodeLite'
+      revenueCode1:
+        type: string
+      revenueCode2:
+        type: string
+      revenueCode3:
+        type: string
+      salesTeams:
+        type: array
+        items:
+          $ref: '#/definitions/SalesTeam'
+    title: Advertiser

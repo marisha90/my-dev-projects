@@ -1,129 +1,113 @@
----
-swagger: "2.0"
+swagger: '2.0'
 info:
-  description: The API provides an MDM platform for Advertiser & Agency
-  version: 2018.2.0
-  title: MDM service
+  description: 'The API provides an option to get all advertisers <br> versionHistory <br> -------------- <br> 2020-Apr-15 Marina Yurovsky - Version - 1.0.0. - Initial version.'
+  version: '1.0'
+  title: Advertiser List External API POST
+  contact:
+    name: API team
+    email: apiteam@operative.com
   license:
-    name: (C) Copyright Operative.
-host: dev-mdm-service01.cloud.operative.com:9191
+    name: Copyright 2020 Operative
+host: 'dev-mdm-service01.cloud.operative.com:9191'
 basePath: /
 tags:
-- name: Advertiser
-  description: Advertiser Controller
+  - name: Advertiser
+    description: Advertiser Controller
 consumes:
-- application/json
+  - application/json
 produces:
-- application/json
+  - application/json
 paths:
-  /service/url:
-/v1/{apiKey}/internal/advertiser/{name}:
-    get:
+  '/v1/{apiKey}/internal/advertiser':
+    post:
       tags:
-      - Advertiser
-      summary: listAdvertiserByName
-      operationId: listAdvertiserByNameUsingGET
+        - Advertiser
+      summary: Returns paginated list containing AOS Advertisers
+      operationId: listAdvertiserUsingPOST
       parameters:
-      - name: Authorization
-        in: header
-        description: Authorization
-        required: true
-        type: string
-      - name: active
-        in: query
-        description: active
-        required: false
-        type: boolean
-      - name: apiKey
-        in: path
-        description: apiKey
-        required: true
-        type: string
-      - name: name
-        in: path
-        description: name
-        required: true
-        type: string
+        - name: Authorization
+          in: header
+          description: Authorization
+          required: true
+          type: string
+        - name: pageSize
+          in: query
+          description: Number of Advertisers returned
+          type: integer
+          format: int32
+          minimum: 0
+          exclusiveMinimum: true
+          maximum: 1000
+          exclusiveMaximum: false
+          multipleOf: 100
+          default: 100
+        - name: pageNumber
+          in: query
+          description: Page number
+          type: integer
+          default: 1
+        - name: status
+          in: query
+          description: Advertiser Status
+          required: false
+          type: boolean
+          default: 'true'
+        - name: apiKey
+          in: path
+          description: apiKey
+          required: true
+          type: string
+        - type: string
+          in: query
+          name: Last Modified DateTime
+          description: Return Advertisers that were added or changed since the date selected
       responses:
-        "200":
+        '200':
           description: OK
           schema:
             $ref: '#/definitions/Advertiser'
+          examples:
+            list of advertisers:
+              id: 5df8c2334d9c000b9c875ab5
+              mdmId: 1121A
+              name: ABBVIE
+              modifiedOn: '2020-02-18T04:54:37.597'
+        '400':
+          description: 'Bad Request. Please verify your request '
+          schema:
+            type: object
+            properties: {}
+        '403':
+          description: Forbidden. Please verify access permissions for the AOS APIs.
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: An unexpected error occured.
+          schema:
+            type: object
+            properties: {}
       deprecated: false
+      description: A paginated list of Advertisers with limited attributes. It can be used for mapping of the AOS IDs to IDs in an external system.
 definitions:
   Advertiser:
     type: object
+    title: Advertiser
     properties:
-      accountExecutives:
-        type: array
-        items:
-          $ref: '#/definitions/AccountExecutive'
-      accountType1:
-        type: string
-      accountType2:
-        type: string
-      active:
-        type: boolean
-      brands:
-        type: array
-        items:
-          type: string
-      businessClassOne:
-        type: string
-      businessClassThree:
-        type: string
-      businessClassTwo:
-        type: string
-      clientType:
-        type: string
-      contacts:
-        type: array
-        items:
-          $ref: '#/definitions/Contact'
-      createdBy:
-        type: string
-      createdDate:
-        type: string
-        format: date-time
-      creditBalance:
-        type: number
-      creditStatus:
-        type: string
-      directBuy:
-        type: boolean
-      expiryDate:
-        type: string
-      externalTrafficSystems:
-        type: array
-        items:
-          $ref: '#/definitions/ExternalTrafficSystem'
       id:
         type: string
-      lastModifiedBy:
-        type: string
+        description: AOS ID of the Advertiser
       lastModifiedDate:
         type: string
         format: date-time
+        example: '2016-06-10T12:36:58.014Z'
+        description: 'Last date time of the modification '
       mdmId:
         type: string
+        description: External system ID
       name:
         type: string
-      parentAdvertiserId:
-        type: string
-      priorityCode:
-        type: string
-      productCodes:
-        type: array
-        items:
-          $ref: '#/definitions/ProductCodeLite'
-      revenueCode1:
-        type: string
-      revenueCode2:
-        type: string
-      revenueCode3:
-        type: string
-      salesTeams:
-        type: array
-        items:
-          $ref: '#/definitions/SalesTeam'
-    title: Advertiser
+        description: Advertiser name
+schemes:
+  - https
+securityDefinitions: {}

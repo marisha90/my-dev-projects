@@ -1,0 +1,113 @@
+swagger: '2.0'
+info:
+  description: 'The API provides an option to get all agencies <br> versionHistory <br> -------------- <br> 2020-Apr-15 Marina Yurovsky - Version - 1.0.0. - Initial version.'
+  version: '1.0'
+  title: Agency List External API POST
+  contact:
+    name: API team
+    email: apiteam@operative.com
+  license:
+    name: Copyright 2020 Operative
+host: 'dev-mdm-service01.cloud.operative.com:9191'
+basePath: /
+tags:
+  - name: Agency
+    description: Agency Controller
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  '/v1/{apiKey}/internal/agency':
+    post:
+      tags:
+        - Agency
+      summary: Returns paginated list containing AOS Agencies
+      operationId: listAgencyUsingPOST
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization
+          required: true
+          type: string
+        - name: pageSize
+          in: query
+          description: Number of Agencies returned
+          type: integer
+          format: int32
+          minimum: 0
+          exclusiveMinimum: true
+          maximum: 1000
+          exclusiveMaximum: false
+          multipleOf: 100
+          default: 100
+        - name: pageNumber
+          in: query
+          description: Page number
+          type: integer
+          default: 1
+        - name: status
+          in: query
+          description: Agency Status
+          required: false
+          type: boolean
+          default: 'true'
+        - name: apiKey
+          in: path
+          description: apiKey
+          required: true
+          type: string
+        - type: string
+          in: query
+          name: Last Modified DateTime
+          description: Return Agencies that were added or changed since the date selected
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Agency'
+          examples:
+            list of agencies:
+              id: 5df8c2334d9c000b9c875ab5
+              mdmId: 1121A
+              name: ABBVIE
+              modifiedOn: '2020-02-18T04:54:37.597'
+        '400':
+          description: 'Bad Request. Please verify your request '
+          schema:
+            type: object
+            properties: {}
+        '403':
+          description: Forbidden. Please verify access permissions for the AOS APIs.
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: An unexpected error occured.
+          schema:
+            type: object
+            properties: {}
+      deprecated: false
+      description: A paginated list of Agencies with limited attributes. It can be used for mapping of the AOS IDs to IDs in an external system.
+definitions:
+  Agency:
+    type: object
+    title: Agency
+    properties:
+      id:
+        type: string
+        description: AOS ID of the Agency
+      lastModifiedDate:
+        type: string
+        format: date-time
+        example: '2016-06-10T12:36:58.014Z'
+        description: 'Last date time of the modification '
+      mdmId:
+        type: string
+        description: External system ID
+      name:
+        type: string
+        description: Agency name
+schemes:
+  - https
+securityDefinitions: {}

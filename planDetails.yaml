@@ -1,880 +1,596 @@
-{
-  "swagger": "2.0",
-  "info": {
-    "description": "The API provides an opetion to get both Plan Header and Plan Lines for a given Plan ID. <br> versionHistory <br> -------------- <br> 20202-Apr-11 Marina Yurovsky - Version - 1.0.0. - Initial version.",
-    "version": "1.0",
-    "title": "Plan Header and Workspace External API GET",
-    "contact": {
-      "name": "API team",
-      "email": "apiteam@operative.com"
-    },
-    "license": {
-      "name": "Copyright 2020 Operative"
-    }
-  },
-  "host": "tvs-dev-gw.operativeone.com",
-  "basePath": "/external_planner",
-  "tags": [
-    {
-      "name": "plan-header-workspace_external-controller",
-      "description": "Plan Header and Workspalce External Controller"
-    }
-  ],
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
-  "paths": {
-    "/v1/{apiKey}/plan/planheader/{planId}": {
-      "get": {
-        "tags": [
-          "plan-header-workspace_external-controller"
-        ],
-        "summary": "Get Plan Header",
-        "description": "Get Plan Details with the given Plan Id...",
-        "operationId": "getPlanHeaderByPlanId",
-        "produces": [
-          "*/*"
-        ],
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Authorization",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "apiKey",
-            "in": "path",
-            "description": "apiKey",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "planId",
-            "in": "path",
-            "description": "planId",
-            "required": true,
-            "type": "string"
-			
-		   
-							 
-							
-			
-		   
-							 
-							
-			
-		   
-							 
-						 
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/Plan"
-            }
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/v1/{apiKey}/plan/{planId}/workspace/summary/period/{demo}": {
-      "post": {
-        "tags": [
-          "plan-header-workspace_external-controller"
-        ],
-        "summary": "Get period summary per demo",
-        "description": "Get line totals per period per demo",
-        "operationId": "getPeriodSummarybyDemo_1",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "*/*"
-        ],
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Authorization",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "apiKey",
-            "in": "path",
-            "description": "apiKey",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "demo",
-            "in": "path",
-            "description": "demo",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "planId",
-            "in": "path",
-            "description": "planId",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "periodTotalRequest",
-            "description": "periodTotalRequest",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/periodTotalRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "type": "object",
-              "additionalProperties": {
-                "type": "object",
-                "additionalProperties": {
-                  "$ref": "#/definitions/PlanTotalDTO"
-                }
-              }
-            }
-          }
-        },
-        "deprecated": false
-      }
-    }
-  },
-  "definitions": {
-    "Plan": {
-      "type": "object",
-      "properties": {
-        "createdBy": {
-          "$ref": "#/definitions/User"
-        },
-        "createdDate": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "header": {
-          "$ref": "#/definitions/PlanHeader"
-        },
-        "id": {
-          "type": "string"
-        },
-        "modifiedBy": {
-          "$ref": "#/definitions/User"
-        },
-        "modifiedDate": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "planId": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "revision": {
-          "type": "number"
-        }
-      },
-      "title": "Plan"
-    },
-    "PlanHeader": {
-      "type": "object",
-      "title": "PlanHeader",
-      "properties": {
-        "accountExecutives": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/AccountExecutive"
-          }
-        },
-        "advertisers": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Advertiser"
-          }
-        },
-        "agencies": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Agency"
-          }
-        },
-        "approvalStatus": {
-          "type": "string"
-        },
-        "calendar": {
-          "$ref": "#/definitions/Calendar"
-        },
-        "channel": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Channel"
-          }
-        },
-        "currentVersion": {
-          "$ref": "#/definitions/Version"
-        },
-        "dealYearId": {
-          "type": "string",
-          "description": "AOS ID of the deal year MRD",
-          "example": "5e8e2d72139410153f740e0b"
-        },
-        "demo": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Demo"
-          }
-        },
-        "division": {
-          "$ref": "#/definitions/Division"
-        },
-        "dueDate": {
-          "type": "string",
-          "example": "yyyy-MM-dd,hh:mm a"
-        },
-        "flightEndDate": {
-          "type": "string",
-          "format": "date"
-        },
-        "endPeriod": {
-          "$ref": "#/definitions/Period"
-        },
-        "equivalised": {
-          "type": "boolean"
-        },
-        "fluidity": {
-          "type": "boolean"
-        },
-        "guaranteed": {
-          "type": "boolean"
-        },
-        "hiatus": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/DateRange"
-          }
-        },
-        "marketPlaceId": {
-          "type": "string",
-          "description": "AOS Identifier for the Marketplace MRD",
-          "example": "5e2540844d9c00600d5a000a"
-        },
-        "onAirId": {
-          "type": "string"
-        },
-        "operativeOneId": {
-          "type": "string"
-        },
-						  
-										  
-		  
-        "orderType": {
-          "$ref": "#/definitions/OrderType"
-        },
-        "planClassId": {
-          "type": "string",
-          "description": "AOS ID of the Planclass MRD"
-        },
-        "planName": {
-          "type": "string"
-        },
-        "planNotes": {
-          "type": "string"
-        },
-        "planStatus": {
-          "$ref": "#/definitions/PlanStatus"
-        },
-        "platform": {
-          "type": "string",
-          "enum": [
-            "LINEAR",
-            "DIGITAL",
-            "CONVERGED"
-          ]
-        },
-        "primaryVersion": {
-          "$ref": "#/definitions/Version"
-        },
-        "primaryVersionId": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "primaryVersionName": {
-          "type": "string"
-        },
-        "ratecard": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/RateCard"
-          }
-        },
-        "ratingStreamId": {
-          "type": "string",
-          "description": "AOS ID of the rating stream MRD"
-        },
-        "salesforceId": {
-          "type": "string"
-        },
-        "flightStartDate": {
-          "type": "string",
-          "format": "date"
-        },
-        "startPeriod": {
-          "$ref": "#/definitions/Period"
-        },
-        "subdivision": {
-          "$ref": "#/definitions/Division"
-        },
-        "teams": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Team"
-          }
-        },
-        "templateId": {
-          "type": "string"
-        },
-        "versions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Version"
-          }
-		  
-							  
-						  
-        }
-		
-					 
-						   
-						   
-					 
-					
-					  
-				   
-			
-							  
-									   
-		 
-      }
-    },
-    "Agency": {
-      "type": "object",
-      "properties": {
-        "address": {
-          "$ref": "#/definitions/LabelKey"
-        },
-        "commission": {
-          "type": "string",
-          "description": "Not required. If empty then default from the MDM Agency"
-        },
-        "contact": {
-          "$ref": "#/definitions/Contact"
-        },
-        "effectiveDate": {
-          "type": "string",
-          "format": "date"
-        },
-        "id": {
-          "type": "string",
-          "description": "AOS ID for the Agency MDM"
-        },
-        "roles": {
-          "type": "array",
-          "description": "Not required. If empty default to Buying",
-          "items": {
-            "type": "string"
-          }
-        },
-        "rolesData": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-      "title": "Agency"
-    },
-    "Channel": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "List of comma separated AOS Identifier of the Channels - Stations MRD",
-          "example": "5e2540844d9c00600d5a000a, C4gyuWfTQZ-BtJLmLZE_rA"
-        }
-      },
-      "title": "Channel"
-    },
-    "Demo": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "Comma separated list of AOS IDs for the Demographic. The first element in the list is an ID of the Primary Demo."
-        }
-      },
-      "title": "Demo"
-    },
-    "RateCard": {
-      "type": "object",
-      "properties": {
-        "asOfDate": {
-          "type": "string",
-          "format": "date"
-        },
-        "channel": {
-          "$ref": "#/definitions/Channel"
-        },
-        "id": {
-          "type": "string",
-          "description": "AOS ID  for the Ratecard in URC"
-        },
-        "revision": {
-          "type": "number"
-        }
-      },
-      "title": "RateCard"
-    },
-    "Period": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "AOS ID from the Calendar MRD. If empty default to the period for the flight end date"
-        }
-      },
-      "title": "Period"
-    },
-    "AccountExecutive": {
-      "type": "object",
-      "properties": {
-        "effectiveDate": {
-          "type": "string",
-          "format": "date",
-          "description": "Not required. If empty default the Flight Start date"
-        },
-        "endDate": {
-          "type": "string",
-          "format": "date",
-          "description": "Not required. If empty default the Flight End date"
-        },
-        "id": {
-          "type": "string",
-          "description": "if empty then API needs to assigned AOS User ID else TBD if email is ok for PITCH"
-        },
-        "isPrimary": {
-          "type": "boolean"
-        },
-        "primary": {
-          "type": "boolean"
-        },
-        "role": {
-          "$ref": "#/definitions/Role"
-        },
-        "split": {
-          "type": "number",
-          "description": "Not required. If empty default to 100%"
-        },
-        "startDate": {
-          "type": "string",
-          "format": "date",
-          "description": "Not required If empty default to Flight Start Date"
-        },
-        "teamId": {
-          "type": "string"
-        },
-        "teamName": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        }
-      },
-      "title": "AccountExecutive"
-    },
-    "Calendar": {
-      "type": "object",
-      "properties": {
-        "calendarBase": {
-          "type": "string"
-        },
-        "calendarDefinitions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/CalendarDefinition"
-          }
-        },
-        "endDate": {
-          "type": "string"
-        },
-        "id": {
-          "type": "string",
-          "description": "AOS ID of the Calendar"
-        },
-        "name": {
-          "type": "string"
-        },
-        "periodBreakdown": {
-          "type": "string"
-        },
-        "startDate": {
-          "type": "string"
-        }
-      },
-      "title": "Calendar"
-    },
-    "CalendarDefinition": {
-      "type": "object",
-      "properties": {
-        "endDate": {
-          "type": "string"
-        },
-        "periodDisplayName": {
-          "type": "string"
-        },
-        "periodName": {
-          "type": "string"
-        },
-        "startDate": {
-          "type": "string"
-        },
-        "year": {
-          "type": "integer",
-          "format": "int32"
-        }
-      },
-      "title": "CalendarDefinition"
-    },
-    "LabelKey": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        }
-      },
-      "title": "LabelKey"
-    },
-    "Contact": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "AOS ID of the agency contact MDM. Not required. If empty default to the primary contact for the agency in MDM"
-        }
-      },
-      "title": "Contact"
-    },
-    "OrderType": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "AOS ID of the order type MRD"
-        }
-      },
-      "title": "OrderType"
-    },
-    "Role": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "label": {
-          "type": "string"
-        }
-      },
-      "title": "Role"
-    },
-    "DateRange": {
-      "type": "object",
-      "properties": {
-        "endDate": {
-          "type": "string",
-          "format": "date"
-        },
-        "startDate": {
-          "type": "string",
-          "format": "date"
-        }
-      },
-      "title": "DateRange"
-    },
-    "User": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "userId": {
-          "type": "string"
-        }
-      },
-      "title": "User"
-    },
-    "Version": {
-      "type": "object",
-      "properties": {
-        "createdBy": {
-          "$ref": "#/definitions/User"
-        },
-        "createdDate": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "modifiedBy": {
-          "$ref": "#/definitions/User"
-        },
-        "modifiedDate": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "name": {
-          "type": "string"
-        },
-        "onAirId": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "operativeOneId": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "primary": {
-          "type": "boolean"
-        }
-      },
-      "title": "Version"
-    },
-    "PlanStatus": {
-      "type": "object",
-      "properties": {
-        "approvers": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/User"
-          }
-        },
-        "statusId": {
-          "type": "string"
-        },
-        "statusName": {
-          "type": "string"
-        }
-      },
-      "title": "PlanStatus"
-    },
-    "Division": {
-      "type": "object",
-      "required": [
-        "id",
-        "name"
-      ],
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "AOS ID of the Division"
-        }
-      },
-      "title": "Division"
-    },
-    "Team": {
-      "type": "object",
-      "properties": {
-        "aeName": {
-          "$ref": "#/definitions/User"
-        },
-        "assistent": {
-          "$ref": "#/definitions/User"
-        },
-        "effectiveDate": {
-          "type": "string",
-          "format": "date"
-        },
-        "id": {
-          "type": "string"
-        },
-        "isdefault": {
-          "type": "boolean"
-        },
-        "location": {
-          "$ref": "#/definitions/LabelKey"
-        },
-        "name": {
-          "type": "string"
-        },
-        "planner": {
-          "$ref": "#/definitions/User"
-        }
-      },
-      "title": "Team"
-    },
-    "periodTotalRequest": {
-      "type": "object",
-      "properties": {
-        "lineIds": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "period": {
-          "type": "string"
-        }
-      },
-      "title": "periodTotalRequest"
-    },
-    "PlanTotalDTO": {
-      "type": "object",
-      "title": "PlanTotalDTO",
-      "properties": {
-        "channelId": {
-          "type": "string",
-          "description": "AOS ID of the Channel MRD"
-        },
-        "demoValues": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/DemoValues"
-          },
-          "properties": {
-            "": {
-              "type": "string"
-            }
-          }
-        },
-        "lineId": {
-          "type": "string"
-        },
-        "planId": {
-          "type": "string"
-        },
-        "period": {
-          "type": "string"
-        },
-        "unitRates": {
-          "$ref": "#/definitions/UnitRates"
-        },
-        "week": {
-          "type": "string"
-        }
-      }
-							 
-    },
-    "DemoValues": {
-      "type": "object",
-      "properties": {
-        "cpm": {
-          "type": "number",
-          "format": "double"
-        },
-        "cpmPercent": {
-          "type": "number",
-          "format": "double"
-        },
-        "cpp": {
-          "type": "number",
-          "format": "double"
-        },
-        "factor": {
-          "type": "number",
-          "format": "double"
-        },
-        "grps": {
-          "type": "number",
-          "format": "double"
-        },
-        "hutPut": {
-          "type": "number",
-          "format": "double"
-        },
-        "imps": {
-          "type": "number",
-          "format": "double"
-        },
-        "impsPercent": {
-          "type": "number",
-          "format": "double"
-        },
-        "index": {
-          "type": "number",
-          "format": "double"
-        },
-        "share": {
-          "type": "number",
-          "format": "double"
-        },
-        "totalGrps": {
-          "type": "number",
-          "format": "double"
-        },
-        "totalImps": {
-          "type": "number",
-          "format": "double"
-        },
-        "ue": {
-          "type": "number",
-          "format": "double"
-        },
-        "vpvh": {
-          "type": "number",
-          "format": "double"
-        }
-      },
-      "title": "DemoValues"
-    },
-    "UnitRates": {
-      "type": "object",
-      "properties": {
-        "rate": {
-          "type": "number",
-          "format": "double",
-          "description": "ratecard rate????"
-        },
-        "ratePercent": {
-          "type": "number",
-          "format": "double"
-        },
-        "totalRate": {
-          "type": "number",
-          "format": "double",
-          "description": "User updated rate????"
-        },
-        "units": {
-          "type": "integer",
-          "format": "int64"
-        }
-      },
-      "title": "UnitRates"
-    }
-	
-						  
-					
-						
-					   
-				   
-	 
-  }
-}
+swagger: '2.0'
+info:
+  description: >-
+    The API provides an opetion to get both Plan Header and Plan Lines for a
+    given Plan ID. <br> versionHistory <br> -------------- <br> 20202-Apr-11
+    Marina Yurovsky - Version - 1.0.0. - Initial version.
+  version: '1.0'
+  title: Plan Header and Workspace External API GET
+  contact:
+    name: API team
+    email: apiteam@operative.com
+  license:
+    name: Copyright 2020 Operative
+host: tvs-dev-gw.operativeone.com
+basePath: /external_planner
+tags:
+  - name: plan-header-workspace_external-controller
+    description: Plan Header and Workspalce External Controller
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  '/v1/{apiKey}/plan/planheader/{planId}':
+    get:
+      tags:
+        - plan-header-workspace_external-controller
+      summary: Get Plan Header
+      description: Get Plan Details with the given Plan Id...
+      operationId: getPlanHeaderByPlanId
+      produces:
+        - '*/*'
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization
+          required: true
+          type: string
+        - name: apiKey
+          in: path
+          description: apiKey
+          required: true
+          type: string
+        - name: planId
+          in: path
+          description: planId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Plan'
+      deprecated: false
+  '/v1/{apiKey}/plan/{planId}/workspace/summary/period/{demo}':
+    post:
+      tags:
+        - plan-header-workspace_external-controller
+      summary: Get period summary per demo
+      description: Get line totals per period per demo
+      operationId: getPeriodSummarybyDemo_1
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization
+          required: true
+          type: string
+        - name: apiKey
+          in: path
+          description: apiKey
+          required: true
+          type: string
+        - name: demo
+          in: path
+          description: demo
+          required: true
+          type: string
+        - name: planId
+          in: path
+          description: planId
+          required: true
+          type: string
+        - in: body
+          name: periodTotalRequest
+          description: periodTotalRequest
+          required: false
+          schema:
+            $ref: '#/definitions/periodTotalRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+              additionalProperties:
+                $ref: '#/definitions/PlanTotalDTO'
+      deprecated: false
+definitions:
+  Plan:
+    type: object
+    properties:
+      createdBy:
+        $ref: '#/definitions/User'
+      createdDate:
+        type: string
+        format: date-time
+      header:
+        $ref: '#/definitions/PlanHeader'
+      id:
+        type: string
+      modifiedBy:
+        $ref: '#/definitions/User'
+      modifiedDate:
+        type: string
+        format: date-time
+      planId:
+        type: integer
+        format: int64
+      revision:
+        type: number
+    title: Plan
+  PlanHeader:
+    type: object
+    title: PlanHeader
+    properties:
+      accountExecutives:
+        type: array
+        items:
+          $ref: '#/definitions/AccountExecutive'
+      advertisers:
+        type: array
+        items:
+          $ref: '#/definitions/Advertiser'
+      agencies:
+        type: array
+        items:
+          $ref: '#/definitions/Agency'
+      approvalStatus:
+        type: string
+      calendar:
+        $ref: '#/definitions/Calendar'
+      channel:
+        type: array
+        items:
+          $ref: '#/definitions/Channel'
+      currentVersion:
+        $ref: '#/definitions/Version'
+      dealYearId:
+        type: string
+        description: AOS ID of the deal year MRD
+        example: 5e8e2d72139410153f740e0b
+      demo:
+        type: array
+        items:
+          $ref: '#/definitions/Demo'
+      division:
+        $ref: '#/definitions/Division'
+      dueDate:
+        type: string
+        example: 'yyyy-MM-dd,hh:mm a'
+      flightEndDate:
+        type: string
+        format: date
+      endPeriod:
+        $ref: '#/definitions/Period'
+      equivalised:
+        type: boolean
+      fluidity:
+        type: boolean
+      guaranteed:
+        type: boolean
+      hiatus:
+        type: array
+        items:
+          $ref: '#/definitions/DateRange'
+      marketPlaceId:
+        type: string
+        description: AOS Identifier for the Marketplace MRD
+        example: 5e2540844d9c00600d5a000a
+      onAirId:
+        type: string
+      operativeOneId:
+        type: string
+      orderType:
+        $ref: '#/definitions/OrderType'
+      planClassId:
+        type: string
+        description: AOS ID of the Planclass MRD
+      planName:
+        type: string
+      planNotes:
+        type: string
+      planStatus:
+        $ref: '#/definitions/PlanStatus'
+      platform:
+        type: string
+        enum:
+          - LINEAR
+          - DIGITAL
+          - CONVERGED
+      primaryVersion:
+        $ref: '#/definitions/Version'
+      primaryVersionId:
+        type: integer
+        format: int64
+      primaryVersionName:
+        type: string
+      ratecard:
+        type: array
+        items:
+          $ref: '#/definitions/RateCard'
+      ratingStreamId:
+        type: string
+        description: AOS ID of the rating stream MRD
+      salesforceId:
+        type: string
+      flightStartDate:
+        type: string
+        format: date
+      startPeriod:
+        $ref: '#/definitions/Period'
+      subdivision:
+        $ref: '#/definitions/Division'
+      teams:
+        type: array
+        items:
+          $ref: '#/definitions/Team'
+      templateId:
+        type: string
+      versions:
+        type: array
+        items:
+          $ref: '#/definitions/Version'
+  Agency:
+    type: object
+    properties:
+      address:
+        $ref: '#/definitions/LabelKey'
+      commission:
+        type: string
+        description: Not required. If empty then default from the MDM Agency
+      contact:
+        $ref: '#/definitions/Contact'
+      effectiveDate:
+        type: string
+        format: date
+      id:
+        type: string
+        description: AOS ID for the Agency MDM
+      roles:
+        type: array
+        description: Not required. If empty default to Buying
+        items:
+          type: string
+      rolesData:
+        type: array
+        items:
+          type: string
+    title: Agency
+  Channel:
+    type: object
+    properties:
+      id:
+        type: string
+        description: List of comma separated AOS Identifier of the Channels - Stations MRD
+        example: '5e2540844d9c00600d5a000a, C4gyuWfTQZ-BtJLmLZE_rA'
+    title: Channel
+  Demo:
+    type: object
+    properties:
+      id:
+        type: string
+        description: >-
+          Comma separated list of AOS IDs for the Demographic. The first element
+          in the list is an ID of the Primary Demo.
+    title: Demo
+  RateCard:
+    type: object
+    properties:
+      asOfDate:
+        type: string
+        format: date
+      channel:
+        $ref: '#/definitions/Channel'
+      id:
+        type: string
+        description: AOS ID  for the Ratecard in URC
+      revision:
+        type: number
+    title: RateCard
+  Period:
+    type: object
+    properties:
+      id:
+        type: string
+        description: >-
+          AOS ID from the Calendar MRD. If empty default to the period for the
+          flight end date
+    title: Period
+  AccountExecutive:
+    type: object
+    properties:
+      effectiveDate:
+        type: string
+        format: date
+        description: Not required. If empty default the Flight Start date
+      endDate:
+        type: string
+        format: date
+        description: Not required. If empty default the Flight End date
+      id:
+        type: string
+        description: >-
+          if empty then API needs to assigned AOS User ID else TBD if email is
+          ok for PITCH
+      isPrimary:
+        type: boolean
+      primary:
+        type: boolean
+      role:
+        $ref: '#/definitions/Role'
+      split:
+        type: number
+        description: Not required. If empty default to 100%
+      startDate:
+        type: string
+        format: date
+        description: Not required If empty default to Flight Start Date
+      teamId:
+        type: string
+      teamName:
+        type: string
+      title:
+        type: string
+    title: AccountExecutive
+  Calendar:
+    type: object
+    properties:
+      calendarBase:
+        type: string
+      calendarDefinitions:
+        type: array
+        items:
+          $ref: '#/definitions/CalendarDefinition'
+      endDate:
+        type: string
+      id:
+        type: string
+        description: AOS ID of the Calendar
+      name:
+        type: string
+      periodBreakdown:
+        type: string
+      startDate:
+        type: string
+    title: Calendar
+  CalendarDefinition:
+    type: object
+    properties:
+      endDate:
+        type: string
+      periodDisplayName:
+        type: string
+      periodName:
+        type: string
+      startDate:
+        type: string
+      year:
+        type: integer
+        format: int32
+    title: CalendarDefinition
+  LabelKey:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    title: LabelKey
+  Contact:
+    type: object
+    properties:
+      id:
+        type: string
+        description: >-
+          AOS ID of the agency contact MDM. Not required. If empty default to
+          the primary contact for the agency in MDM
+    title: Contact
+  OrderType:
+    type: object
+    properties:
+      id:
+        type: string
+        description: AOS ID of the order type MRD
+    title: OrderType
+  Role:
+    type: object
+    properties:
+      id:
+        type: string
+      label:
+        type: string
+    title: Role
+  DateRange:
+    type: object
+    properties:
+      endDate:
+        type: string
+        format: date
+      startDate:
+        type: string
+        format: date
+    title: DateRange
+  User:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      userId:
+        type: string
+    title: User
+  Version:
+    type: object
+    properties:
+      createdBy:
+        $ref: '#/definitions/User'
+      createdDate:
+        type: string
+        format: date-time
+      id:
+        type: integer
+        format: int64
+      modifiedBy:
+        $ref: '#/definitions/User'
+      modifiedDate:
+        type: string
+        format: date-time
+      name:
+        type: string
+      onAirId:
+        type: integer
+        format: int32
+      operativeOneId:
+        type: integer
+        format: int32
+      primary:
+        type: boolean
+    title: Version
+  PlanStatus:
+    type: object
+    properties:
+      approvers:
+        type: array
+        items:
+          $ref: '#/definitions/User'
+      statusId:
+        type: string
+      statusName:
+        type: string
+    title: PlanStatus
+  Division:
+    type: object
+    required:
+      - id
+      - name
+    properties:
+      id:
+        type: string
+        description: AOS ID of the Division
+    title: Division
+  Team:
+    type: object
+    properties:
+      aeName:
+        $ref: '#/definitions/User'
+      assistent:
+        $ref: '#/definitions/User'
+      effectiveDate:
+        type: string
+        format: date
+      id:
+        type: string
+      isdefault:
+        type: boolean
+      location:
+        $ref: '#/definitions/LabelKey'
+      name:
+        type: string
+      planner:
+        $ref: '#/definitions/User'
+    title: Team
+  periodTotalRequest:
+    type: object
+    properties:
+      lineIds:
+        type: array
+        items:
+          type: string
+      period:
+        type: string
+    title: periodTotalRequest
+  PlanTotalDTO:
+    type: object
+    title: PlanTotalDTO
+    properties:
+      channelId:
+        type: string
+        description: AOS ID of the Channel MRD
+      demoValues:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/DemoValues'
+        properties:
+          '':
+            type: string
+      lineId:
+        type: string
+      planId:
+        type: string
+      period:
+        type: string
+      unitRates:
+        $ref: '#/definitions/UnitRates'
+      week:
+        type: string
+  DemoValues:
+    type: object
+    properties:
+      cpm:
+        type: number
+        format: double
+      cpmPercent:
+        type: number
+        format: double
+      cpp:
+        type: number
+        format: double
+      factor:
+        type: number
+        format: double
+      grps:
+        type: number
+        format: double
+      hutPut:
+        type: number
+        format: double
+      imps:
+        type: number
+        format: double
+      impsPercent:
+        type: number
+        format: double
+      index:
+        type: number
+        format: double
+      share:
+        type: number
+        format: double
+      totalGrps:
+        type: number
+        format: double
+      totalImps:
+        type: number
+        format: double
+      ue:
+        type: number
+        format: double
+      vpvh:
+        type: number
+        format: double
+    title: DemoValues
+  UnitRates:
+    type: object
+    properties:
+      rate:
+        type: number
+        format: double
+        description: ratecard rate????
+      ratePercent:
+        type: number
+        format: double
+      totalRate:
+        type: number
+        format: double
+        description: User updated rate????
+      units:
+        type: integer
+        format: int64
+    title: UnitRates

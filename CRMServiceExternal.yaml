@@ -1,18 +1,19 @@
 swagger: '2.0'
 info:
-  description: >-
-    CRM Service API acts as a bridge between Planner and any external system .
-    It manages Opportunities and Lines
+  description: "CRM Service API acts as a bridge between Planner and any external system . It manages Opportunities and Lines. <br> versionHistory <br> -------------- <br> 2020-Apr-16 Marina Yurovsky - Version - 1.0.0. - Initial version.'"
   version: '1.0'
   title: CRM Service API
-  termsOfService: 'http://www.operative.com'
   license:
     name: Copyright 2020 Operative
+  contact:
+    name: API team
+    email: apiteam@operative.com
+  termsOfService: 'http://www.operative.com'
 host: aos-dev-gw.operativeone.com
 basePath: /crm
 tags:
   - name: Opportunity API
-    description: Opportunity Create And Update Controller
+    description: Opportunity Create And Update External Controller
 consumes:
   - application/json
 produces:
@@ -23,10 +24,8 @@ paths:
       tags:
         - Opportunity API
       summary: Creates a new Opportunity
-      description: Creates a new Opportunity
+      description: Creates a new Opportunity in AOS
       operationId: createOpportunityUsingPOST
-      produces:
-        - application/json
       parameters:
         - name: Authorization
           in: header
@@ -40,7 +39,7 @@ paths:
           type: string
         - in: body
           name: opportunityDTO
-          description: Opportunity
+          description: Opportunity and Opportunity Lines Data Object
           required: true
           schema:
             $ref: '#/definitions/OpportunityDTO'
@@ -72,7 +71,6 @@ paths:
           schema:
             type: string
       deprecated: false
-      scope: Public
     put:
       tags:
         - Opportunity API
@@ -126,41 +124,61 @@ paths:
           schema:
             type: string
       deprecated: false
-      scope: Public
 definitions:
   OpportunityDTO:
     type: object
+    title: OpportunityDTO
+    description: Data obect that contains Opportunity and Opportunity LInes.
     properties:
       accountExecutive:
         type: string
       advertiserId:
         type: string
+        description: AOS ID of an Advertiser
       agencyId:
         type: string
+        description: AOS ID of an Agency
       amount:
         type: number
         format: double
+        description: Projected Amount
       attributes:
         type: object
         additionalProperties:
           type: string
+        description: 'Additional Opportunity attributes, plan class, deal year, marketplace, etc.'
+        properties:
+          planClassID:
+            type: string
+            description: AOS ID of the Plan class
       flightEndDate:
         type: string
+        description: Opportunity Flight End Date
       flightStartDate:
         type: string
+        description: Opportunity Flight Start Date
       lineItems:
         type: array
+        description: Array that contains a list of the Opportunity Lines
         items:
           $ref: '#/definitions/OpportunityLineItemDTO'
       name:
         type: string
+        description: Opportunity name
       planId:
         type: string
+        description: AOS Plan ID
       platform:
         type: string
-      salesforceId:
+      externalSystemId:
         type: string
-    title: OpportunityDTO
+        description: External ID of the Opportunity
+    required:
+      - accountExecutive
+      - advertiserId
+      - agencyId
+      - flightEndDate
+      - flightStartDate
   OpportunityLineItemDTO:
     type: object
     properties:
@@ -171,3 +189,5 @@ definitions:
       lineItemId:
         type: string
     title: OpportunityLineItemDTO
+schemes:
+  - https

@@ -1,0 +1,173 @@
+swagger: '2.0'
+info:
+  description: >-
+    CRM Service API acts as a bridge between Planner and any external system .
+    It manages Opportunities and Lines
+  version: '1.0'
+  title: CRM Service API
+  termsOfService: 'http://www.operative.com'
+  license:
+    name: Copyright 2020 Operative
+host: aos-dev-gw.operativeone.com
+basePath: /crm
+tags:
+  - name: Opportunity API
+    description: Opportunity Create And Update Controller
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  '/v1/{apiKey}/opportunities':
+    post:
+      tags:
+        - Opportunity API
+      summary: Creates a new Opportunity
+      description: Creates a new Opportunity
+      operationId: createOpportunityUsingPOST
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization
+          required: true
+          type: string
+        - name: apiKey
+          in: path
+          description: apiKey
+          required: true
+          type: string
+        - in: body
+          name: opportunityDTO
+          description: Opportunity
+          required: true
+          schema:
+            $ref: '#/definitions/OpportunityDTO'
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: string
+        '201':
+          description: Created
+        '400':
+          description: Invalid Request Body
+          schema:
+            type: string
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '403':
+          description: FORBIDDEN
+          schema:
+            type: string
+        '404':
+          description: Not found
+          schema:
+            type: string
+        '500':
+          description: INTERNAL_SERVER_ERROR
+          schema:
+            type: string
+      deprecated: false
+      scope: Public
+    put:
+      tags:
+        - Opportunity API
+      summary: Updates a new Opportunity
+      description: Updates a new Opportunity
+      operationId: updateOpportunityUsingPUT
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization
+          required: true
+          type: string
+        - name: apiKey
+          in: path
+          description: apiKey
+          required: true
+          type: string
+        - in: body
+          name: opportunityDTO
+          description: Opportunity
+          required: true
+          schema:
+            $ref: '#/definitions/OpportunityDTO'
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            type: string
+        '201':
+          description: Created
+        '400':
+          description: Invalid Request Body
+          schema:
+            type: string
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+        '403':
+          description: FORBIDDEN
+          schema:
+            type: string
+        '404':
+          description: Not found
+          schema:
+            type: string
+        '500':
+          description: INTERNAL_SERVER_ERROR
+          schema:
+            type: string
+      deprecated: false
+      scope: Public
+definitions:
+  OpportunityDTO:
+    type: object
+    properties:
+      accountExecutive:
+        type: string
+      advertiserId:
+        type: string
+      agencyId:
+        type: string
+      amount:
+        type: number
+        format: double
+      attributes:
+        type: object
+        additionalProperties:
+          type: string
+      flightEndDate:
+        type: string
+      flightStartDate:
+        type: string
+      lineItems:
+        type: array
+        items:
+          $ref: '#/definitions/OpportunityLineItemDTO'
+      name:
+        type: string
+      planId:
+        type: string
+      platform:
+        type: string
+      salesforceId:
+        type: string
+    title: OpportunityDTO
+  OpportunityLineItemDTO:
+    type: object
+    properties:
+      attributes:
+        type: object
+        additionalProperties:
+          type: string
+      lineItemId:
+        type: string
+    title: OpportunityLineItemDTO

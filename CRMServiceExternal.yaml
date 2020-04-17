@@ -45,9 +45,11 @@ paths:
             $ref: '#/definitions/OpportunityDTO'
       responses:
         '200':
-          description: Successful Operation
+          description: 'Successful Operation. '
           schema:
             type: string
+          examples:
+            '"2537"': {}
         '201':
           description: Created
         '400':
@@ -55,7 +57,7 @@ paths:
           schema:
             type: string
         '401':
-          description: Unauthorized
+          description: 'Unauthorized. '
           schema:
             type: string
         '403':
@@ -74,7 +76,7 @@ paths:
     put:
       tags:
         - Opportunity API
-      summary: Updates a new Opportunity
+      summary: Updates a existing Opportunity
       description: Updates a new Opportunity
       operationId: updateOpportunityUsingPUT
       produces:
@@ -147,10 +149,6 @@ definitions:
         additionalProperties:
           type: string
         description: 'Additional Opportunity attributes, plan class, deal year, marketplace, etc.'
-        properties:
-          planClassID:
-            type: string
-            description: AOS ID of the Plan class
       flightEndDate:
         type: string
         description: Opportunity Flight End Date
@@ -179,15 +177,51 @@ definitions:
       - agencyId
       - flightEndDate
       - flightStartDate
+    x-examples:
+      'Opportunity DTO ':
+        accountExecutive: string
+        advertiserId: string
+        agencyId: string
+        amount: 0
+        attributes:
+          planClassId: string
+          marketplaceId: string
+          dealYearId: string
+        flightEndDate: string
+        flightStartDate: string
+        lineItems:
+          - attributes:
+              channelId: string
+              daypartId: string
+              startDate: string
+              endDate: string
+              projectedAmount: string
+            lineItemId: string
+        name: string
+        planId: string
+        platform: string
+        externalSystemId: string
   OpportunityLineItemDTO:
     type: object
+    title: OpportunityLineItemDTO
     properties:
       attributes:
         type: object
         additionalProperties:
           type: string
+        description: 'Array of additional attributes for Opportunity Lines, like channel id, daypart id, etc'
       lineItemId:
         type: string
-    title: OpportunityLineItemDTO
+        description: Unique identifier of the Opportunity Lines
+    description: Data object for the Opportunity lines
+    x-examples:
+      Opportunity lines:
+        attributes:
+          channelId: string
+          daypartId: string
+          startDate: string
+          endDate: string
+          projectedAmount: string
+        lineItemId: string
 schemes:
   - https

@@ -193,7 +193,7 @@ definitions:
         description: AOS Plan ID
       platform:
         type: string
-      OpportunityId:
+      opportunityId:
         type: string
         description: Opportunity ID
     required:

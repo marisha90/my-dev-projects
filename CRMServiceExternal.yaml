@@ -131,52 +131,6 @@ definitions:
     type: object
     title: OpportunityDTO
     description: Data obect that contains Opportunity and Opportunity LInes.
-    properties:
-      accountExecutive:
-        type: string
-      advertiserId:
-        type: string
-        description: AOS ID of an Advertiser
-      agencyId:
-        type: string
-        description: AOS ID of an Agency
-      amount:
-        type: number
-        format: double
-        description: Projected Amount
-      attributes:
-        type: object
-        additionalProperties:
-          type: string
-        description: 'Additional Opportunity attributes, plan class, deal year, marketplace, etc.'
-      flightEndDate:
-        type: string
-        description: Opportunity Flight End Date
-      flightStartDate:
-        type: string
-        description: Opportunity Flight Start Date
-      lineItems:
-        type: array
-        description: Array that contains a list of the Opportunity Lines
-        items:
-          $ref: '#/definitions/OpportunityLineItemDTO'
-      name:
-        type: string
-        description: Opportunity name
-      planId:
-        type: string
-        description: AOS Plan ID
-      platform:
-        type: string
-      externalSystemId:
-        type: string
-        description: External ID of the Opportunity
-    required:
-      - accountExecutive
-      - advertiserId
-      - agencyId
-      - flightEndDate
-      - flightStartDate
     x-examples:
       'Opportunity DTO ':
         accountExecutive: string
@@ -200,7 +154,54 @@ definitions:
         name: string
         planId: string
         platform: string
-        externalSystemId: string
+        opportunityId: string
+    properties:
+      accountExecutive:
+        type: string
+        description: ''
+      advertiserId:
+        type: string
+        description: AOS ID of an Advertiser
+      agencyId:
+        type: string
+        description: AOS ID of an Agency
+      amount:
+        type: number
+        format: double
+        description: Projected Amount
+      attributes:
+        type: object
+        additionalProperties:
+          type: string
+        description: 'Additional Opportunity attributes, for exmaple plan class, deal year, marketplace, etc.'
+      flightEndDate:
+        type: string
+        description: Opportunity Flight End Date
+      flightStartDate:
+        type: string
+        description: Opportunity Flight Start Date
+      lineItems:
+        type: array
+        description: Array that contains a list of the Opportunity Lines
+        items:
+          $ref: '#/definitions/OpportunityLineItemDTO'
+      name:
+        type: string
+        description: Opportunity name
+      planId:
+        type: string
+        description: AOS Plan ID
+      platform:
+        type: string
+      OpportunityId:
+        type: string
+        description: Opportunity ID
+    required:
+      - accountExecutive
+      - advertiserId
+      - agencyId
+      - flightEndDate
+      - flightStartDate
   OpportunityLineItemDTO:
     type: object
     title: OpportunityLineItemDTO

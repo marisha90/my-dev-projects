@@ -1,9 +1,6 @@
 swagger: '2.0'
 info:
-  description: >-
-    The API provides an opetion to get both Plan Header and Plan Lines for a
-    given Plan ID. <br> versionHistory <br> -------------- <br> 20202-Apr-11
-    Marina Yurovsky - Version - 1.0.0. - Initial version.
+  description: 'The API provides an opetion to get both Plan Header and Plan Lines for a given Plan ID. <br> versionHistory <br> -------------- <br> 20202-Apr-11 Marina Yurovsky - Version - 1.0.0. - Initial version.'
   version: '1.0'
   title: Plan Header and Workspace External API GET
   contact:
@@ -26,7 +23,7 @@ paths:
       tags:
         - plan-header-workspace_external-controller
       summary: Get Plan Header
-      description: Get Plan Details with the given Plan Id...
+      description: Get Plan Details with the given Plan Id
       operationId: getPlanHeaderByPlanId
       produces:
         - '*/*'
@@ -151,9 +148,9 @@ definitions:
       currentVersion:
         $ref: '#/definitions/Version'
       dealYearId:
-        type: string
-        description: AOS ID of the deal year MRD
-        example: 5e8e2d72139410153f740e0b
+        type: array
+        items:
+          $ref: '#/definitions/DealYear'
       demo:
         type: array
         items:
@@ -166,6 +163,7 @@ definitions:
       flightEndDate:
         type: string
         format: date
+        example: '2020-04-17'
       endPeriod:
         $ref: '#/definitions/Period'
       equivalised:
@@ -222,6 +220,7 @@ definitions:
       flightStartDate:
         type: string
         format: date
+        example: '2020-09-30'
       startPeriod:
         $ref: '#/definitions/Period'
       subdivision:
@@ -236,6 +235,9 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Version'
+    description: ''
+    x-examples:
+      example-1: {}
   Agency:
     type: object
     properties:
@@ -262,6 +264,18 @@ definitions:
         items:
           type: string
     title: Agency
+    x-examples:
+      Agency:
+        id: 5ddf63114d9c003405f35df3
+        name: "America's Health Insurance Plans"
+        commission: null
+        rolesData:
+          - BY
+        roles:
+          - Buying
+        contact: null
+        address: null
+        effectiveDate: '2020-04-17'
   Channel:
     type: object
     properties:
@@ -275,9 +289,7 @@ definitions:
     properties:
       id:
         type: string
-        description: >-
-          Comma separated list of AOS IDs for the Demographic. The first element
-          in the list is an ID of the Primary Demo.
+        description: Comma separated list of AOS IDs for the Demographic. The first element in the list is an ID of the Primary Demo.
     title: Demo
   RateCard:
     type: object
@@ -289,44 +301,56 @@ definitions:
         $ref: '#/definitions/Channel'
       id:
         type: string
-        description: AOS ID  for the Ratecard in URC
       revision:
         type: number
+      name:
+        type: string
     title: RateCard
+    x-examples:
+      ratecard:
+        id: 5e8c69dd754aba7146e2a6de
+        name: 'IP Test RC Deportes Apr 07 2020 11:32:42 AM Apr 07 2020 11:54:05 AM'
+        channel:
+          id: Nou_azxVQs6uopaWpzH7Hg
+          name: Deportes
+          code: Deportes
+          isPrimary: false
+          ratingSource: null
+          ratingStream: null
+          hhPostBuyId: null
+          demoPostBuyId: null
+          division: null
+          subDivision: null
+          primary: false
+        asOfDate: '2020-04-15'
+        revision: 1
   Period:
     type: object
     properties:
       id:
         type: string
-        description: >-
-          AOS ID from the Calendar MRD. If empty default to the period for the
-          flight end date
+        description: AOS ID from the Calendar MRD. If empty default to the period for the flight end date
     title: Period
   AccountExecutive:
     type: object
+    title: AccountExecutive
     properties:
-      effectiveDate:
-        type: string
-        format: date
-        description: Not required. If empty default the Flight Start date
       endDate:
         type: string
         format: date
         description: Not required. If empty default the Flight End date
       id:
         type: string
-        description: >-
-          if empty then API needs to assigned AOS User ID else TBD if email is
-          ok for PITCH
+        description: if empty then API needs to assigned AOS User ID else TBD if email is ok for PITCH
       isPrimary:
         type: boolean
-      primary:
-        type: boolean
       role:
-        $ref: '#/definitions/Role'
+        type: array
+        items:
+          type: string
       split:
         type: number
-        description: Not required. If empty default to 100%
+        description: 'Not required. If empty default to 100%'
       startDate:
         type: string
         format: date
@@ -337,7 +361,20 @@ definitions:
         type: string
       title:
         type: string
-    title: AccountExecutive
+    x-examples:
+      Account Exec:
+        name: API User
+        id: '2'
+        isPrimary: true
+        startDate: null
+        endDate: null
+        split: 100
+        role: null
+        title: ae
+        teamId: ''
+        teamName: ''
+        effectiveDate: null
+        primary: true
   Calendar:
     type: object
     properties:
@@ -387,9 +424,7 @@ definitions:
     properties:
       id:
         type: string
-        description: >-
-          AOS ID of the agency contact MDM. Not required. If empty default to
-          the primary contact for the agency in MDM
+        description: AOS ID of the agency contact MDM. Not required. If empty default to the primary contact for the agency in MDM
     title: Contact
   OrderType:
     type: object
@@ -397,15 +432,13 @@ definitions:
       id:
         type: string
         description: AOS ID of the order type MRD
+      name:
+        type: string
     title: OrderType
-  Role:
-    type: object
-    properties:
-      id:
-        type: string
-      label:
-        type: string
-    title: Role
+    x-examples:
+      order type:
+        id: default
+        name: default
   DateRange:
     type: object
     properties:
@@ -465,6 +498,14 @@ definitions:
       statusName:
         type: string
     title: PlanStatus
+    x-examples:
+      plan status:
+        approvers:
+          - id: null
+            name: John Doe
+            userId: xxx@domain.com
+        statusId: Working
+        statusName: Working
   Division:
     type: object
     required:
@@ -509,6 +550,7 @@ definitions:
   PlanTotalDTO:
     type: object
     title: PlanTotalDTO
+    description: ''
     properties:
       channelId:
         type: string
@@ -522,23 +564,25 @@ definitions:
             type: string
       lineId:
         type: string
+        description: Unique Identifier of the Plan Line
       planId:
         type: string
+        description: Unique Identifier of the AOS Plan
       period:
         type: string
+        description: 'Calendar period, for example quarter'
       unitRates:
         $ref: '#/definitions/UnitRates'
       week:
         type: string
   DemoValues:
     type: object
+    title: DemoValues
     properties:
       cpm:
         type: number
         format: double
-      cpmPercent:
-        type: number
-        format: double
+        description: Cost per thousand impressions
       cpp:
         type: number
         format: double
@@ -548,25 +592,10 @@ definitions:
       grps:
         type: number
         format: double
-      hutPut:
-        type: number
-        format: double
       imps:
         type: number
         format: double
-      impsPercent:
-        type: number
-        format: double
       index:
-        type: number
-        format: double
-      share:
-        type: number
-        format: double
-      totalGrps:
-        type: number
-        format: double
-      totalImps:
         type: number
         format: double
       ue:
@@ -575,22 +604,55 @@ definitions:
       vpvh:
         type: number
         format: double
-    title: DemoValues
   UnitRates:
     type: object
+    title: UnitRates
     properties:
       rate:
         type: number
         format: double
         description: ratecard rate????
-      ratePercent:
-        type: number
-        format: double
-      totalRate:
-        type: number
-        format: double
-        description: User updated rate????
       units:
         type: integer
         format: int64
-    title: UnitRates
+      rc:
+        type: string
+  Advertiser:
+    type: object
+    title: Advertiser
+    properties:
+      id:
+        type: string
+        description: AdvExclusion Id
+      name:
+        type: string
+        description: AdvExclusion name
+    x-examples:
+      advertiser:
+        id: 5e2540844d9c00600d5a000a
+        name: $$Advertiser-38735638548844new
+        advContact: null
+        advCategory: null
+        advSecCategory: null
+        advBrand: null
+        advAddress: null
+  DealYear:
+    type: object
+    properties:
+      endDate:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      startDate:
+        type: string
+    title: DealYear
+    x-examples:
+      deal year:
+        id: pGEAriBjS_WjXyhOilJPTQ
+        name: 2020 DY
+        startDate: '2020-03-26'
+        endDate: '2021-03-01'
+schemes:
+  - https

@@ -116,6 +116,7 @@ definitions:
       revision:
         type: number
     title: Plan
+    description: Data object that contains audit information about a Plan revision
   PlanHeader:
     type: object
     title: PlanHeader
@@ -172,16 +173,16 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/DateRange'
-      marketPlaceId:
-        $ref: '#/definitions/LabelKey'
+      marketPlace:
+        $ref: '#/definitions/marketPlace'
       onAirId:
         type: string
       operativeOneId:
         type: string
       orderType:
         $ref: '#/definitions/OrderType'
-      planClassId:
-        $ref: '#/definitions/LabelKey'
+      planClass:
+        $ref: '#/definitions/planClass'
       planName:
         type: string
       planNotes:
@@ -205,8 +206,8 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/RateCard'
-      ratingStreamId:
-        $ref: '#/definitions/LabelKey'
+      ratingStream:
+        $ref: '#/definitions/ratingStream'
       externalSystemId:
         type: string
       flightStartDate:
@@ -367,6 +368,7 @@ definitions:
         description: AOS ID from the Calendar MRD. If empty default to the period for the flight end date
       name:
         type: string
+    description: Data object that contains attributes of a calendar period
   AccountExecutive:
     type: object
     title: AccountExecutive
@@ -384,6 +386,7 @@ definitions:
         teamName: ''
         effectiveDate: null
         primary: true
+    description: Data object contains information about Account exectives assigned to the Plan
     properties:
       endDate:
         type: string
@@ -394,8 +397,10 @@ definitions:
         description: if empty then API needs to assigned AOS User ID else TBD if email is ok for PITCH
       isPrimary:
         type: boolean
+        description: true if Account Executive is Primary
       role:
         type: array
+        description: 'Sales Position of the Account Executive. For example: ae, sales planner, sales assistant'
         items:
           type: string
       split:
@@ -407,12 +412,12 @@ definitions:
         description: Not required If empty default to Flight Start Date
       teamId:
         type: string
+        description: AOS ID of a Sales Team
       teamName:
         type: string
       name:
         type: string
         description: Account executive name
-    description: Data object contains information about Account exectives assigned to the Plan
   Calendar:
     type: object
     properties:
@@ -735,5 +740,29 @@ definitions:
         $ref: '#/definitions/DemoValues'
     title: PlanRates
     description: Data objet that contains information unit and demographic information
+  marketPlace:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    title: marketPlace
+  planClass:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    title: planClass
+  ratingStream:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    title: ratingStream
 schemes:
   - https

@@ -49,13 +49,13 @@ paths:
           schema:
             $ref: '#/definitions/Plan'
       deprecated: false
-  '/v1/{apiKey}/plan/{planId}/workspace/summary/period/{demo}':
+  '/v1/{apiKey}/plan/{planId}/workspace/spots':
     post:
       tags:
         - plan-header-workspace_external-controller
-      summary: Get period summary per demo
-      description: Get line totals per period per demo
-      operationId: getPeriodSummarybyDemo_1
+      summary: Get spots by weeks and workspace lines
+      description: Get Plan Weekly Spots with optional filter
+      operationId: getSpots
       consumes:
         - application/json
       produces:
@@ -71,22 +71,17 @@ paths:
           description: apiKey
           required: true
           type: string
-        - name: demo
-          in: path
-          description: demo
-          required: true
-          type: string
+        - in: body
+          name: filter
+          description: filter
+          required: false
+          schema:
+            $ref: '#/definitions/PlanWeeklySpotFilter'
         - name: planId
           in: path
           description: planId
           required: true
           type: string
-        - in: body
-          name: periodTotalRequest
-          description: periodTotalRequest
-          required: false
-          schema:
-            $ref: '#/definitions/periodTotalRequest'
       responses:
         '200':
           description: OK
@@ -95,7 +90,7 @@ paths:
             additionalProperties:
               type: object
               additionalProperties:
-                $ref: '#/definitions/PlanTotalDTO'
+                $ref: '#/definitions/PlanWeeklySpotPlacement'
       deprecated: false
 definitions:
   Plan:
@@ -232,6 +227,10 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Version'
+      customFields:
+        type: array
+        items:
+          $ref: '#/definitions/LabelKey'
   Agency:
     type: object
     title: Agency
@@ -587,44 +586,8 @@ definitions:
       planner:
         $ref: '#/definitions/User'
     title: Team
-  periodTotalRequest:
-    type: object
-    properties:
-      lineIds:
-        type: array
-        items:
-          type: string
-      period:
-        type: string
-    title: periodTotalRequest
-  PlanTotalDTO:
-    type: object
-    title: PlanTotalDTO
-    description: ''
-    properties:
-      channelId:
-        type: string
-        description: AOS ID of the Channel MRD
-      demoValues:
-        type: object
-        additionalProperties:
-          $ref: '#/definitions/DemoValues'
-        properties:
-          '':
-            type: string
-      lineId:
-        type: string
-        description: Unique Identifier of the Plan Line
-      planId:
-        type: string
-        description: Unique Identifier of the AOS Plan
-      period:
-        type: string
-        description: 'Calendar period, for example quarter'
-      unitRates:
-        $ref: '#/definitions/UnitRates'
-      week:
-        type: string
+
+
   DemoValues:
     type: object
     title: DemoValues
@@ -695,5 +658,46 @@ definitions:
         type: string
       name:
         type: string
+  PlanWeeklySpotFilter:
+    type: object
+    properties:
+      lineIds:
+        type: array
+        items:
+          type: string
+      weekIds:
+        type: array
+        items:
+          type: string
+    title: PlanWeeklySpotFilter
+  PlanWeeklySpotPlacement:
+    type: object
+    properties:
+      id:
+        type: string
+      lineId:
+        type: string
+      planId:
+        type: string
+      spotValues:
+        type: array
+        items:
+          $ref: '#/definitions/PlanRates'
+      version:
+        type: integer
+        format: int64
+      weekId:
+        type: string
+    title: PlanWeeklySpotPlacement
+  PlanRates:
+    type: object
+    properties:
+      demoValues:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/DemoValues'
+      unitRates:
+        $ref: '#/definitions/UnitRates'
+    title: PlanRates
 schemes:
   - https

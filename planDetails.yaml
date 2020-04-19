@@ -511,6 +511,7 @@ definitions:
       createdDate:
         type: string
         format: date-time
+        description: Date when the Plan version was created
       id:
         type: integer
         format: int64
@@ -519,9 +520,10 @@ definitions:
       modifiedDate:
         type: string
         format: date-time
-        description: Version Name.
+        description: Date when a Plan version was last modified
       name:
         type: string
+        description: Plan Version name
       primary:
         type: boolean
         description: True if for primary version of the plan
@@ -585,6 +587,7 @@ definitions:
   DemoValues:
     type: object
     title: DemoValues
+    description: Data object that contains information about various mesures available for the Plan Demo.
     properties:
       cpm:
         type: number
@@ -596,28 +599,37 @@ definitions:
       grps:
         type: number
         format: double
+        description: Gross rating points
       imps:
         type: number
         format: double
+        description: Estimated Impressions
       index:
         type: number
         format: double
       ue:
         type: number
         format: double
+        description: Estimated universe of all people subscribed to the channel
       vpvh:
         type: number
         format: double
+        description: Viewers per viewing household
       rcCpm:
         type: number
+        description: Cost per thousand impressions calculated based on ratecard rate and estimated impressions.
       cpp:
         type: number
+        description: Cost per rating point
       totalImps:
         type: number
+        description: Total Impressions for all the units in a week for a Plan Line
       totalGrps:
         type: number
+        description: Total Gross Rating Points for all the units in a week for a Plan Line
       totalCpm:
         type: number
+        description: Total cost per thousands of impressions for all the units in a week for a Plan Line
       hutPut:
         type: number
       share:
@@ -642,6 +654,7 @@ definitions:
         type: integer
         format: int64
         description: Number of units in a week for a Plan Line
+    description: Data object that contains information about units and rates
   Advertiser:
     type: object
     title: Advertiser
@@ -684,11 +697,11 @@ definitions:
         description: List of calendar week ids for a plan
         items:
           type: string
-    description: Object that contains a list of Plan Lines Ids and calendar week ids
+    description: Data object that contains a list of Plan Lines Ids and calendar week ids
   PlanWeeklySpotPlacement:
     type: object
     title: PlanWeeklySpotPlacement
-    description: Object that contains plan line attributes by weeks.
+    description: Data object that contains plan line attributes by weeks.
     properties:
       id:
         type: string
@@ -721,5 +734,6 @@ definitions:
       additionalProperties:
         $ref: '#/definitions/DemoValues'
     title: PlanRates
+    description: Data objet that contains information unit and demographic information
 schemes:
   - https

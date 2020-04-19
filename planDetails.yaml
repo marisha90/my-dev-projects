@@ -50,7 +50,7 @@ paths:
             $ref: '#/definitions/Plan'
       deprecated: false
   '/v1/{apiKey}/plan/{planId}/workspace/spots':
-    post:
+    get:
       tags:
         - plan-header-workspace_external-controller
       summary: Get spots by weeks and workspace lines
@@ -491,18 +491,20 @@ definitions:
       example-1: {}
   User:
     type: object
+    title: User
     properties:
       id:
         type: string
+        description: AOS ID of a user in UM
       name:
         type: string
+        description: User Name
       userId:
         type: string
-    title: User
   Version:
     type: object
     title: Version
-    description: ''
+    description: Object that contains attributes of a Plan Version.
     properties:
       createdBy:
         $ref: '#/definitions/User'
@@ -520,13 +522,6 @@ definitions:
         description: Version Name.
       name:
         type: string
-      onAirId:
-        type: integer
-        format: int32
-        description: External system mapping
-      operativeOneId:
-        type: integer
-        format: int32
       primary:
         type: boolean
         description: True if for primary version of the plan
@@ -586,8 +581,7 @@ definitions:
       planner:
         $ref: '#/definitions/User'
     title: Team
-
-
+    description: Object that contains information about the team that is managing a Plan.
   DemoValues:
     type: object
     title: DemoValues
@@ -596,9 +590,6 @@ definitions:
         type: number
         format: double
         description: Cost per thousand impressions
-      cpp:
-        type: number
-        format: double
       factor:
         type: number
         format: double
@@ -617,6 +608,20 @@ definitions:
       vpvh:
         type: number
         format: double
+      rcCpm:
+        type: number
+      cpp:
+        type: number
+      totalImps:
+        type: number
+      totalGrps:
+        type: number
+      totalCpm:
+        type: number
+      hutPut:
+        type: number
+      share:
+        type: number
   UnitRates:
     type: object
     title: UnitRates
@@ -624,12 +629,19 @@ definitions:
       rate:
         type: number
         format: double
-        description: ratecard rate????
+        description: Rate of a single unit
+      rcRate:
+        type: number
+        format: double
+        description: Ratecard rate of a unit
+      totalRate:
+        type: number
+        format: double
+        description: Total Rate for all the units in the week for a Plan line.
       units:
         type: integer
         format: int64
-      rc:
-        type: string
+        description: Number of units in a week for a Plan Line
   Advertiser:
     type: object
     title: Advertiser
@@ -660,44 +672,54 @@ definitions:
         type: string
   PlanWeeklySpotFilter:
     type: object
+    title: PlanWeeklySpotFilter
     properties:
       lineIds:
         type: array
+        description: List of Plan Line Ids
         items:
           type: string
       weekIds:
         type: array
+        description: List of calendar week ids for a plan
         items:
           type: string
-    title: PlanWeeklySpotFilter
+    description: Object that contains a list of Plan Lines Ids and calendar week ids
   PlanWeeklySpotPlacement:
     type: object
+    title: PlanWeeklySpotPlacement
+    description: Object that contains plan line attributes by weeks.
     properties:
       id:
         type: string
+        description: ''
       lineId:
         type: string
+        description: AOS ID of a Plan Line
       planId:
         type: string
+        description: AOS ID of a Plan
       spotValues:
         type: array
+        description: Obejct that contains rate details for the units on the Plan Line in a week
         items:
           $ref: '#/definitions/PlanRates'
       version:
         type: integer
         format: int64
+        description: Version Number
       weekId:
         type: string
-    title: PlanWeeklySpotPlacement
+        description: AOS ID of a calendar week
   PlanRates:
     type: object
     properties:
       demoValues:
         type: object
-        additionalProperties:
-          $ref: '#/definitions/DemoValues'
       unitRates:
         $ref: '#/definitions/UnitRates'
+      additionalProperties:
+        $ref: '#/definitions/DemoValues'
     title: PlanRates
 schemes:
   - https

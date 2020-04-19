@@ -8,6 +8,7 @@ info:
     email: apiteam@operative.com
   license:
     name: Copyright 2020 Operative
+  termsOfService: 'http://www.operative.com'
 host: tvs-dev-gw.operativeone.com
 tags:
   - name: plan-header-external-controller
@@ -55,36 +56,39 @@ definitions:
   PlanDTO:
     type: object
     title: PlanDTO
-    description: ''
+    description: Data obect that contains Plan header attributes.
     x-tags:
       - plan-header-external-controller
+    x-examples:
+      example-1: {}
     properties:
       accountExecutives:
         type: array
+        description: Sales people that are managing the Plan. One AE is required and will be set as Primary
         items:
           $ref: '#/definitions/AccountExecutive'
-        description: |+
-          Sales people that are managing the Plan. One AE is required and will be set as Primary
-      advertisers:
-        type: array
-        items:
-          $ref: '#/definitions/Advertiser'
+      advertiserId:
+        type: string
+        description: AOS ID of the Advertiser
       agencies:
         type: array
+        description: Data object the contains Agency attributes
         items:
           $ref: '#/definitions/Agency'
-      calendar:
-       $ref: '#/definitions/Calendar'
+      calendarId:
+        type: string
+        description: AOS ID of the Calendar
       channel:
         type: array
+        description: Data object the contains Channel attributes
         items:
           $ref: '#/definitions/Channel'
       dealYearId:
-        type: array
-        items:
-          $ref: '#/definitions/Channel'
+        type: string
+        description: AOS ID of a deal year.
       demo:
         type: array
+        description: Data object the contains Demo attributes
         items:
           $ref: '#/definitions/Demo'
       dueDate:
@@ -94,6 +98,7 @@ definitions:
       flightEndDate:
         type: string
         example: yyyy-MM-dd
+        description: End date of the Plan flight
       endPeriod:
         type: string
         description: AOS ID from the Calendar period in MRD. If empty default to the period for the flight end date
@@ -108,6 +113,7 @@ definitions:
         description: Not required. If empty default to false
       hiatus:
         type: array
+        description: Data object the contains dates and/or date ranges of the hiatus dates
         items:
           $ref: '#/definitions/Hiatus'
       marketPlaceId:
@@ -115,27 +121,30 @@ definitions:
         description: AOS Identifier for the Marketplace MRD
         example: 5e2540844d9c00600d5a000a
       orderType:
-        $ref: '#/definitions/OrderType'
+        type: string
+        description: AOS ID of the order type - MRD
       planClassId:
         type: string
         description: AOS ID of the Planclass MRD
       externalSystemId:
         type: string
-        description: Unque Identifier from the External CRM applicaation. Not required.
+        description: Unque Identifier from the External CRM application. Not required.
       planName:
         type: string
         description: 'If plan name is empty, default name generated'
       planNotes:
         type: string
+        description: Free text that can be printed on the reports
       platform:
         type: string
-        description: ''
+        description: 'Defines the main platform for the Plan. Choices are LINEAR, DIGItAL or CONVERGED'
         enum:
           - LINEAR
           - DIGITAL
           - CONVERGED
       ratecard:
         type: array
+        description: Data object the contains Ratecard attributes
         items:
           $ref: '#/definitions/RateCard'
       ratingStreamId:
@@ -144,12 +153,19 @@ definitions:
       flightStartDate:
         type: string
         example: yyyy-MM-dd
+        description: End date of the Plan flight
       startPeriod:
         type: string
         description: AOS ID from the Calendar period in MRD. If empty default to the period for the flight start date
       versionName:
         type: string
         description: Not required. If empty default to generated version name
+      division:
+        type: string
+        description: Attribute for groupping and reporting of the plans
+      subDivision:
+        type: string
+        description: Additional attribute for groupping and classifications of the Plans
     required:
       - platform
   Agency:
@@ -192,7 +208,7 @@ definitions:
         type: string
     required:
       - id
-    description: ''
+    description: Data object the contains Agency attributes
   Channel:
     type: object
     title: Channel
@@ -200,6 +216,8 @@ definitions:
       Channel:
         id: C4gyuWfTQZ-BtJLmLZE_rA
         isPrimary: true
+        demoPostBuyId: null
+        hhPostBuyID: null
     properties:
       id:
         type: string
@@ -208,24 +226,33 @@ definitions:
       isPrimary:
         type: string
         description: ''
+      demoPostBuyId:
+        type: string
+        description: "Not required. Will be defaulted from the channel. \nAOS ID of the Projection methodology MRD. Will be used to estimate audience delivery for demos other than household"
+      hhPostBuyId:
+        type: string
+        description: "Not required. Will be defaulted from the channel. \nAOS ID of the Projection methodology MRD. Will be used to estimate audience delivery for household demo"
     required:
       - id
       - isPrimary
+    description: Data object the contains Chhannel attributes
   Demo:
     type: object
     title: Demo
+    description: Data object the contains Demo attributes
     properties:
       id:
         type: string
         description: AOS ID of the Demographic MRD
       postby:
         type: boolean
-        description: Seams too early for postbuy - this is plan only ???
+        description: Not required. True of the demo will be sent to MSA PostBuy for delivery reporting
       isPrimary:
         type: boolean
+        description: True if the demo is primary for the Plan
       edi:
         type: boolean
-        description: Not important while plan. ???
+        description: Not required. True of the demo will be sent via electionic interface -edi
     required:
       - id
       - isPrimary
@@ -246,6 +273,7 @@ definitions:
       revision:
         type: number
         description: Ratecard revision.
+    description: Data obect that Ratecard information.
   GenericResponse:
     type: object
     properties:
@@ -343,7 +371,7 @@ definitions:
         split: 100
         role: ae
         effectiveDate: '2021-08-10'
-    description: Account Executives for the Plan
+    description: 'Account Executives for the Plan. '
     properties:
       endDate:
         type: string
@@ -369,18 +397,6 @@ definitions:
         description: Not required If empty default to Flight Start Date
     required:
       - id
-  Calendar:
-    type: object
-    title: Calendar
-    properties:
-      id:
-        type: string
-        description: AOS ID of the Calendar
-    required:
-      - id
-    x-examples:
-      Calendar:
-        id: mP4l347WQNC-5qJgzCsNag
   Contact:
     type: object
     properties:
@@ -390,13 +406,7 @@ definitions:
     title: Contact
     x-examples:
       example-1: {}
-  OrderType:
-    type: object
-    title: OrderType
-    properties:
-      id:
-        type: string
-        description: Not required. AOS ID of the Order Type MRD
+    description: ''
   Hiatus:
     type: object
     title: Hiatus
@@ -413,25 +423,8 @@ definitions:
       Hiatus:
         startDate: '2021-09-27'
         endDate: '2021-10-03'
-  Advertiser:
-    type: object
-    title: Advertiser
-    x-examples:
-      'Advertiser ':
-        id: 5e2540844d9c00600d5a000a
-        advCategory: null
-        advSecCategory: null
-    properties:
-      id:
-        type: string
-        description: AOS ID for the Advertiser in MDM
-      advCategory:
-        type: string
-        description: 'Not required. AOS ID of the Primary industry category of the Advertiser. '
-      advSecCategory:
-        type: string
-        description: 'Not required. AOS ID of the secondary industry category of the Advertiser. '
     required:
       - id
+    description: Data obect that dates and/or date ranges when the advertiser does not want air the commercials.
 schemes:
   - https

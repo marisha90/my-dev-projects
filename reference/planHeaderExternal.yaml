@@ -44,582 +44,49 @@ paths:
           description: planDTO
           required: true
           schema:
-            type: object
-            title: PlanDTO
-            description: ''
-            properties:
-              accountExecutives:
-                type: array
-                description: |+
-                  Sales people that are managing the Plan. One AE is required and will be set as Primary
-
-
-                items:
-                  type: object
-                  title: AccountExecutive
-                  x-examples:
-                    Joe Smith Primary AE:
-                      name: Joe Smith
-                      id: '40'
-                      isPrimary: true
-                      startDate: '2021-08-10'
-                      endDate: '2022-07-12'
-                      split: 100
-                      role: null
-                      title: ae
-                      effectiveDate: '2021-08-10'
-                  description: Account Executives for the Plan
-                  properties:
-                    effectiveDate:
-                      type: string
-                      default: If empty default to the Flight Start date
-                      description: Not required. If empty default the Flight Start date
-                      format: date
-                      example: '2020-04-13'
-                    endDate:
-                      type: string
-                      default: If empty default the Flight End date
-                      description: Not required. If empty default the Flight End date
-                      format: date
-                      example: '2021-08-30'
-                    id:
-                      type: string
-                      description: if empty then API needs to assigned AOS User ID else TBD if email is ok for PITCH
-                    isPrimary:
-                      type: boolean
-                      description: If empty then API needs to assigned AOS User ID else TBD if email is ok
-                    role:
-                      type: string
-                      description: AOS ID of the Account Executive role in UM
-                    split:
-                      type: number
-                      description: 'Not required. If empty default to 100%'
-                    startDate:
-                      type: string
-                      format: date
-                      description: Not required If empty default to Flight Start Date
-                    title:
-                      type: string
-                      description: 'Looks like it is hardcoded: AE, Planner, Sales Assistant'
-                  required:
-                    - id
-              advertisers:
-                type: array
-                items:
-                  type: object
-                  title: Advertiser
-                  properties:
-                    id:
-                      type: string
-                      description: AOS ID for the Advertiser in MDM
-                  required:
-                    - id
-                  x-examples:
-                    'Advertiser ':
-                      id: 5e2540844d9c00600d5a000a
-                      advContact: null
-                      advCategory: null
-                      advSecCategory: null
-                      advBrand: null
-                      advAddress: null
-              agencies:
-                type: array
-                items:
-                  type: object
-                  title: Agency
-                  properties:
-                    address:
-                      type: string
-                      description: Address of the agency contact
-                    commission:
-                      type: string
-                      description: Not required. If empty will default from the MDM Agency
-                    contact:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          description: AOS ID of the agency contact MDM. Not required. If empty default to the primary contact for the agency in MDM
-                      title: Contact
-                    effectiveDate:
-                      type: string
-                      format: date
-                    id:
-                      type: string
-                      description: AOS ID for the Agency MDM
-                    roles:
-                      type: array
-                      description: Not required. If empty default to Buying
-                      items:
-                        type: string
-                  required:
-                    - id
-                  x-examples:
-                    example-1: {}
-              calendar:
-                type: object
-                title: Calendar
-                properties:
-                  id:
-                    type: string
-                    description: AOS ID of the Calendar
-                required:
-                  - id
-                x-examples:
-                  Calendar:
-                    id: mP4l347WQNC-5qJgzCsNag
-              channel:
-                type: array
-                items:
-                  type: object
-                  title: Channel
-                  x-examples:
-                    Channel:
-                      id: C4gyuWfTQZ-BtJLmLZE_rA
-                      isPrimary: true
-                      hhPostBuyId: null
-                      demoPostBuyId: null
-                      division: null
-                      subDivision: null
-                      primary: true
-                  properties:
-                    id:
-                      type: string
-                      description: AOS Identifier of the Channels - Stations MRD
-                      example: '5e2540844d9c00600d5a000a, C4gyuWfTQZ-BtJLmLZE_rA'
-                    demoPostBuyId:
-                      type: string
-                      description: Not required. If empty default from Station MRD
-                    division:
-                      description: Not required. If empty defaul from Primary Channel - Station MRD
-                      type: string
-                    hhPostBuyId:
-                      type: string
-                      description: Not required. If empty default from Station MRD
-                    isPrimary:
-                      type: string
-                      description: ''
-                    subDivision:
-                      type: string
-                      description: |
-                        AOS ID of Subdivision. If empty default from the Channel - Station on MRD
-                  required:
-                    - id
-                    - isPrimary
-              dealYearId:
-                type: string
-                description: AOS ID of the deal year MRD
-                example: 5e8e2d72139410153f740e0b
-              demo:
-                type: array
-                items:
-                  type: object
-                  title: Demo
-                  properties:
-                    id:
-                      type: string
-                      description: AOS ID of the Demographic MRD
-                    postby:
-                      type: boolean
-                      description: Seams too early for postbuy - this is plan only ???
-                    metrics:
-                      type: array
-                      description: Is this a leftover from local?
-                      items:
-                        type: string
-                    isPrimary:
-                      type: boolean
-                    edi:
-                      type: boolean
-                      description: Not important while plan. ???
-                  required:
-                    - id
-                    - isPrimary
-              dueDate:
-                type: string
-                example: 'yyyy-MM-dd,hh:mm a'
-                description: Date and Time
-              flightEndDate:
-                type: string
-                example: yyyy-MM-dd
-              endPeriod:
-                type: string
-                description: AOS ID from the Calendar period in MRD. If empty default to the period for the flight end date
-              equivalized:
-                type: boolean
-                description: Not required.If empty default to false
-              fluidity:
-                type: boolean
-                description: Not required. If empty default to false
-              guaranteed:
-                type: boolean
-                description: Not required. If empty default to false
-              hiatus:
-                type: array
-                description: Array or date ranges or single dates for the Flight Dates exclusion
-                items:
-                  type: object
-                  title: DateRange
-                  properties:
-                    endDate:
-                      type: string
-                      format: date
-                      description: End date of the hiatus period in yyyy-MM-dd format
-                    startDate:
-                      type: string
-                      format: date
-                      description: Start date of the hiatus period in yyyy-MM-dd format
-                  x-examples:
-                    Hiatus:
-                      startDate: '2021-09-27'
-                      endDate: '2021-10-03'
-              marketPlaceId:
-                type: string
-                description: AOS Identifier for the Marketplace MRD
-                example: 5e2540844d9c00600d5a000a
-              orderType:
-                type: object
-                title: OrderType
-                properties:
-                  id:
-                    type: string
-                    description: AOS ID of the Order Type MRD
-              planClassId:
-                type: string
-                description: AOS ID of the Planclass MRD
-              externalSystemId:
-                type: string
-                description: Unque Identifier from the External CRM applicaation. Not required.
-              planName:
-                type: string
-                description: 'If plan name is empty, default name generated'
-              planNotes:
-                type: string
-              platform:
-                type: string
-                description: ''
-                enum:
-                  - LINEAR
-                  - DIGITAL
-                  - CONVERGED
-              ratecard:
-                type: array
-                items:
-                  type: object
-                  title: RateCard
-                  properties:
-                    asOfDate:
-                      type: string
-                      format: date
-                    channel:
-                      type: string
-                      description: AOS ID of the Channel - Station MRD. Must be one of the channels selected for the plan header
-                    id:
-                      type: string
-                      description: AOS ID  for the Ratecard in URC
-                    revision:
-                      type: number
-              ratingStreamId:
-                type: string
-                description: AOS ID of the rating stream MRD
-              flightStartDate:
-                type: string
-                example: yyyy-MM-dd
-              startPeriod:
-                type: string
-                description: AOS ID from the Calendar period in MRD. If empty default to the period for the flight start date
-              versionName:
-                type: string
-                description: Not required. If empty default to generated version name
-            required:
-              - platform
-            x-tags:
-              - plan-header-external-controller
+            $ref: '#/definitions/PlanDTO'
       responses:
         '200':
           description: OK
           schema:
-            type: object
-            properties:
-              errorMsg:
-                type: array
-                items:
-                  type: string
-              httpStatusCode:
-                type: string
-                enum:
-                  - 100 CONTINUE
-                  - 101 SWITCHING_PROTOCOLS
-                  - 102 PROCESSING
-                  - 103 CHECKPOINT
-                  - 200 OK
-                  - 201 CREATED
-                  - 202 ACCEPTED
-                  - 203 NON_AUTHORITATIVE_INFORMATION
-                  - 204 NO_CONTENT
-                  - 205 RESET_CONTENT
-                  - 206 PARTIAL_CONTENT
-                  - 207 MULTI_STATUS
-                  - 208 ALREADY_REPORTED
-                  - 226 IM_USED
-                  - 300 MULTIPLE_CHOICES
-                  - 301 MOVED_PERMANENTLY
-                  - 302 FOUND
-                  - 302 MOVED_TEMPORARILY
-                  - 303 SEE_OTHER
-                  - 304 NOT_MODIFIED
-                  - 305 USE_PROXY
-                  - 307 TEMPORARY_REDIRECT
-                  - 308 PERMANENT_REDIRECT
-                  - 400 BAD_REQUEST
-                  - 401 UNAUTHORIZED
-                  - 402 PAYMENT_REQUIRED
-                  - 403 FORBIDDEN
-                  - 404 NOT_FOUND
-                  - 405 METHOD_NOT_ALLOWED
-                  - 406 NOT_ACCEPTABLE
-                  - 407 PROXY_AUTHENTICATION_REQUIRED
-                  - 408 REQUEST_TIMEOUT
-                  - 409 CONFLICT
-                  - 410 GONE
-                  - 411 LENGTH_REQUIRED
-                  - 412 PRECONDITION_FAILED
-                  - 413 PAYLOAD_TOO_LARGE
-                  - 413 REQUEST_ENTITY_TOO_LARGE
-                  - 414 URI_TOO_LONG
-                  - 414 REQUEST_URI_TOO_LONG
-                  - 415 UNSUPPORTED_MEDIA_TYPE
-                  - 416 REQUESTED_RANGE_NOT_SATISFIABLE
-                  - 417 EXPECTATION_FAILED
-                  - 418 I_AM_A_TEAPOT
-                  - 419 INSUFFICIENT_SPACE_ON_RESOURCE
-                  - 420 METHOD_FAILURE
-                  - 421 DESTINATION_LOCKED
-                  - 422 UNPROCESSABLE_ENTITY
-                  - 423 LOCKED
-                  - 424 FAILED_DEPENDENCY
-                  - 426 UPGRADE_REQUIRED
-                  - 428 PRECONDITION_REQUIRED
-                  - 429 TOO_MANY_REQUESTS
-                  - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
-                  - 451 UNAVAILABLE_FOR_LEGAL_REASONS
-                  - 500 INTERNAL_SERVER_ERROR
-                  - 501 NOT_IMPLEMENTED
-                  - 502 BAD_GATEWAY
-                  - 503 SERVICE_UNAVAILABLE
-                  - 504 GATEWAY_TIMEOUT
-                  - 505 HTTP_VERSION_NOT_SUPPORTED
-                  - 506 VARIANT_ALSO_NEGOTIATES
-                  - 507 INSUFFICIENT_STORAGE
-                  - 508 LOOP_DETECTED
-                  - 509 BANDWIDTH_LIMIT_EXCEEDED
-                  - 510 NOT_EXTENDED
-                  - 511 NETWORK_AUTHENTICATION_REQUIRED
-              id:
-                type: string
-              response:
-                type: object
-              successMsg:
-                type: string
-            title: GenericResponse
-        '400':
-          description: Bad Request. Response body would contain more details
-        '500':
-          description: Internal Server Error. Response body would contain more details
+            $ref: '#/definitions/GenericResponse'
       deprecated: false
 definitions:
   PlanDTO:
     type: object
     title: PlanDTO
     description: ''
+    x-tags:
+      - plan-header-external-controller
     properties:
       accountExecutives:
         type: array
+        items:
+          $ref: '#/definitions/AccountExecutive'
         description: |+
           Sales people that are managing the Plan. One AE is required and will be set as Primary
-
-
-        items:
-          type: object
-          title: AccountExecutive
-          x-examples:
-            Joe Smith Primary AE:
-              name: Joe Smith
-              id: '40'
-              isPrimary: true
-              startDate: '2021-08-10'
-              endDate: '2022-07-12'
-              split: 100
-              role: null
-              title: ae
-              effectiveDate: '2021-08-10'
-          description: Account Executives for the Plan
-          properties:
-            effectiveDate:
-              type: string
-              default: If empty default to the Flight Start date
-              description: Not required. If empty default the Flight Start date
-              format: date
-              example: '2020-04-13'
-            endDate:
-              type: string
-              default: If empty default the Flight End date
-              description: Not required. If empty default the Flight End date
-              format: date
-              example: '2021-08-30'
-            id:
-              type: string
-              description: if empty then API needs to assigned AOS User ID else TBD if email is ok for PITCH
-            isPrimary:
-              type: boolean
-              description: If empty then API needs to assigned AOS User ID else TBD if email is ok
-            role:
-              type: string
-              description: AOS ID of the Account Executive role in UM
-            split:
-              type: number
-              description: 'Not required. If empty default to 100%'
-            startDate:
-              type: string
-              format: date
-              description: Not required If empty default to Flight Start Date
-            title:
-              type: string
-              description: 'Looks like it is hardcoded: AE, Planner, Sales Assistant'
-          required:
-            - id
       advertisers:
         type: array
         items:
-          type: object
-          title: Advertiser
-          properties:
-            id:
-              type: string
-              description: AOS ID for the Advertiser in MDM
-          required:
-            - id
-          x-examples:
-            'Advertiser ':
-              id: 5e2540844d9c00600d5a000a
-              advContact: null
-              advCategory: null
-              advSecCategory: null
-              advBrand: null
-              advAddress: null
+          $ref: '#/definitions/Advertiser'
       agencies:
         type: array
         items:
-          type: object
-          title: Agency
-          properties:
-            address:
-              type: string
-              description: Address of the agency contact
-            commission:
-              type: string
-              description: Not required. If empty will default from the MDM Agency
-            contact:
-              type: object
-              properties:
-                id:
-                  type: string
-                  description: AOS ID of the agency contact MDM. Not required. If empty default to the primary contact for the agency in MDM
-              title: Contact
-            effectiveDate:
-              type: string
-              format: date
-            id:
-              type: string
-              description: AOS ID for the Agency MDM
-            roles:
-              type: array
-              description: Not required. If empty default to Buying
-              items:
-                type: string
-          required:
-            - id
-          x-examples:
-            example-1: {}
+          $ref: '#/definitions/Agency'
       calendar:
-        type: object
-        title: Calendar
-        properties:
-          id:
-            type: string
-            description: AOS ID of the Calendar
-        required:
-          - id
-        x-examples:
-          Calendar:
-            id: mP4l347WQNC-5qJgzCsNag
+       $ref: '#/definitions/Calendar'
       channel:
         type: array
         items:
-          type: object
-          title: Channel
-          x-examples:
-            Channel:
-              id: C4gyuWfTQZ-BtJLmLZE_rA
-              isPrimary: true
-              hhPostBuyId: null
-              demoPostBuyId: null
-              division: null
-              subDivision: null
-              primary: true
-          properties:
-            id:
-              type: string
-              description: AOS Identifier of the Channels - Stations MRD
-              example: '5e2540844d9c00600d5a000a, C4gyuWfTQZ-BtJLmLZE_rA'
-            demoPostBuyId:
-              type: string
-              description: Not required. If empty default from Station MRD
-            division:
-              description: Not required. If empty defaul from Primary Channel - Station MRD
-              type: string
-            hhPostBuyId:
-              type: string
-              description: Not required. If empty default from Station MRD
-            isPrimary:
-              type: string
-              description: ''
-            subDivision:
-              type: string
-              description: |
-                AOS ID of Subdivision. If empty default from the Channel - Station on MRD
-          required:
-            - id
-            - isPrimary
+          $ref: '#/definitions/Channel'
       dealYearId:
-        type: string
-        description: AOS ID of the deal year MRD
-        example: 5e8e2d72139410153f740e0b
+        type: array
+        items:
+          $ref: '#/definitions/Channel'
       demo:
         type: array
         items:
-          type: object
-          title: Demo
-          properties:
-            id:
-              type: string
-              description: AOS ID of the Demographic MRD
-            postby:
-              type: boolean
-              description: Seams too early for postbuy - this is plan only ???
-            metrics:
-              type: array
-              description: Is this a leftover from local?
-              items:
-                type: string
-            isPrimary:
-              type: boolean
-            edi:
-              type: boolean
-              description: Not important while plan. ???
-          required:
-            - id
-            - isPrimary
+          $ref: '#/definitions/Demo'
       dueDate:
         type: string
         example: 'yyyy-MM-dd,hh:mm a'
@@ -641,34 +108,14 @@ definitions:
         description: Not required. If empty default to false
       hiatus:
         type: array
-        description: Array or date ranges or single dates for the Flight Dates exclusion
         items:
-          type: object
-          title: DateRange
-          properties:
-            endDate:
-              type: string
-              format: date
-              description: End date of the hiatus period in yyyy-MM-dd format
-            startDate:
-              type: string
-              format: date
-              description: Start date of the hiatus period in yyyy-MM-dd format
-          x-examples:
-            Hiatus:
-              startDate: '2021-09-27'
-              endDate: '2021-10-03'
+          $ref: '#/definitions/Hiatus'
       marketPlaceId:
         type: string
         description: AOS Identifier for the Marketplace MRD
         example: 5e2540844d9c00600d5a000a
       orderType:
-        type: object
-        title: OrderType
-        properties:
-          id:
-            type: string
-            description: AOS ID of the Order Type MRD
+        $ref: '#/definitions/OrderType'
       planClassId:
         type: string
         description: AOS ID of the Planclass MRD
@@ -690,20 +137,7 @@ definitions:
       ratecard:
         type: array
         items:
-          type: object
-          title: RateCard
-          properties:
-            asOfDate:
-              type: string
-              format: date
-            channel:
-              type: string
-              description: AOS ID of the Channel - Station MRD. Must be one of the channels selected for the plan header
-            id:
-              type: string
-              description: AOS ID  for the Ratecard in URC
-            revision:
-              type: number
+          $ref: '#/definitions/RateCard'
       ratingStreamId:
         type: string
         description: AOS ID of the rating stream MRD
@@ -718,11 +152,22 @@ definitions:
         description: Not required. If empty default to generated version name
     required:
       - platform
-    x-tags:
-      - plan-header-external-controller
   Agency:
     type: object
     title: Agency
+    x-examples:
+      agency:
+        id: 5dee39514d9c000a905b421e
+        name: Ally Bank
+        commission: 15
+        roles:
+          - Buying
+          - Paying
+          - Billing
+        contact: 5e84eadd4d9c0030cf34641e
+        address: '1111 St Gregory Street,UNITED STATES,OH,Cincinnati,45202'
+        startDate: '2020-04-15'
+        endDate: '2020-05-31'
     properties:
       address:
         type: string
@@ -731,13 +176,8 @@ definitions:
         type: string
         description: Not required. If empty will default from the MDM Agency
       contact:
-        type: object
-        properties:
-          id:
-            type: string
-            description: AOS ID of the agency contact MDM. Not required. If empty default to the primary contact for the agency in MDM
-        title: Contact
-      effectiveDate:
+        $ref: '#/definitions/Contact'
+      startDate:
         type: string
         format: date
       id:
@@ -748,10 +188,11 @@ definitions:
         description: Not required. If empty default to Buying
         items:
           type: string
+      endDate:
+        type: string
     required:
       - id
-    x-examples:
-      example-1: {}
+    description: ''
   Channel:
     type: object
     title: Channel
@@ -759,32 +200,14 @@ definitions:
       Channel:
         id: C4gyuWfTQZ-BtJLmLZE_rA
         isPrimary: true
-        hhPostBuyId: null
-        demoPostBuyId: null
-        division: null
-        subDivision: null
-        primary: true
     properties:
       id:
         type: string
         description: AOS Identifier of the Channels - Stations MRD
         example: '5e2540844d9c00600d5a000a, C4gyuWfTQZ-BtJLmLZE_rA'
-      demoPostBuyId:
-        type: string
-        description: Not required. If empty default from Station MRD
-      division:
-        description: Not required. If empty defaul from Primary Channel - Station MRD
-        type: string
-      hhPostBuyId:
-        type: string
-        description: Not required. If empty default from Station MRD
       isPrimary:
         type: string
         description: ''
-      subDivision:
-        type: string
-        description: |
-          AOS ID of Subdivision. If empty default from the Channel - Station on MRD
     required:
       - id
       - isPrimary
@@ -798,11 +221,6 @@ definitions:
       postby:
         type: boolean
         description: Seams too early for postbuy - this is plan only ???
-      metrics:
-        type: array
-        description: Is this a leftover from local?
-        items:
-          type: string
       isPrimary:
         type: boolean
       edi:
@@ -818,6 +236,7 @@ definitions:
       asOfDate:
         type: string
         format: date
+        description: Find all ratecards that were published to use in planning as of the date specified
       channel:
         type: string
         description: AOS ID of the Channel - Station MRD. Must be one of the channels selected for the plan header
@@ -826,6 +245,7 @@ definitions:
         description: AOS ID  for the Ratecard in URC
       revision:
         type: number
+        description: Ratecard revision.
   GenericResponse:
     type: object
     properties:
@@ -921,17 +341,10 @@ definitions:
         startDate: '2021-08-10'
         endDate: '2022-07-12'
         split: 100
-        role: null
-        title: ae
+        role: ae
         effectiveDate: '2021-08-10'
     description: Account Executives for the Plan
     properties:
-      effectiveDate:
-        type: string
-        default: If empty default to the Flight Start date
-        description: Not required. If empty default the Flight Start date
-        format: date
-        example: '2020-04-13'
       endDate:
         type: string
         default: If empty default the Flight End date
@@ -943,10 +356,10 @@ definitions:
         description: if empty then API needs to assigned AOS User ID else TBD if email is ok for PITCH
       isPrimary:
         type: boolean
-        description: If empty then API needs to assigned AOS User ID else TBD if email is ok
+        description: Required
       role:
         type: string
-        description: AOS ID of the Account Executive role in UM
+        description: AOS ID of the Sales position in MRD
       split:
         type: number
         description: 'Not required. If empty default to 100%'
@@ -954,9 +367,6 @@ definitions:
         type: string
         format: date
         description: Not required If empty default to Flight Start Date
-      title:
-        type: string
-        description: 'Looks like it is hardcoded: AE, Planner, Sales Assistant'
     required:
       - id
   Calendar:
@@ -978,16 +388,18 @@ definitions:
         type: string
         description: AOS ID of the agency contact MDM. Not required. If empty default to the primary contact for the agency in MDM
     title: Contact
+    x-examples:
+      example-1: {}
   OrderType:
     type: object
     title: OrderType
     properties:
       id:
         type: string
-        description: AOS ID of the Order Type MRD
+        description: Not required. AOS ID of the Order Type MRD
   Hiatus:
     type: object
-    title: DateRange
+    title: Hiatus
     properties:
       endDate:
         type: string
@@ -1004,17 +416,22 @@ definitions:
   Advertiser:
     type: object
     title: Advertiser
+    x-examples:
+      'Advertiser ':
+        id: 5e2540844d9c00600d5a000a
+        advCategory: null
+        advSecCategory: null
     properties:
       id:
         type: string
         description: AOS ID for the Advertiser in MDM
+      advCategory:
+        type: string
+        description: 'Not required. AOS ID of the Primary industry category of the Advertiser. '
+      advSecCategory:
+        type: string
+        description: 'Not required. AOS ID of the secondary industry category of the Advertiser. '
     required:
       - id
-    x-examples:
-      'Advertiser ':
-        id: 5e2540844d9c00600d5a000a
-        advContact: null
-        advCategory: null
-        advSecCategory: null
-        advBrand: null
-        advAddress: null
+schemes:
+  - https

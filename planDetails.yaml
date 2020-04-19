@@ -211,8 +211,7 @@ definitions:
         items:
           $ref: '#/definitions/RateCard'
       ratingStreamId:
-        type: string
-        description: AOS ID of the rating stream MRD
+        $ref: '#/definitions/LabelKey'
       externalSystemId:
         type: string
       flightStartDate:

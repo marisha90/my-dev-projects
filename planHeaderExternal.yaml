@@ -1024,3 +1024,5 @@ definitions:
         advSecCategory: null
         advBrand: null
         advAddress: null
+schemes:
+  - https

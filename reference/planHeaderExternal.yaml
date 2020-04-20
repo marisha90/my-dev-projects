@@ -68,8 +68,10 @@ definitions:
         items:
           $ref: '#/definitions/AccountExecutive'
       advertiserId:
-        type: string
+        type: array
         description: AOS ID of the Advertiser
+        items:
+          type: string
       agencies:
         type: array
         description: Data object the contains Agency attributes
@@ -99,7 +101,7 @@ definitions:
         type: string
         example: yyyy-MM-dd
         description: End date of the Plan flight
-      endPeriod:
+      endPeriodId:
         type: string
         description: AOS ID from the Calendar period in MRD. If empty default to the period for the flight end date
       equivalized:
@@ -120,7 +122,7 @@ definitions:
         type: string
         description: AOS Identifier for the Marketplace MRD
         example: 5e2540844d9c00600d5a000a
-      orderType:
+      orderTypeId:
         type: string
         description: AOS ID of the order type - MRD
       planClassId:
@@ -154,18 +156,12 @@ definitions:
         type: string
         example: yyyy-MM-dd
         description: End date of the Plan flight
-      startPeriod:
+      startPeriodId:
         type: string
         description: AOS ID from the Calendar period in MRD. If empty default to the period for the flight start date
       versionName:
         type: string
         description: Not required. If empty default to generated version name
-      division:
-        type: string
-        description: Attribute for groupping and reporting of the plans
-      subDivision:
-        type: string
-        description: Additional attribute for groupping and classifications of the Plans
     required:
       - platform
   Agency:
@@ -184,6 +180,7 @@ definitions:
         address: '1111 St Gregory Street,UNITED STATES,OH,Cincinnati,45202'
         startDate: '2020-04-15'
         endDate: '2020-05-31'
+    description: Data object the contains Agency attributes
     properties:
       address:
         type: string
@@ -192,7 +189,7 @@ definitions:
         type: string
         description: Not required. If empty will default from the MDM Agency
       contact:
-        $ref: '#/definitions/Contact'
+        type: string
       startDate:
         type: string
         format: date
@@ -208,7 +205,6 @@ definitions:
         type: string
     required:
       - id
-    description: Data object the contains Agency attributes
   Channel:
     type: object
     title: Channel
@@ -218,6 +214,7 @@ definitions:
         isPrimary: true
         demoPostBuyId: null
         hhPostBuyID: null
+    description: Data object the contains Chhannel attributes
     properties:
       id:
         type: string
@@ -232,10 +229,13 @@ definitions:
       hhPostBuyId:
         type: string
         description: "Not required. Will be defaulted from the channel. \nAOS ID of the Projection methodology MRD. Will be used to estimate audience delivery for household demo"
+      division:
+        type: string
+      subDivision:
+        type: string
     required:
       - id
       - isPrimary
-    description: Data object the contains Chhannel attributes
   Demo:
     type: object
     title: Demo
@@ -397,16 +397,6 @@ definitions:
         description: Not required If empty default to Flight Start Date
     required:
       - id
-  Contact:
-    type: object
-    properties:
-      id:
-        type: string
-        description: AOS ID of the agency contact MDM. Not required. If empty default to the primary contact for the agency in MDM
-    title: Contact
-    x-examples:
-      example-1: {}
-    description: ''
   Hiatus:
     type: object
     title: Hiatus

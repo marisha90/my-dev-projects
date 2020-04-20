@@ -431,7 +431,9 @@ definitions:
   PlanDTO:
     type: object
     title: PlanDTO
-    description: ''
+    description: Data object that contains information about Plan header.
+    x-tags:
+      - plan-header-external-controller
     properties:
       accountExecutives:
         type: array
@@ -493,12 +495,6 @@ definitions:
         items:
           type: object
           title: Advertiser
-          properties:
-            id:
-              type: string
-              description: AOS ID for the Advertiser in MDM
-          required:
-            - id
           x-examples:
             'Advertiser ':
               id: 5e2540844d9c00600d5a000a
@@ -507,11 +503,19 @@ definitions:
               advSecCategory: null
               advBrand: null
               advAddress: null
+          properties:
+            id:
+              type: string
+              description: AOS ID for the Advertiser in MDM
+          required:
+            - id
       agencies:
         type: array
         items:
           type: object
           title: Agency
+          x-examples:
+            example-1: {}
           properties:
             address:
               type: string
@@ -521,11 +525,11 @@ definitions:
               description: Not required. If empty will default from the MDM Agency
             contact:
               type: object
+              title: Contact
               properties:
                 id:
                   type: string
                   description: AOS ID of the agency contact MDM. Not required. If empty default to the primary contact for the agency in MDM
-              title: Contact
             effectiveDate:
               type: string
               format: date
@@ -539,20 +543,18 @@ definitions:
                 type: string
           required:
             - id
-          x-examples:
-            example-1: {}
       calendar:
         type: object
         title: Calendar
+        x-examples:
+          Calendar:
+            id: mP4l347WQNC-5qJgzCsNag
         properties:
           id:
             type: string
             description: AOS ID of the Calendar
         required:
           - id
-        x-examples:
-          Calendar:
-            id: mP4l347WQNC-5qJgzCsNag
       channel:
         type: array
         items:
@@ -597,6 +599,7 @@ definitions:
         example: 5e8e2d72139410153f740e0b
       demo:
         type: array
+        description: Data object that contains attributes of a demo
         items:
           type: object
           title: Demo
@@ -627,7 +630,8 @@ definitions:
       flightEndDate:
         type: string
         example: yyyy-MM-dd
-      endPeriod:
+        description: End of flight date for a Plan
+      endPeriodId:
         type: string
         description: AOS ID from the Calendar period in MRD. If empty default to the period for the flight end date
       equivalized:
@@ -645,6 +649,10 @@ definitions:
         items:
           type: object
           title: DateRange
+          x-examples:
+            Hiatus:
+              startDate: '2021-09-27'
+              endDate: '2021-10-03'
           properties:
             endDate:
               type: string
@@ -654,10 +662,6 @@ definitions:
               type: string
               format: date
               description: Start date of the hiatus period in yyyy-MM-dd format
-          x-examples:
-            Hiatus:
-              startDate: '2021-09-27'
-              endDate: '2021-10-03'
       marketPlaceId:
         type: string
         description: AOS Identifier for the Marketplace MRD
@@ -710,7 +714,7 @@ definitions:
       flightStartDate:
         type: string
         example: yyyy-MM-dd
-      startPeriod:
+      startPeriodId:
         type: string
         description: AOS ID from the Calendar period in MRD. If empty default to the period for the flight start date
       versionName:
@@ -718,11 +722,20 @@ definitions:
         description: Not required. If empty default to generated version name
     required:
       - platform
-    x-tags:
-      - plan-header-external-controller
   Agency:
     type: object
     title: Agency
+    x-examples:
+      Agency:
+        id: 5e8c31c34d9c001b67658d37
+        name: Best Buying Agency
+        commission: '15'
+        roles:
+          - BY
+        contact: 5e8c31c34d9cqwer67658d37
+        address: null
+        effectiveDate: '2020-08-15'
+    description: Data object that contains attributes of a Buying Agency on a Plan
     properties:
       address:
         type: string
@@ -731,15 +744,13 @@ definitions:
         type: string
         description: Not required. If empty will default from the MDM Agency
       contact:
-        type: object
-        properties:
-          id:
-            type: string
-            description: AOS ID of the agency contact MDM. Not required. If empty default to the primary contact for the agency in MDM
+        type: string
         title: Contact
-      effectiveDate:
+        description: AOS ID of the contact person - UM
+      startDate:
         type: string
         format: date
+        description: 'Start Date for an Agency to be assigned to a Plan. Not required. If empty, flight start date will be used'
       id:
         type: string
         description: AOS ID for the Agency MDM
@@ -748,10 +759,11 @@ definitions:
         description: Not required. If empty default to Buying
         items:
           type: string
+      endDate:
+        type: string
+        description: 'End Date for an Agency to be assigned to a Plan. Not required. If empty, flight end date will be used'
     required:
       - id
-    x-examples:
-      example-1: {}
   Channel:
     type: object
     title: Channel

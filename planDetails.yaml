@@ -116,7 +116,7 @@ definitions:
       revision:
         type: number
     title: Plan
-    description: Data object that contains audit information about a Plan revision
+    description: Data object that contains audit information about a Plan
   PlanHeader:
     type: object
     title: PlanHeader
@@ -136,8 +136,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Agency'
-      approvalStatus:
-        type: string
       calendar:
         $ref: '#/definitions/Calendar'
       channel:
@@ -152,8 +150,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Demo'
-      division:
-        $ref: '#/definitions/Division'
       dueDate:
         type: string
         example: 'yyyy-MM-dd,hh:mm a'
@@ -175,10 +171,8 @@ definitions:
           $ref: '#/definitions/DateRange'
       marketPlace:
         $ref: '#/definitions/marketPlace'
-      onAirId:
-        type: string
-      operativeOneId:
-        type: string
+      externalTrafficSystem:
+        $ref: '#/definitions/LabelKey'
       orderType:
         $ref: '#/definitions/OrderType'
       planClass:
@@ -195,13 +189,6 @@ definitions:
           - LINEAR
           - DIGITAL
           - CONVERGED
-      primaryVersion:
-        $ref: '#/definitions/Version'
-      primaryVersionId:
-        type: integer
-        format: int64
-      primaryVersionName:
-        type: string
       ratecard:
         type: array
         items:
@@ -216,12 +203,6 @@ definitions:
         example: '2020-09-30'
       startPeriod:
         $ref: '#/definitions/Period'
-      subdivision:
-        $ref: '#/definitions/Division'
-      teams:
-        type: array
-        items:
-          $ref: '#/definitions/Team'
       templateId:
         type: string
       versions:
@@ -247,6 +228,7 @@ definitions:
         contact: null
         address: null
         effectiveDate: '2020-04-17'
+    description: Data object that contains attribute of the agencies assigned to the plan.
     properties:
       address:
         $ref: '#/definitions/LabelKey'
@@ -255,7 +237,7 @@ definitions:
         description: Not required. If empty then default from the MDM Agency
       contact:
         $ref: '#/definitions/Contact'
-      effectiveDate:
+      startDate:
         type: string
         format: date
       id:
@@ -266,7 +248,8 @@ definitions:
         description: 'Roles assigned to the agencies. Options are: Buying, Paying and Billing'
         items:
           type: string
-    description: Data object that contains attribute of the agencies assigned to the plan.
+      endDate:
+        type: string
   Channel:
     type: object
     title: Channel
@@ -290,8 +273,6 @@ definitions:
         type: string
       isPrimary:
         type: boolean
-      ratingStream:
-        type: string
       hhPostBuyId:
         type: string
       hhPostBuyName:
@@ -300,6 +281,10 @@ definitions:
         type: string
       demoPostBuyName:
         type: string
+      Division:
+        $ref: '#/definitions/Division'
+      subDivision:
+        $ref: '#/definitions/LabelKey'
   Demo:
     type: object
     title: Demo
@@ -420,40 +405,13 @@ definitions:
         description: Account executive name
   Calendar:
     type: object
+    title: Calendar
     properties:
-      calendarBase:
-        type: string
-      calendarDefinitions:
-        type: array
-        items:
-          $ref: '#/definitions/CalendarDefinition'
-      endDate:
-        type: string
       id:
         type: string
         description: AOS ID of the Calendar
       name:
         type: string
-      periodBreakdown:
-        type: string
-      startDate:
-        type: string
-    title: Calendar
-  CalendarDefinition:
-    type: object
-    properties:
-      endDate:
-        type: string
-      periodDisplayName:
-        type: string
-      periodName:
-        type: string
-      startDate:
-        type: string
-      year:
-        type: integer
-        format: int32
-    title: CalendarDefinition
   LabelKey:
     type: object
     properties:
@@ -464,11 +422,13 @@ definitions:
     title: LabelKey
   Contact:
     type: object
+    title: Contact
     properties:
       id:
         type: string
         description: AOS ID of the agency contact MDM. Not required. If empty default to the primary contact for the agency in MDM
-    title: Contact
+      name:
+        type: string
   OrderType:
     type: object
     properties:
@@ -569,26 +529,13 @@ definitions:
       - id
   Team:
     type: object
-    properties:
-      aeName:
-        $ref: '#/definitions/User'
-      assistent:
-        $ref: '#/definitions/User'
-      effectiveDate:
-        type: string
-        format: date
-      id:
-        type: string
-      isdefault:
-        type: boolean
-      location:
-        $ref: '#/definitions/LabelKey'
-      name:
-        type: string
-      planner:
-        $ref: '#/definitions/User'
     title: Team
     description: Object that contains information about the team that is managing a Plan.
+    properties:
+      id:
+        type: string
+      name:
+        type: string
   DemoValues:
     type: object
     title: DemoValues

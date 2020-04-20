@@ -49,6 +49,64 @@ paths:
           schema:
             $ref: '#/definitions/Plan'
       deprecated: false
+    post:
+      tags:
+        - plan-header-workspace_external-controller
+      summary: Get plan products
+      description: Get All Plan products
+      operationId: getPlanProducts
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization
+          required: true
+          type: string
+        - name: apiKey
+          in: path
+          description: apiKey
+          required: true
+          type: string
+        - in: body
+          name: filter
+          description: filter
+          required: false
+          schema:
+            $ref: '#/definitions/WorkspaceFilter'
+        - name: pageNo
+          in: query
+          description: pageNo
+          required: false
+          type: integer
+          format: int32
+        - name: pageSize
+          in: query
+          description: pageSize
+          required: false
+          type: integer
+          format: int32
+        - name: planId
+          in: path
+          description: planId
+          required: true
+          type: string
+        - name: version
+          in: query
+          description: version
+          required: false
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              $ref: '#/definitions/PlanProduct'
+      deprecated: false
   '/v1/{apiKey}/plan/{planId}/workspace/spots':
     get:
       tags:
@@ -724,5 +782,399 @@ definitions:
       name:
         type: string
     title: customFields
+  WorkspaceFilter:
+    type: object
+    properties:
+      arrayFilter:
+        type: object
+        additionalProperties:
+          type: array
+          items:
+            type: string
+      demoProjection:
+        type: string
+      nonArrayFilter:
+        type: object
+        additionalProperties:
+          type: string
+      weekStartDateProjections:
+        type: array
+        items:
+          type: string
+    title: WorkspaceFilter
+  PlanProduct:
+    type: object
+    properties:
+      id:
+        type: string
+      planId:
+        type: string
+      planProductRefId:
+        type: string
+      productDetail:
+        $ref: '#/definitions/ProductDetail'
+      version:
+        type: integer
+        format: int64
+    title: PlanProduct
+  ProductDetail:
+    type: object
+    properties:
+      advtExclusions:
+        type: array
+        items:
+          $ref: '#/definitions/AdvertiserExclusion'
+      airingTypeId:
+        type: string
+      bccNum:
+        type: number
+        format: double
+      categoryExclusions:
+        type: array
+        items:
+          $ref: '#/definitions/CategoryExclusion'
+      commercialType:
+        type: array
+        items:
+          $ref: '#/definitions/CommercialType'
+      dayAndTime:
+        $ref: '#/definitions/DayAndTimeTO'
+      daypartIds:
+        type: array
+        items:
+          type: string
+      daysOfWeekSortOrder:
+        type: integer
+        format: int32
+      description:
+        type: string
+      division:
+        $ref: '#/definitions/Division'
+      divisionId:
+        type: string
+      excludeROSSpots:
+        type: boolean
+      exclusivities:
+        type: array
+        items:
+          $ref: '#/definitions/Exclusivity'
+      firstTelecast:
+        type: string
+        format: date
+      fullMarketFootPrint:
+        type: string
+      fullStationFootPrint:
+        type: boolean
+      genreId:
+        type: string
+      groupId:
+        type: integer
+        format: int64
+      hiatusDates:
+        type: array
+        items:
+          $ref: '#/definitions/HiatusDateTO'
+      historicalReference:
+        type: string
+      lastPublishedDate:
+        type: string
+        format: date-time
+      lastTelecast:
+        type: string
+        format: date
+      orderNumber:
+        type: integer
+        format: int64
+      planClassIds:
+        type: array
+        items:
+          type: string
+      platform:
+        type: string
+        enum:
+          - Linear
+          - Non-Linear
+      primaryDaypartId:
+        type: string
+      productCategoryId:
+        type: string
+      productId:
+        type: string
+      productName:
+        type: string
+      productSetId:
+        type: string
+      quarters:
+        type: array
+        items:
+          type: string
+      restrictTimeEnabled:
+        type: boolean
+      scopeDetail:
+        $ref: '#/definitions/ScopeDetail'
+      scopeTypeId:
+        type: string
+      startTimeSortOrder:
+        type: number
+        format: double
+      stationId:
+        type: string
+      status:
+        type: string
+      tagIds:
+        type: array
+        items:
+          type: string
+      telecastDate:
+        $ref: '#/definitions/TelecastDateTO'
+      telecastStDateSortOrder:
+        type: integer
+        format: int32
+      templateId:
+        type: string
+      templateName:
+        type: string
+    title: ProductDetail
+  ScopeDetail:
+    type: object
+    properties:
+      dateExclusions:
+        type: array
+        items:
+          $ref: '#/definitions/DateExclusion'
+      scopes:
+        type: array
+        items:
+          $ref: '#/definitions/Scope'
+    title: ScopeDetail
+  TelecastDateTO:
+    type: object
+    properties:
+      firstTelecastDate:
+        type: string
+        format: date
+        description: First Telecast Date
+      lastTelecastDate:
+        type: string
+        format: date
+        description: Last Telecast Date
+    title: TelecastDateTO
+  Scope:
+    type: object
+    properties:
+      daysAndTime:
+        $ref: '#/definitions/DayAndTimeTO'
+      incl:
+        type: boolean
+      limitEvent:
+        type: boolean
+      live:
+        type: boolean
+      program:
+        $ref: '#/definitions/Program'
+      telecastDate:
+        $ref: '#/definitions/TelecastDateTO'
+    title: Scope
+  Program:
+    type: object
+    required:
+      - id
+      - name
+    properties:
+      episodes:
+        type: array
+        items:
+          $ref: '#/definitions/Episode'
+      id:
+        type: string
+        description: Program Id
+      name:
+        type: string
+        description: Program name
+    title: Program
+  AdvertiserExclusion:
+    type: object
+    properties:
+      advertiser:
+        $ref: '#/definitions/Advertiser'
+      dateRange:
+        $ref: '#/definitions/DateRange'
+    title: AdvertiserExclusion
+  CategoryExclusion:
+    type: object
+    properties:
+      category:
+        $ref: '#/definitions/Category'
+      dateRange:
+        $ref: '#/definitions/DateRange'
+    title: CategoryExclusion
+  CommercialType:
+    type: object
+    required:
+      - id
+      - name
+    properties:
+      id:
+        type: string
+        description: CommercialType Id
+      name:
+        type: string
+        description: CommercialType name
+    title: CommercialType
+  Category:
+    type: object
+    required:
+      - id
+      - name
+    properties:
+      id:
+        type: string
+        description: Category Id
+      name:
+        type: string
+        description: Category name
+      subCategories:
+        type: array
+        items:
+          $ref: '#/definitions/SubCategory'
+    title: Category
+  SubCategory:
+    type: object
+    required:
+      - id
+      - name
+    properties:
+      id:
+        type: string
+        description: SubCategory Id
+      name:
+        type: string
+        description: SubCategory name
+      subSubCategories:
+        type: array
+        items:
+          $ref: '#/definitions/SubSubCategory'
+    title: SubCategory
+  SubSubCategory:
+    type: object
+    required:
+      - id
+      - name
+    properties:
+      id:
+        type: string
+        description: SubSubCategory Id
+      name:
+        type: string
+        description: SubSubCategory name
+    title: SubSubCategory
+  DayAndTimeTO:
+    type: object
+    required:
+      - dayAndTime
+      - endTime
+      - startTime
+    properties:
+      crossOver:
+        type: boolean
+      dayAndTime:
+        type: string
+        description: Day And Time
+      daysOfWeek:
+        type: array
+        description: daysOfWeek
+        items:
+          type: string
+          enum:
+            - M
+            - Tu
+            - W
+            - Th
+            - F
+            - Sa
+            - Su
+      displayDow:
+        type: string
+      displayEndTime:
+        type: string
+      displayStartTime:
+        type: string
+      dowOrder:
+        type: integer
+        format: int32
+      endGreaterThanBST:
+        type: boolean
+      endLessThanBST:
+        type: boolean
+      endTime:
+        type: string
+        description: End Time
+      estEndTime:
+        type: string
+      estStartTime:
+        type: string
+      shifted:
+        type: boolean
+      startGreaterThanBET:
+        type: boolean
+      startLessThanBET:
+        type: boolean
+      startTime:
+        type: string
+        description: Start Time
+      timeOrder:
+        $ref: '#/definitions/TimeOrder'
+    title: DayAndTimeTO
+  Exclusivity:
+    type: object
+    properties:
+      advertiser:
+        $ref: '#/definitions/Advertiser'
+      category:
+        $ref: '#/definitions/Category'
+      dateRange:
+        $ref: '#/definitions/DateRange'
+    title: Exclusivity
+  HiatusDateTO:
+    type: object
+    properties:
+      endDate:
+        type: string
+        format: date
+        description: End Date
+      startDate:
+        type: string
+        format: date
+    title: HiatusDateTO
+  TimeOrder:
+    type: object
+    properties:
+      lowerbound:
+        type: number
+        format: double
+        description: lower bound order
+      upperbound:
+        type: number
+        format: double
+        description: upper bound order
+    title: TimeOrder
+  DateExclusion:
+    type: object
+    properties:
+      commercialType:
+        $ref: '#/definitions/CommercialType'
+      exclusionType:
+        type: string
+      hiatusDate:
+        $ref: '#/definitions/HiatusDateTO'
+    title: DateExclusion
+  Episode:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    title: Episode
 schemes:
   - https

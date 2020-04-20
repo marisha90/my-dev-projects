@@ -172,7 +172,7 @@ definitions:
       marketPlace:
         $ref: '#/definitions/marketPlace'
       externalTrafficSystem:
-        $ref: '#/definitions/LabelKey'
+        $ref: '#/definitions/externalTrafficSystem'
       orderType:
         $ref: '#/definitions/OrderType'
       planClass:
@@ -212,7 +212,7 @@ definitions:
       customFields:
         type: array
         items:
-          $ref: '#/definitions/LabelKey'
+          $ref: '#/definitions/customFields'
   Agency:
     type: object
     title: Agency
@@ -231,7 +231,7 @@ definitions:
     description: Data object that contains attribute of the agencies assigned to the plan.
     properties:
       address:
-        $ref: '#/definitions/LabelKey'
+        type: string
       commission:
         type: string
         description: Not required. If empty then default from the MDM Agency
@@ -284,7 +284,7 @@ definitions:
       Division:
         $ref: '#/definitions/Division'
       subDivision:
-        $ref: '#/definitions/LabelKey'
+        $ref: '#/definitions/subDivision'
   Demo:
     type: object
     title: Demo
@@ -395,11 +395,8 @@ definitions:
         type: string
         format: date
         description: Not required If empty default to Flight Start Date
-      teamId:
-        type: string
-        description: AOS ID of a Sales Team
-      teamName:
-        type: string
+      team:
+        $ref: '#/definitions/Team'
       name:
         type: string
         description: Account executive name
@@ -412,14 +409,14 @@ definitions:
         description: AOS ID of the Calendar
       name:
         type: string
-  LabelKey:
+  subDivision:
     type: object
     properties:
       id:
         type: string
       name:
         type: string
-    title: LabelKey
+    title: subDivision
   Contact:
     type: object
     title: Contact
@@ -711,5 +708,21 @@ definitions:
       name:
         type: string
     title: ratingStream
+  externalTrafficSystem:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    title: externalTrafficSystem
+  customFields:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    title: customFields
 schemes:
   - https

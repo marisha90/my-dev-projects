@@ -88,13 +88,13 @@ paths:
             additionalProperties:
               $ref: '#/definitions/PlanWorkspaceProduct'
       deprecated: false
-  '/v1/{apiKey}/plan/{planId}/workspace/summary/quarter':
+  '/v1/{apiKey}/plan/{planId}/workspace/summary/period':
     post:
       tags:
         - plan-header-workspace_external-controller
-      summary: Get quarterly summary per demo
-      description: Get line totals per quarter per demo
-      operationId: getQuarterlySummarybyDemo
+      summary: Get period summary per demo
+      description: Get line totals per period per demo
+      operationId: getPeriodSummarybyDemo
       consumes:
         - application/json
       produces:
@@ -116,11 +116,11 @@ paths:
           required: true
           type: string
         - in: body
-          name: quarterTotalRequest
-          description: quarterTotalRequest
+          name: periodTotalRequest
+          description: periodTotalRequest
           required: false
           schema:
-            $ref: '#/definitions/QuarterTotalRequest'
+            $ref: '#/definitions/PeriodTotalRequest'
       responses:
         '200':
           description: OK
@@ -713,29 +713,32 @@ definitions:
     title: customFields
   PlanWorkspaceProduct:
     type: object
+    title: PlanWorkspaceProduct
+    description: ''
     properties:
-      channelId:
-        type: string
-      commercialTypeId:
-        type: string
+      channel:
+        $ref: '#/definitions/Channel'
+      commercialType:
+        $ref: '#/definitions/CommercialType'
       lineClassAttributes:
         $ref: '#/definitions/LineClassAttributes'
-      lineClassId:
-        type: string
+      lineClass:
+        $ref: '#/definitions/LineClass'
       lineId:
         type: string
       lineNo:
         type: integer
         format: int64
       planProductId:
-        type: string
+        $ref: ''
       productId:
         type: string
-      ratecardId:
-        type: string
-      spotLengthId:
-        type: string
-    title: PlanWorkspaceProduct
+      ratecard:
+        $ref: '#/definitions/RateCard'
+      spotLength:
+        $ref: '#/definitions/SpotLength'
+      daypart:
+        $ref: '#/definitions/daypart'
   LineClassAttributes:
     type: object
     properties:
@@ -748,16 +751,16 @@ definitions:
       planRate:
         type: boolean
     title: LineClassAttributes
-  QuarterTotalRequest:
+  PeriodTotalRequest:
     type: object
+    title: PeriodTotalRequest
     properties:
       lineIds:
         type: array
         items:
           type: string
-      quarter:
+      period:
         type: string
-    title: QuarterTotalRequest
   PlanTotalDTO:
     type: object
     properties:
@@ -778,5 +781,46 @@ definitions:
       week:
         type: string
     title: PlanTotalDTO
+  CommercialType:
+    type: object
+    required:
+      - id
+      - name
+    properties:
+      id:
+        type: string
+        description: CommercialType Id
+      name:
+        type: string
+        description: CommercialType name
+    title: CommercialType
+  LineClass:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    title: LineClass
+  SpotLength:
+    type: object
+    properties:
+      id:
+        type: string
+      ratingsRatio:
+        type: string
+      ratio:
+        type: string
+      spotDisplayName:
+        type: string
+    title: SpotLength
+  daypart:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    title: daypart
 schemes:
   - https

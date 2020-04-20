@@ -190,6 +190,7 @@ definitions:
         description: Not required. If empty will default from the MDM Agency
       contact:
         type: string
+        description: AOS ID of the Contact person - UM
       startDate:
         type: string
         format: date

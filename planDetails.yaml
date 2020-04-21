@@ -731,8 +731,8 @@ definitions:
         format: int64
       planProductId:
         $ref: ''
-      productId:
-        type: string
+      product:
+        $ref: '#/definitions/product'
       ratecard:
         $ref: '#/definitions/RateCard'
       spotLength:
@@ -763,6 +763,7 @@ definitions:
         type: string
   PlanTotalDTO:
     type: object
+    title: PlanTotalDTO
     properties:
       channelId:
         type: string
@@ -774,13 +775,13 @@ definitions:
         type: string
       planId:
         type: string
-      quarter:
-        type: string
+      period:
+        $ref: '#/definitions/Period'
       unitRates:
         $ref: '#/definitions/UnitRates'
       week:
         type: string
-    title: PlanTotalDTO
+    description: ''
   CommercialType:
     type: object
     required:
@@ -822,5 +823,13 @@ definitions:
       name:
         type: string
     title: daypart
+  product:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    title: product
 schemes:
   - https

@@ -1,0 +1,560 @@
+swagger: '2.0'
+info:
+  description: 'The API provides an opetion to get both Plan Header and Plan Lines for a given Plan ID. <br> versionHistory <br> -------------- <br> 20202-Apr-11 Marina Yurovsky - Version - 1.0.0. - Initial version.'
+  version: '1.0'
+  title: Plan Header and Workspace External API GET
+  contact:
+    name: API team
+    email: apiteam@operative.com
+  license:
+    name: Copyright 2020 Operative
+host: tvs-dev-gw.operativeone.com
+basePath: /external_planner
+tags:
+  - name: plan-header-workspace_external-controller
+    description: Plan Header and Workspalce External Controller
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  '/v1/{apiKey}/plan/planheader/{planId}':
+    get:
+      tags:
+        - plan-header-workspace_external-controller
+      summary: Get Plan Header
+      description: Get Plan Details with the given Plan Id
+      operationId: getPlanHeaderByPlanId
+      produces:
+        - '*/*'
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization
+          required: true
+          type: string
+        - name: apiKey
+          in: path
+          description: apiKey
+          required: true
+          type: string
+        - name: planId
+          in: path
+          description: planId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Plan'
+      deprecated: false
+definitions:
+  Plan:
+    type: object
+    properties:
+      createdBy:
+        $ref: '#/definitions/User'
+      createdDate:
+        type: string
+        format: date-time
+      header:
+        $ref: '#/definitions/PlanHeader'
+      id:
+        type: string
+      modifiedBy:
+        $ref: '#/definitions/User'
+      modifiedDate:
+        type: string
+        format: date-time
+      planId:
+        type: integer
+        format: int64
+      revision:
+        type: number
+    title: Plan
+    description: Data object that contains audit information about a Plan
+  PlanHeader:
+    type: object
+    title: PlanHeader
+    description: Data object that contains attributes of the Plan header
+    x-examples:
+      example-1: {}
+    properties:
+      accountExecutives:
+        type: array
+        items:
+          $ref: '#/definitions/AccountExecutive'
+      advertisers:
+        type: array
+        items:
+          $ref: '#/definitions/Advertiser'
+      agencies:
+        type: array
+        items:
+          $ref: '#/definitions/Agency'
+      calendar:
+        $ref: '#/definitions/Calendar'
+      channel:
+        type: array
+        items:
+          $ref: '#/definitions/Channel'
+      dealYearId:
+        type: array
+        items:
+          $ref: '#/definitions/DealYear'
+      demo:
+        type: array
+        items:
+          $ref: '#/definitions/Demo'
+      dueDate:
+        type: string
+        example: 'yyyy-MM-dd,hh:mm a'
+      flightEndDate:
+        type: string
+        format: date
+        example: '2020-04-17'
+      endPeriod:
+        $ref: '#/definitions/Period'
+      equivalised:
+        type: boolean
+      fluidity:
+        type: boolean
+      guaranteed:
+        type: boolean
+      hiatus:
+        type: array
+        items:
+          $ref: '#/definitions/DateRange'
+      marketPlace:
+        $ref: '#/definitions/marketPlace'
+      externalSourceSystem:
+        $ref: '#/definitions/externalSourceSystem'
+      orderType:
+        $ref: '#/definitions/OrderType'
+      planClass:
+        $ref: '#/definitions/planClass'
+      planName:
+        type: string
+      planNotes:
+        type: string
+      planStatus:
+        $ref: '#/definitions/PlanStatus'
+      platform:
+        type: string
+        enum:
+          - LINEAR
+          - DIGITAL
+          - CONVERGED
+      ratecard:
+        type: array
+        items:
+          $ref: '#/definitions/RateCard'
+      ratingStream:
+        $ref: '#/definitions/ratingStream'
+      flightStartDate:
+        type: string
+        format: date
+        example: '2020-09-30'
+      startPeriod:
+        $ref: '#/definitions/Period'
+      versions:
+        type: array
+        items:
+          $ref: '#/definitions/Version'
+      customFields:
+        type: array
+        items:
+          $ref: '#/definitions/customFields'
+  Agency:
+    type: object
+    title: Agency
+    x-examples:
+      Agency:
+        id: 5ddf63114d9c003405f35df3
+        name: "America's Health Insurance Plans"
+        commission: null
+        rolesData:
+          - BY
+        roles:
+          - Buying
+        contact: null
+        address: null
+        effectiveDate: '2020-04-17'
+    description: Data object that contains attribute of the agencies assigned to the plan.
+    properties:
+      address:
+        type: string
+      commission:
+        type: string
+        description: Not required. If empty then default from the MDM Agency
+      contact:
+        $ref: '#/definitions/Contact'
+      startDate:
+        type: string
+        format: date
+      id:
+        type: string
+        description: AOS ID for the Agency MDM
+      roles:
+        type: array
+        description: 'Roles assigned to the agencies. Options are: Buying, Paying and Billing'
+        items:
+          type: string
+      endDate:
+        type: string
+  Channel:
+    type: object
+    title: Channel
+    x-examples:
+      channel:
+        id: nEZkdsMzSmKkf1w8fBOpUw
+        name: Best TV
+        code: BTV
+        isPrimary: true
+        ratingStream: C3
+        hhPostBuyId: null
+        demoPostBuyId: null
+    properties:
+      id:
+        type: string
+        description: List of comma separated AOS Identifier of the Channels - Stations MRD
+        example: '5e2540844d9c00600d5a000a, C4gyuWfTQZ-BtJLmLZE_rA'
+      code:
+        type: string
+      name:
+        type: string
+      isPrimary:
+        type: boolean
+      hhPostBuyId:
+        type: string
+      hhPostBuyName:
+        type: string
+      demoPostBuyId:
+        type: string
+      demoPostBuyName:
+        type: string
+      Division:
+        $ref: '#/definitions/Division'
+      subDivision:
+        $ref: '#/definitions/subDivision'
+  Demo:
+    type: object
+    title: Demo
+    x-examples:
+      demo:
+        id: '11'
+        name: M18-32
+        isPrimary: true
+        edi: true
+        postby: true
+    properties:
+      id:
+        type: string
+        description: Comma separated list of AOS IDs for the Demographic. The first element in the list is an ID of the Primary Demo.
+      name:
+        type: string
+      isPrimary:
+        type: boolean
+      edi:
+        type: boolean
+      postBuy:
+        type: boolean
+  RateCard:
+    type: object
+    properties:
+      asOfDate:
+        type: string
+        format: date
+      channel:
+        $ref: '#/definitions/Channel'
+      id:
+        type: string
+      revision:
+        type: number
+      name:
+        type: string
+    title: RateCard
+    x-examples:
+      ratecard:
+        id: 5e8c69dd754aba7146e2a6de
+        name: 'IP Test RC Deportes Apr 07 2020 11:32:42 AM Apr 07 2020 11:54:05 AM'
+        channel:
+          id: Nou_azxVQs6uopaWpzH7Hg
+          name: Deportes
+          code: Deportes
+          isPrimary: false
+          ratingSource: null
+          ratingStream: null
+          hhPostBuyId: null
+          demoPostBuyId: null
+          division: null
+          subDivision: null
+          primary: false
+        asOfDate: '2020-04-15'
+        revision: 1
+  Period:
+    type: object
+    title: Period
+    x-examples:
+      period:
+        id: 4Q20
+        name: 4Q20
+    properties:
+      id:
+        type: string
+        description: AOS ID from the Calendar MRD. If empty default to the period for the flight end date
+      name:
+        type: string
+    description: Data object that contains attributes of a calendar period
+  AccountExecutive:
+    type: object
+    title: AccountExecutive
+    x-examples:
+      Account Exec:
+        name: API User
+        id: '2'
+        isPrimary: true
+        startDate: null
+        endDate: null
+        split: 100
+        role: null
+        title: ae
+        teamId: ''
+        teamName: ''
+        effectiveDate: null
+        primary: true
+    description: Data object contains information about Account exectives assigned to the Plan
+    properties:
+      endDate:
+        type: string
+        format: date
+        description: Not required. If empty default the Flight End date
+      id:
+        type: string
+        description: if empty then API needs to assigned AOS User ID else TBD if email is ok for PITCH
+      isPrimary:
+        type: boolean
+        description: true if Account Executive is Primary
+      role:
+        type: array
+        description: 'Sales Position of the Account Executive. For example: ae, sales planner, sales assistant'
+        items:
+          type: string
+      split:
+        type: number
+        description: 'Not required. If empty default to 100%'
+      startDate:
+        type: string
+        format: date
+        description: Not required If empty default to Flight Start Date
+      team:
+        $ref: '#/definitions/Team'
+      name:
+        type: string
+        description: Account executive name
+  Calendar:
+    type: object
+    title: Calendar
+    properties:
+      id:
+        type: string
+        description: AOS ID of the Calendar
+      name:
+        type: string
+  subDivision:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    title: subDivision
+  Contact:
+    type: object
+    title: Contact
+    properties:
+      id:
+        type: string
+        description: AOS ID of the agency contact MDM. Not required. If empty default to the primary contact for the agency in MDM
+      name:
+        type: string
+  OrderType:
+    type: object
+    properties:
+      id:
+        type: string
+        description: AOS ID of the order type MRD
+      name:
+        type: string
+    title: OrderType
+    x-examples:
+      order type:
+        id: default
+        name: default
+  DateRange:
+    type: object
+    properties:
+      endDate:
+        type: string
+        format: date
+      startDate:
+        type: string
+        format: date
+    title: DateRange
+    x-examples:
+      example-1: {}
+  User:
+    type: object
+    title: User
+    properties:
+      id:
+        type: string
+        description: AOS ID of a user in UM
+      name:
+        type: string
+        description: User Name
+      userId:
+        type: string
+  Version:
+    type: object
+    title: Version
+    description: Object that contains attributes of a Plan Version.
+    properties:
+      createdBy:
+        $ref: '#/definitions/User'
+      createdDate:
+        type: string
+        format: date-time
+        description: Date when the Plan version was created
+      id:
+        type: integer
+        format: int64
+      modifiedBy:
+        $ref: '#/definitions/User'
+      modifiedDate:
+        type: string
+        format: date-time
+        description: Date when a Plan version was last modified
+      name:
+        type: string
+        description: Plan Version name
+      primary:
+        type: boolean
+        description: True if for primary version of the plan
+  PlanStatus:
+    type: object
+    properties:
+      approvers:
+        type: array
+        items:
+          $ref: '#/definitions/User'
+      statusId:
+        type: string
+      statusName:
+        type: string
+    title: PlanStatus
+    x-examples:
+      plan status:
+        approvers:
+          - id: null
+            name: John Doe
+            userId: xxx@domain.com
+        statusId: Working
+        statusName: Working
+  Division:
+    type: object
+    title: Division
+    x-examples:
+      division:
+        id: xzxDdDspRRSafgUY8zs7bw
+        name: Entertainment
+    properties:
+      id:
+        type: string
+        description: AOS ID of the Division
+      name:
+        type: string
+    required:
+      - id
+  Team:
+    type: object
+    title: Team
+    description: Object that contains information about the team that is managing a Plan.
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+  Advertiser:
+    type: object
+    title: Advertiser
+    properties:
+      id:
+        type: string
+        description: AdvExclusion Id
+      name:
+        type: string
+        description: AdvExclusion name
+    x-examples:
+      advertiser:
+        id: 5dee3bae4d9c000a905b43ef
+        name: ACM Awards
+  DealYear:
+    type: object
+    title: DealYear
+    x-examples:
+      deal year:
+        id: pGEAriBjS_WjXyhOilJPTQ
+        name: 2020 DY
+        startDate: '2020-03-26'
+        endDate: '2021-03-01'
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+  marketPlace:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    title: marketPlace
+  ratingStream:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    title: ratingStream
+  externalSourceSystem:
+    type: object
+    title: externalSourceSystem
+    properties:
+      extSourceID:
+        type: string
+        description: AOS ID of the External Sysem
+      externalID:
+        type: string
+        description: 'Unique ID in the External system, like Opportunity ID'
+  customFields:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    title: customFields
+  planClass:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    title: planClass
+schemes:
+  - https

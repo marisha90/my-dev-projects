@@ -1,8 +1,8 @@
 swagger: '2.0'
 info:
-  description: 'The API provides an opetion to get Plan Lines for a given Plan ID. <br> versionHistory <br> -------------- <br> 20202-Apr-11 Marina Yurovsky - Version - 1.0.0. - Initial version.'
+  description: 'The API provides an option to get Plan Lines weekly summary by channel, daypart and demo for a given Plan ID. <br> versionHistory <br> -------------- <br> 20202-Apr-11 Marina Yurovsky - Version - 1.0.0. - Initial version.'
   version: '1.0'
-  title: Plan Workspace Weekly External API GET
+  title: Plan Details Weekly External API GET
   contact:
     name: API team
     email: apiteam@operative.com
@@ -24,7 +24,7 @@ paths:
         - plan-header-workspace_external-controller
       summary: Get weekly summary per demo
       description: Get line totals per week per demo
-      operationId: getPeriodSummarybyDemo
+      operationId: getWeeklySummarybyDemo
       consumes:
         - application/json
       produces:
@@ -98,14 +98,14 @@ definitions:
       period:
         id: '18675'
         name: 4Q20
-    description: Data object that contains attributes of a calendar period
+    description: 'Data object that contains attributes of a calendar period for the aggregation of weeks, like quarter'
     properties:
       id:
         type: string
-        description: AOS ID of the period for the week on the line -  Calendar MRD.
+        description: AOS ID of the period for aggregation of the weeks on the line -  Calendar MRD.
       name:
         type: string
-        description: Name of the calendar period
+        description: Name of the calendar period for the weeks aggregation
   DemoValues:
     type: object
     title: DemoValues
@@ -129,7 +129,7 @@ definitions:
       index:
         type: number
         format: double
-      nationalUe:
+      nationalUE:
         type: number
         format: double
         description: Estimated universe of all people subscribed to the channel
@@ -176,7 +176,7 @@ definitions:
   PlanTotalDTO:
     type: object
     title: PlanTotalDTO
-    description: ''
+    description: 'Data object that contains attributes of the Plan Line summarized by channel, daypart and week.'
     properties:
       channelId:
         $ref: '#/definitions/Channel'
@@ -184,14 +184,20 @@ definitions:
         type: object
         additionalProperties:
           $ref: '#/definitions/DemoValues'
+        description: Data object that contains demo attributes
       lineId:
         type: string
+        description: Plan Line ID
       planId:
         type: string
+        description: Plan ID
       unitRates:
         $ref: '#/definitions/UnitRates'
       week:
         type: string
+        description: Week start date.
+        format: date
+        example: '2020-04-19'
       daypart:
         $ref: '#/definitions/daypart'
       period:
@@ -207,5 +213,9 @@ definitions:
       name:
         type: string
         description: Daypart Name
+    x-examples:
+      daypart:
+        id: 5e8c31c34d9c001b67658d36
+        name: Prime
 schemes:
   - https

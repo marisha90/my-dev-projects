@@ -1,0 +1,427 @@
+swagger: '2.0'
+info:
+  description: 'API to update existing Plan <br> versionHistory <br> -------------- <br> 20202-Apr-11 Marina Yurovsky - Version - 1.0.0. - Initial version.'
+  version: '1.0'
+  title: Update Plan Header External API Post
+  contact:
+    name: API team
+    email: apiteam@operative.com
+  license:
+    name: Copyright 2020 Operative
+  termsOfService: 'http://www.operative.com'
+host: tvs-dev-gw.operativeone.com
+tags:
+  - name: plan-header-put-external-controller
+    description: Plan Header Put External Controller
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  '/v1/{apiKey}/plan/{planId}':
+    put:
+      tags:
+        - plan-header-put-external-controller
+      summary: Update Plan Header
+      description: update plan header
+      operationId: updatePlanHeader
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization
+          required: true
+          type: string
+        - name: apiKey
+          in: path
+          description: apiKey
+          required: true
+          type: string
+        - in: body
+          name: planHeader
+          description: planHeader
+          required: true
+          schema:
+            $ref: '#/definitions/PlanHeader'
+        - name: planId
+          in: path
+          description: planId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/GenericResponse'
+      deprecated: false
+definitions:
+  PlanHeader:
+    type: object
+    properties:
+      accountExecutives:
+        type: array
+        items:
+          $ref: '#/definitions/AccountExecutive'
+      advertisers:
+        type: array
+        items:
+          $ref: '#/definitions/Advertiser'
+      agencies:
+        type: array
+        items:
+          $ref: '#/definitions/Agency'
+      approvalStatus:
+        type: string
+      calendar:
+        $ref: '#/definitions/Calendar'
+      channel:
+        type: array
+        items:
+          $ref: '#/definitions/Channel'
+      currentVersion:
+        $ref: '#/definitions/Version'
+      customFieldValues:
+        type: object
+      dealYear:
+        $ref: '#/definitions/DealYear'
+      demo:
+        type: array
+        items:
+          $ref: '#/definitions/Demo'
+      division:
+        $ref: '#/definitions/Division'
+      dueDate:
+        type: string
+        example: 'yyyy-MM-dd,hh:mm a'
+      endDate:
+        type: string
+        format: date
+      endPeriod:
+        $ref: '#/definitions/Period'
+      equivalised:
+        type: boolean
+      fluidity:
+        type: boolean
+      guaranteed:
+        type: boolean
+      hiatus:
+        type: array
+        items:
+          $ref: '#/definitions/DateRange'
+      marketPlace:
+        $ref: '#/definitions/Marketplace'
+      onAirId:
+        type: string
+      operativeOneId:
+        type: string
+      orderTimeZone:
+        $ref: '#/definitions/LabelKey'
+      orderType:
+        $ref: '#/definitions/LabelKey'
+      planClass:
+        $ref: '#/definitions/PlanClass'
+      planName:
+        type: string
+      planNotes:
+        type: string
+      planStatus:
+        $ref: '#/definitions/PlanStatus'
+      platform:
+        type: string
+        enum:
+          - LINEAR
+          - DIGITAL
+          - CONVERGED
+      primaryVersion:
+        $ref: '#/definitions/Version'
+      primaryVersionId:
+        type: integer
+        format: int64
+      primaryVersionName:
+        type: string
+      ratecard:
+        type: array
+        items:
+          $ref: '#/definitions/RateCard'
+      ratingStream:
+        $ref: '#/definitions/LabelKey'
+      salesforceId:
+        type: string
+      spotLength:
+        $ref: '#/definitions/SpotLength'
+      startDate:
+        type: string
+        format: date
+      startPeriod:
+        $ref: '#/definitions/Period'
+      subdivision:
+        $ref: '#/definitions/Division'
+      teams:
+        type: array
+        items:
+          $ref: '#/definitions/Team'
+      templateId:
+        type: string
+      versions:
+        type: array
+        items:
+          $ref: '#/definitions/Version'
+    title: PlanHeader
+  Agency:
+    type: object
+    title: Agency
+    x-examples:
+      agency:
+        id: 5dee39514d9c000a905b421e
+        name: Ally Bank
+        commission: 15
+        roles:
+          - Buying
+          - Paying
+          - Billing
+        contact: 5e84eadd4d9c0030cf34641e
+        address: '1111 St Gregory Street,UNITED STATES,OH,Cincinnati,45202'
+        startDate: '2020-04-15'
+        endDate: '2020-05-31'
+    description: Data object the contains Agency attributes
+    properties:
+      address:
+        type: string
+        description: Address of the agency contact
+      commission:
+        type: string
+        description: Not required. If empty will default from the MDM Agency
+      contact:
+        type: string
+        description: AOS ID of the Contact person - UM
+      startDate:
+        type: string
+        format: date
+      id:
+        type: string
+        description: AOS ID for the Agency MDM
+      roles:
+        type: array
+        description: Not required. If empty default to Buying
+        items:
+          type: string
+      endDate:
+        type: string
+    required:
+      - id
+  Channel:
+    type: object
+    title: Channel
+    x-examples:
+      Channel:
+        id: C4gyuWfTQZ-BtJLmLZE_rA
+        isPrimary: true
+        demoPostBuyId: null
+        hhPostBuyID: null
+    description: Data object the contains Chhannel attributes
+    properties:
+      id:
+        type: string
+        description: AOS Identifier of the Channels - Stations MRD
+        example: '5e2540844d9c00600d5a000a, C4gyuWfTQZ-BtJLmLZE_rA'
+      isPrimary:
+        type: string
+        description: ''
+      demoPostBuyId:
+        type: string
+        description: "Not required. Will be defaulted from the channel. \nAOS ID of the Projection methodology MRD. Will be used to estimate audience delivery for demos other than household"
+      hhPostBuyId:
+        type: string
+        description: "Not required. Will be defaulted from the channel. \nAOS ID of the Projection methodology MRD. Will be used to estimate audience delivery for household demo"
+      division:
+        type: string
+      subDivision:
+        type: string
+    required:
+      - id
+      - isPrimary
+  Demo:
+    type: object
+    title: Demo
+    description: Data object the contains Demo attributes
+    properties:
+      id:
+        type: string
+        description: AOS ID of the Demographic MRD
+      postby:
+        type: boolean
+        description: Not required. True of the demo will be sent to MSA PostBuy for delivery reporting
+      isPrimary:
+        type: boolean
+        description: True if the demo is primary for the Plan
+      edi:
+        type: boolean
+        description: Not required. True of the demo will be sent via electionic interface -edi
+    required:
+      - id
+      - isPrimary
+  RateCard:
+    type: object
+    title: RateCard
+    properties:
+      asOfDate:
+        type: string
+        format: date
+        description: Find all ratecards that were published to use in planning as of the date specified
+      channel:
+        type: string
+        description: AOS ID of the Channel - Station MRD. Must be one of the channels selected for the plan header
+      id:
+        type: string
+        description: AOS ID  for the Ratecard in URC
+      revision:
+        type: number
+        description: Ratecard revision.
+    description: Data obect that Ratecard information.
+  GenericResponse:
+    type: object
+    properties:
+      errorMsg:
+        type: array
+        items:
+          type: string
+      httpStatusCode:
+        type: string
+        enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+      id:
+        type: string
+      response:
+        type: object
+      successMsg:
+        type: string
+    title: GenericResponse
+  AccountExecutive:
+    type: object
+    title: AccountExecutive
+    x-examples:
+      Joe Smith Primary AE:
+        name: Joe Smith
+        id: '40'
+        isPrimary: true
+        startDate: '2021-08-10'
+        endDate: '2022-07-12'
+        split: 100
+        role: ae
+        effectiveDate: '2021-08-10'
+    description: 'Account Executives for the Plan. '
+    properties:
+      endDate:
+        type: string
+        default: If empty default the Flight End date
+        description: Not required. If empty default the Flight End date
+        format: date
+        example: '2021-08-30'
+      id:
+        type: string
+        description: if empty then API needs to assigned AOS User ID else TBD if email is ok for PITCH
+      isPrimary:
+        type: boolean
+        description: Required
+      role:
+        type: string
+        description: AOS ID of the Sales position in MRD
+      split:
+        type: number
+        description: 'Not required. If empty default to 100%'
+      startDate:
+        type: string
+        format: date
+        description: Not required If empty default to Flight Start Date
+    required:
+      - id
+  Hiatus:
+    type: object
+    title: Hiatus
+    properties:
+      endDate:
+        type: string
+        format: date
+        description: End date of the hiatus period in yyyy-MM-dd format
+      startDate:
+        type: string
+        format: date
+        description: Start date of the hiatus period in yyyy-MM-dd format
+    x-examples:
+      Hiatus:
+        startDate: '2021-09-27'
+        endDate: '2021-10-03'
+    required:
+      - id
+    description: Data obect that dates and/or date ranges when the advertiser does not want air the commercials.
+schemes:
+  - https

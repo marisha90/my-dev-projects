@@ -442,6 +442,8 @@ definitions:
       primary:
         type: boolean
         description: True if for primary version of the plan
+    x-examples:
+      example-1: {}
   PlanStatus:
     type: object
     properties:

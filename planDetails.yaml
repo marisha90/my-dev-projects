@@ -79,29 +79,33 @@ definitions:
         id: nEZkdsMzSmKkf1w8fBOpUw
         name: Best TV
         code: BTV
+    description: Data object that contains attirbutes of the Channel
     properties:
       id:
         type: string
-        description: List of comma separated AOS Identifier of the Channels - Stations MRD
+        description: AOS Identifier of the Channels - Stations MRD
         example: '5e2540844d9c00600d5a000a, C4gyuWfTQZ-BtJLmLZE_rA'
       code:
         type: string
+        description: Abbriviated name of the channel - call letters
       name:
         type: string
+        description: Channel name
   Period:
     type: object
     title: Period
     x-examples:
       period:
-        id: 4Q20
+        id: '18675'
         name: 4Q20
+    description: Data object that contains attributes of a calendar period
     properties:
       id:
         type: string
-        description: AOS ID from the Calendar MRD. If empty default to the period for the flight end date
+        description: AOS ID of the period for the week on the line -  Calendar MRD.
       name:
         type: string
-    description: Data object that contains attributes of a calendar period
+        description: Name of the calendar period
   DemoValues:
     type: object
     title: DemoValues
@@ -125,7 +129,7 @@ definitions:
       index:
         type: number
         format: double
-      ue:
+      nationalUe:
         type: number
         format: double
         description: Estimated universe of all people subscribed to the channel
@@ -139,32 +143,22 @@ definitions:
       cpp:
         type: number
         description: Cost per rating point
-      totalImps:
+      guaranteedImps:
         type: number
-        description: Total Impressions for all the units in a week for a Plan Line
-      totalGrps:
-        type: number
-        description: Total Gross Rating Points for all the units in a week for a Plan Line
-      totalCpm:
-        type: number
-        description: Total cost per thousands of impressions for all the units in a week for a Plan Line
-      hutPut:
-        type: number
-      share:
-        type: number
+        description: Based on the line class. If guaranteed then guaranteed impressions
   UnitRates:
     type: object
     title: UnitRates
     description: Data object that contains information about units and rates
     properties:
-      totalRate:
+      rate:
         type: number
         format: double
         description: Total Rate of a all units in the week
-      totalRcrate:
+      rcRate:
         type: number
         format: double
-        description: Ratecard rate of a unit
+        description: Ratecard rate of a units in the week
       units:
         type: integer
         format: int64
@@ -204,11 +198,14 @@ definitions:
         $ref: '#/definitions/Period'
   daypart:
     type: object
+    title: daypart
+    description: Data object that contains attributes of the daypart
     properties:
       id:
         type: string
+        description: AOS ID of the Daypart
       name:
         type: string
-    title: daypart
+        description: Daypart Name
 schemes:
   - https

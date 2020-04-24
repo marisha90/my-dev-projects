@@ -81,40 +81,40 @@ definitions:
     x-examples:
       example-1: {}
     properties:
-      accountExecutives:
+      AccountExecutives:
         type: array
         items:
-          $ref: '#/definitions/AccountExecutive'
-      advertisers:
+          $ref: '#/definitions/AccountExecutives'
+      Advertisers:
         type: array
         items:
           $ref: '#/definitions/Advertiser'
-      agencies:
+      Agencies:
         type: array
         items:
-          $ref: '#/definitions/Agency'
-      calendar:
+          $ref: '#/definitions/Agencies'
+      Calendar:
         $ref: '#/definitions/Calendar'
-      channel:
+      Channels:
         type: array
         items:
-          $ref: '#/definitions/Channel'
-      dealYearId:
+          $ref: '#/definitions/Channels'
+      DealYear:
         type: array
         items:
           $ref: '#/definitions/DealYear'
-      demo:
+      Demos:
         type: array
         items:
-          $ref: '#/definitions/Demo'
+          $ref: '#/definitions/Demos'
       dueDate:
         type: string
         example: 'yyyy-MM-dd,hh:mm a'
-      flightEndDate:
+      endDate:
         type: string
         format: date
         example: '2020-04-17'
-      endPeriod:
+      EndPeriod:
         $ref: '#/definitions/Period'
       equivalised:
         type: boolean
@@ -122,23 +122,23 @@ definitions:
         type: boolean
       guaranteed:
         type: boolean
-      hiatus:
+      Hiatus:
         type: array
         items:
           $ref: '#/definitions/DateRange'
-      marketPlace:
-        $ref: '#/definitions/marketPlace'
-      externalSourceSystem:
-        $ref: '#/definitions/externalSourceSystem'
-      orderType:
+      Marketplace:
+        $ref: '#/definitions/Marketplace'
+      ExternalSourceSystems:
+        $ref: '#/definitions/ExternalSourceSystems'
+      OrderType:
         $ref: '#/definitions/OrderType'
-      planClass:
-        $ref: '#/definitions/planClass'
+      PlanClass:
+        $ref: '#/definitions/PlanClass'
       planName:
         type: string
       planNotes:
         type: string
-      planStatus:
+      PlanStatus:
         $ref: '#/definitions/PlanStatus'
       platform:
         type: string
@@ -146,29 +146,29 @@ definitions:
           - LINEAR
           - DIGITAL
           - CONVERGED
-      ratecard:
+      Ratecard:
         type: array
         items:
-          $ref: '#/definitions/RateCard'
-      ratingStream:
-        $ref: '#/definitions/ratingStream'
-      flightStartDate:
+          $ref: '#/definitions/Ratecard'
+      RatingStream:
+        $ref: '#/definitions/RatingStream'
+      startDate:
         type: string
         format: date
         example: '2020-09-30'
-      startPeriod:
+      StartPeriod:
         $ref: '#/definitions/Period'
-      versions:
+      Versions:
         type: array
         items:
           $ref: '#/definitions/Version'
-      customFields:
+      CustomFields:
         type: array
         items:
-          $ref: '#/definitions/customFields'
-  Agency:
+          $ref: '#/definitions/CustomFields'
+  Agencies:
     type: object
-    title: Agency
+    title: Agencies
     x-examples:
       Agency:
         id: 5ddf63114d9c003405f35df3
@@ -203,9 +203,9 @@ definitions:
           type: string
       endDate:
         type: string
-  Channel:
+  Channels:
     type: object
-    title: Channel
+    title: Channels
     x-examples:
       channel:
         id: nEZkdsMzSmKkf1w8fBOpUw
@@ -237,10 +237,10 @@ definitions:
       Division:
         $ref: '#/definitions/Division'
       subDivision:
-        $ref: '#/definitions/subDivision'
-  Demo:
+        $ref: '#/definitions/SubDivision'
+  Demos:
     type: object
-    title: Demo
+    title: Demos
     x-examples:
       demo:
         id: '11'
@@ -260,21 +260,21 @@ definitions:
         type: boolean
       postBuy:
         type: boolean
-  RateCard:
+  Ratecard:
     type: object
     properties:
       asOfDate:
         type: string
         format: date
-      channel:
-        $ref: '#/definitions/Channel'
+      Channels:
+        $ref: '#/definitions/Channels'
       id:
         type: string
       revision:
         type: number
       name:
         type: string
-    title: RateCard
+    title: Ratecard
     x-examples:
       ratecard:
         id: 5e8c69dd754aba7146e2a6de
@@ -307,9 +307,9 @@ definitions:
       name:
         type: string
     description: Data object that contains attributes of a calendar period
-  AccountExecutive:
+  AccountExecutives:
     type: object
-    title: AccountExecutive
+    title: AccountExecutives
     x-examples:
       Account Exec:
         name: API User
@@ -362,14 +362,14 @@ definitions:
         description: AOS ID of the Calendar
       name:
         type: string
-  subDivision:
+  SubDivision:
     type: object
     properties:
       id:
         type: string
       name:
         type: string
-    title: subDivision
+    title: SubDivision
   Contact:
     type: object
     title: Contact
@@ -517,25 +517,25 @@ definitions:
         type: string
       name:
         type: string
-  marketPlace:
+  Marketplace:
     type: object
     properties:
       id:
         type: string
       name:
         type: string
-    title: marketPlace
-  ratingStream:
+    title: Marketplace
+  RatingStream:
     type: object
     properties:
       id:
         type: string
       name:
         type: string
-    title: ratingStream
-  externalSourceSystem:
+    title: RatingStream
+  ExternalSourceSystems:
     type: object
-    title: externalSourceSystem
+    title: ExternalSourceSystems
     properties:
       extSourceID:
         type: string
@@ -545,21 +545,21 @@ definitions:
         description: 'Unique ID in the External system, like Opportunity ID'
     x-examples:
       example-1: {}
-  customFields:
+  CustomFields:
     type: object
     properties:
       id:
         type: string
       name:
         type: string
-    title: customFields
-  planClass:
+    title: CustomFields
+  PlanClass:
     type: object
     properties:
       id:
         type: string
       name:
         type: string
-    title: planClass
+    title: PlanClass
 schemes:
   - https

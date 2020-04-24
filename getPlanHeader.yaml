@@ -125,7 +125,7 @@ definitions:
       Hiatus:
         type: array
         items:
-          $ref: '#/definitions/DateRange'
+          $ref: '#/definitions/Hiatus'
       Marketplace:
         $ref: '#/definitions/Marketplace'
       ExternalSourceSystems:
@@ -158,10 +158,10 @@ definitions:
         example: '2020-09-30'
       StartPeriod:
         $ref: '#/definitions/Period'
-      Versions:
+      PrimaryVersion:
         type: array
         items:
-          $ref: '#/definitions/Version'
+          $ref: '#/definitions/PrimaryVersion'
       CustomFields:
         type: array
         items:
@@ -262,18 +262,6 @@ definitions:
         type: boolean
   Ratecard:
     type: object
-    properties:
-      asOfDate:
-        type: string
-        format: date
-      Channels:
-        $ref: '#/definitions/Channels'
-      id:
-        type: string
-      revision:
-        type: number
-      name:
-        type: string
     title: Ratecard
     x-examples:
       ratecard:
@@ -293,6 +281,18 @@ definitions:
           primary: false
         asOfDate: '2020-04-15'
         revision: 1
+    properties:
+      asOfDate:
+        type: string
+        format: date
+      channelId:
+        type: string
+      id:
+        type: string
+      revision:
+        type: number
+      name:
+        type: string
   Period:
     type: object
     title: Period
@@ -300,13 +300,17 @@ definitions:
       period:
         id: 4Q20
         name: 4Q20
+    description: Data object that contains attributes of a calendar period
     properties:
       id:
         type: string
         description: AOS ID from the Calendar MRD. If empty default to the period for the flight end date
       name:
         type: string
-    description: Data object that contains attributes of a calendar period
+      startDate:
+        type: string
+      endDate:
+        type: string
   AccountExecutives:
     type: object
     title: AccountExecutives
@@ -362,6 +366,12 @@ definitions:
         description: AOS ID of the Calendar
       name:
         type: string
+      startDate:
+        type: string
+      endDate:
+        type: string
+      calendarBase:
+        type: string
   SubDivision:
     type: object
     properties:
@@ -392,7 +402,7 @@ definitions:
       order type:
         id: default
         name: default
-  DateRange:
+  Hiatus:
     type: object
     properties:
       endDate:
@@ -401,7 +411,7 @@ definitions:
       startDate:
         type: string
         format: date
-    title: DateRange
+    title: Hiatus
     x-examples:
       example-1: {}
   User:
@@ -416,9 +426,9 @@ definitions:
         description: User Name
       userId:
         type: string
-  Version:
+  PrimaryVersion:
     type: object
-    title: Version
+    title: Primary Version
     description: Object that contains attributes of a Plan Version.
     properties:
       createdBy:
@@ -446,15 +456,6 @@ definitions:
       example-1: {}
   PlanStatus:
     type: object
-    properties:
-      approvers:
-        type: array
-        items:
-          $ref: '#/definitions/User'
-      statusId:
-        type: string
-      statusName:
-        type: string
     title: PlanStatus
     x-examples:
       plan status:
@@ -464,6 +465,11 @@ definitions:
             userId: xxx@domain.com
         statusId: Working
         statusName: Working
+    properties:
+      statusId:
+        type: string
+      statusName:
+        type: string
   Division:
     type: object
     title: Division
@@ -491,6 +497,13 @@ definitions:
   Advertiser:
     type: object
     title: Advertiser
+    x-examples:
+      advertiser:
+        id: 5dee3bae4d9c000a905b43ef
+        name: Zephyr Advertsers
+        categoryId: 5e7a15d24d9c0017f51d26bd
+        secCategoryId: 5e4e458f4d9c0028f7c3280f
+    description: Data Object that contains information for an Advertiser
     properties:
       id:
         type: string
@@ -498,11 +511,12 @@ definitions:
       name:
         type: string
         description: Advertiser name
-    x-examples:
-      advertiser:
-        id: 5dee3bae4d9c000a905b43ef
-        categoryId: 5e7a15d24d9c0017f51d26bd
-        secCategoryId: 5e4e458f4d9c0028f7c3280f
+      category:
+        type: string
+        description: Primary industry category for an Advertiser
+      subCategory:
+        type: string
+        description: Secondary industry category
   DealYear:
     type: object
     title: DealYear
@@ -516,6 +530,10 @@ definitions:
       id:
         type: string
       name:
+        type: string
+      startDate:
+        type: string
+      endDate:
         type: string
   Marketplace:
     type: object

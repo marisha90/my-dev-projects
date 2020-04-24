@@ -494,14 +494,15 @@ definitions:
     properties:
       id:
         type: string
-        description: AdvExclusion Id
+        description: Advertiser Id
       name:
         type: string
-        description: AdvExclusion name
+        description: Advertiser name
     x-examples:
       advertiser:
         id: 5dee3bae4d9c000a905b43ef
-        name: ACM Awards
+        categoryId: 5e7a15d24d9c0017f51d26bd
+        secCategoryId: 5e4e458f4d9c0028f7c3280f
   DealYear:
     type: object
     title: DealYear
@@ -542,6 +543,8 @@ definitions:
       externalID:
         type: string
         description: 'Unique ID in the External system, like Opportunity ID'
+    x-examples:
+      example-1: {}
   customFields:
     type: object
     properties:

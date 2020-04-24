@@ -62,17 +62,14 @@ definitions:
     x-examples:
       example-1: {}
     properties:
-      accountExecutives:
+      AccountExecutives:
         type: array
         description: Sales people that are managing the Plan. One AE is required and will be set as Primary
         items:
           $ref: '#/definitions/AccountExecutive'
-      advertiserId:
-        type: array
-        description: AOS ID of the Advertiser
-        items:
-          type: string
-      agencies:
+      Advertisers:
+        $ref: '#/definitions/Advertiser'
+      Agencies:
         type: array
         description: Data object the contains Agency attributes
         items:
@@ -80,7 +77,7 @@ definitions:
       calendarId:
         type: string
         description: AOS ID of the Calendar
-      channel:
+      Channels:
         type: array
         description: Data object the contains Channel attributes
         items:
@@ -88,7 +85,7 @@ definitions:
       dealYearId:
         type: string
         description: AOS ID of a deal year.
-      demo:
+      Demos:
         type: array
         description: Data object the contains Demo attributes
         items:
@@ -97,7 +94,7 @@ definitions:
         type: string
         example: 'yyyy-MM-dd,hh:mm a'
         description: Date and Time
-      flightEndDate:
+      endDate:
         type: string
         example: yyyy-MM-dd
         description: End date of the Plan flight
@@ -128,9 +125,8 @@ definitions:
       planClassId:
         type: string
         description: AOS ID of the Planclass MRD
-      externalSystemId:
-        type: string
-        description: Unque Identifier from the External CRM application. Not required.
+      externalSourceSystems:
+        $ref: '#/definitions/externalSourceSystems'
       planName:
         type: string
         description: 'If plan name is empty, default name generated'
@@ -144,7 +140,7 @@ definitions:
           - LINEAR
           - DIGITAL
           - CONVERGED
-      ratecard:
+      Ratecards:
         type: array
         description: Data object the contains Ratecard attributes
         items:
@@ -152,7 +148,7 @@ definitions:
       ratingStreamId:
         type: string
         description: AOS ID of the rating stream MRD
-      flightStartDate:
+      startDate:
         type: string
         example: yyyy-MM-dd
         description: End date of the Plan flight
@@ -188,7 +184,7 @@ definitions:
       commission:
         type: string
         description: Not required. If empty will default from the MDM Agency
-      contact:
+      contactId:
         type: string
         description: AOS ID of the Contact person - UM
       startDate:
@@ -220,7 +216,6 @@ definitions:
       id:
         type: string
         description: AOS Identifier of the Channels - Stations MRD
-        example: '5e2540844d9c00600d5a000a, C4gyuWfTQZ-BtJLmLZE_rA'
       isPrimary:
         type: string
         description: ''
@@ -245,7 +240,7 @@ definitions:
       id:
         type: string
         description: AOS ID of the Demographic MRD
-      postby:
+      postbuy:
         type: boolean
         description: Not required. True of the demo will be sent to MSA PostBuy for delivery reporting
       isPrimary:
@@ -260,12 +255,13 @@ definitions:
   RateCard:
     type: object
     title: RateCard
+    description: Data obect that Ratecard information.
     properties:
       asOfDate:
         type: string
         format: date
         description: Find all ratecards that were published to use in planning as of the date specified
-      channel:
+      channelId:
         type: string
         description: AOS ID of the Channel - Station MRD. Must be one of the channels selected for the plan header
       id:
@@ -274,7 +270,6 @@ definitions:
       revision:
         type: number
         description: Ratecard revision.
-    description: Data obect that Ratecard information.
   GenericResponse:
     type: object
     properties:
@@ -417,5 +412,32 @@ definitions:
     required:
       - id
     description: Data obect that dates and/or date ranges when the advertiser does not want air the commercials.
+  Advertiser:
+    type: object
+    title: Advertiser
+    description: Data object that contains attributes of an Advertiser
+    properties:
+      id:
+        type: string
+        description: Advertiser Id
+      categoryId:
+        type: string
+      secCatgoryId:
+        type: string
+    x-examples:
+      advertiser:
+        id: 5dee3bae4d9c000a905b43ef
+        categoryId: 5e7a15d24d9c0017f51d26bd
+        secCategoryId: 5e4e458f4d9c0028f7c3280f
+  externalSourceSystems:
+    type: object
+    title: externalSourceSystems
+    properties:
+      extSourceID:
+        type: string
+        description: AOS ID of the External Sysem
+      externalID:
+        type: string
+        description: 'Unique ID in the External system, like Opportunity ID'
 schemes:
   - https

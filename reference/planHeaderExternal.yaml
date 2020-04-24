@@ -126,7 +126,7 @@ definitions:
         type: string
         description: AOS ID of the Planclass MRD
       ExternalSourceSystems:
-        $ref: '#/definitions/externalSourceSystems'
+        $ref: '#/definitions/ExternalSourceSystems'
       planName:
         type: string
         description: 'If plan name is empty, default name generated'

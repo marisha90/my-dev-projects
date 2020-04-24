@@ -110,7 +110,7 @@ definitions:
       guaranteed:
         type: boolean
         description: Not required. If empty default to false
-      hiatus:
+      Hiatus:
         type: array
         description: Data object the contains dates and/or date ranges of the hiatus dates
         items:
@@ -125,7 +125,7 @@ definitions:
       planClassId:
         type: string
         description: AOS ID of the Planclass MRD
-      externalSourceSystems:
+      ExternalSourceSystems:
         $ref: '#/definitions/externalSourceSystems'
       planName:
         type: string
@@ -429,9 +429,9 @@ definitions:
         id: 5dee3bae4d9c000a905b43ef
         categoryId: 5e7a15d24d9c0017f51d26bd
         secCategoryId: 5e4e458f4d9c0028f7c3280f
-  externalSourceSystems:
+  ExternalSourceSystems:
     type: object
-    title: externalSourceSystems
+    title: ExternalSourceSystems
     properties:
       extSourceID:
         type: string

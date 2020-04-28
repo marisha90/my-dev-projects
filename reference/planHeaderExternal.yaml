@@ -37,9 +37,6 @@ definitions:
         id: 5dee3bae4d9c000a905b43ef
         categoryId: 5e7a15d24d9c0017f51d26bd
         secCategoryId: 5e4e458f4d9c0028f7c3280f
-        contactId: null
-        brandId: null
-        address: null
     properties:
       id:
         type: string
@@ -71,7 +68,7 @@ definitions:
         endDate: '2022-07-12'
         split: 100
         role: ae
-        teamId: xxxxx
+        effectiveDate: '2021-08-10'
     description: 'Account Executives for the Plan. '
     properties:
       endDate:
@@ -96,9 +93,6 @@ definitions:
         type: string
         format: date
         description: Not required If empty default to Flight Start Date
-      teamId:
-        type: string
-        description: AOS ID of the Sales team for the Account Executive
     required:
       - id
   GenericResponse:
@@ -217,8 +211,6 @@ definitions:
     required:
       - id
       - isPrimary
-    x-examples:
-      example-1: {}
   Channels:
     type: object
     title: Channels
@@ -226,8 +218,8 @@ definitions:
       Channel:
         id: C4gyuWfTQZ-BtJLmLZE_rA
         isPrimary: true
-        division: Sports
-        subDivision: Tennis
+        hhPostBuyID: null
+        demoPostBuyId: null
     description: Data object the contains Chhannel attributes
     properties:
       id:

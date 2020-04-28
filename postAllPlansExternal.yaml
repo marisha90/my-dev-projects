@@ -1,0 +1,212 @@
+swagger: '2.0'
+info:
+  description: 'The API provides a paginated list of all plans based on the filters. <br> versionHistory <br> -------------- <br> 2020-Apr-28 Marina Yurovsky - Version - 1.0.0. - Initial version.'
+  version: '1.0'
+  title: List all Plans External API POST
+  contact:
+    name: API team
+    email: apiteam@operative.com
+  license:
+    name: Copyright 2020 Operative
+host: tvs-dev-gw.operativeone.com
+basePath: /external_planner
+tags:
+  - name: plan-list_external-controller
+    description: Plan List External Controller
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  '/v1/{apiKey}/plan':
+    post:
+      tags:
+        - plan-list_external-controller
+      summary: Get All Plan sorted by field
+      description: Get all Plans sorted by field
+      operationId: getPlanPageSortedByField
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: Authorization
+          in: header
+          description: Authorization
+          required: true
+          type: string
+        - name: apiKey
+          in: path
+          description: apiKey
+          required: true
+          type: string
+        - name: fieldName
+          in: query
+          description: fieldName
+          required: true
+          type: string
+        - in: body
+          name: filter
+          description: Filter Proposal
+          required: false
+          schema:
+            $ref: '#/definitions/PlanListFilter'
+        - name: pageNo
+          in: query
+          description: pageNo
+          required: true
+          type: string
+        - name: pageSize
+          in: query
+          description: pageSize
+          required: true
+          type: string
+        - name: sortOrder
+          in: query
+          description: sortOrder
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Plan'
+      deprecated: false
+definitions:
+  Plan:
+    type: object
+    properties:
+      createdBy:
+        type: string
+      createdDate:
+        type: string
+        format: date-time
+      header:
+        $ref: '#/definitions/PlanHeader'
+      id:
+        type: string
+      lastModifiedBy:
+        type: string
+      lastModifiedDate:
+        type: string
+        format: date-time
+      planId:
+        type: integer
+        format: int64
+      revision:
+        type: number
+    title: Plan
+  PlanHeader:
+    type: object
+    properties:
+      accountExecutives:
+        type: array
+        items:
+          $ref: '#/definitions/AccountExecutive'
+      advertisers:
+        type: array
+        items:
+          $ref: '#/definitions/Advertiser'
+      agencies:
+        type: array
+        items:
+          $ref: '#/definitions/Agency'
+      approvalStatus:
+        type: string
+      calendar:
+        $ref: '#/definitions/Calendar'
+      channel:
+        type: array
+        items:
+          $ref: '#/definitions/Channel'
+      currentVersion:
+        $ref: '#/definitions/Version'
+      customFieldValues:
+        type: object
+      dealYear:
+        $ref: '#/definitions/DealYear'
+      demo:
+        type: array
+        items:
+          $ref: '#/definitions/Demo'
+      division:
+        $ref: '#/definitions/Division'
+      dueDate:
+        type: string
+        example: 'yyyy-MM-dd,hh:mm a'
+      endDate:
+        type: string
+        format: date
+      endPeriod:
+        $ref: '#/definitions/Period'
+      equivalised:
+        type: boolean
+      fluidity:
+        type: boolean
+      guaranteed:
+        type: boolean
+      hiatus:
+        type: array
+        items:
+          $ref: '#/definitions/DateRange'
+      marketPlace:
+        $ref: '#/definitions/Marketplace'
+      onAirId:
+        type: string
+      operativeOneId:
+        type: string
+      orderTimeZone:
+        $ref: '#/definitions/LabelKey'
+      orderType:
+        $ref: '#/definitions/LabelKey'
+      planClass:
+        $ref: '#/definitions/PlanClass'
+      planName:
+        type: string
+      planNotes:
+        type: string
+      planStatus:
+        $ref: '#/definitions/PlanStatus'
+      platform:
+        type: string
+        enum:
+          - LINEAR
+          - DIGITAL
+          - CONVERGED
+      primaryVersion:
+        $ref: '#/definitions/Version'
+      primaryVersionId:
+        type: integer
+        format: int64
+      primaryVersionName:
+        type: string
+      ratecard:
+        type: array
+        items:
+          $ref: '#/definitions/RateCard'
+      ratingStream:
+        $ref: '#/definitions/LabelKey'
+      salesforceId:
+        type: string
+      spotLength:
+        $ref: '#/definitions/SpotLength'
+      startDate:
+        type: string
+        format: date
+      startPeriod:
+        $ref: '#/definitions/Period'
+      subdivision:
+        $ref: '#/definitions/Division'
+      teams:
+        type: array
+        items:
+          $ref: '#/definitions/Team'
+      templateId:
+        type: string
+      versions:
+        type: array
+        items:
+          $ref: '#/definitions/Version'
+    title: PlanHeader

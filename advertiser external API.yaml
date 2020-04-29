@@ -30,9 +30,9 @@ paths:
           description: Authorization
           required: true
           type: string
-        - name: pageSize
+        - name: size
           in: query
-          description: Number of Advertisers returned
+          description: Number of Advertisers returned per page
           type: integer
           format: int32
           minimum: 0
@@ -41,11 +41,11 @@ paths:
           exclusiveMaximum: false
           multipleOf: 100
           default: 100
-        - name: pageNumber
+        - name: page
           in: query
           description: Page number
           type: integer
-          default: 1
+          default: 0
         - name: status
           in: query
           description: Advertiser Status
@@ -61,17 +61,16 @@ paths:
           in: query
           name: Last Modified DateTime
           description: Return Advertisers that were added or changed since the date selected
+        - name: external Source System ID
+          in: query
+          description: External source system identifier of an Advertiser
+          required: false
+          type: string
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/Advertiser'
-          examples:
-            list of advertisers:
-              id: 5df8c2334d9c000b9c875ab5
-              mdmId: 1121A
-              name: ABBVIE
-              modifiedOn: '2020-02-18T04:54:37.597'
+            $ref: '#/definitions/Page«Advertiser»'
         '400':
           description: 'Bad Request. Please verify your request '
           schema:
@@ -96,7 +95,7 @@ definitions:
     properties:
       id:
         type: string
-        description: AOS ID of the Advertiser
+        description: AOS identifier of an Advertiser
       lastModifiedDate:
         type: string
         format: date-time
@@ -104,10 +103,54 @@ definitions:
         description: 'Last date time of the modification '
       mdmId:
         type: string
-        description: External system ID
+        description: External source system Identifier
       name:
         type: string
         description: Advertiser name
+    description: Data object that contains attirbutes of an Advertiser
+    x-examples:
+      advertiser:
+        id: string
+        lastModifiedDate: '2016-06-10T12:36:58.014Z'
+        mdmId: string
+        name: string
+  Sort:
+    type: object
+    properties:
+      empty:
+        type: boolean
+      sorted:
+        type: boolean
+      unsorted:
+        type: boolean
+    title: Sort
+    description: Data object that contains sort paramters
+  Page«Advertiser»:
+    type: object
+    title: Page«Advertiser»
+    x-examples:
+      example-1: {}
+    description: Data object that contains attributes of the Advertiser page returned by the API call
+    properties:
+      content:
+        type: array
+        description: Advertiser records returned by the API call
+        items:
+          $ref: '#/definitions/Advertiser'
+      size:
+        type: integer
+        format: int32
+        description: Number of Advertisers returned per page
+      sort:
+        $ref: '#/definitions/Sort'
+      totalElements:
+        type: integer
+        format: int64
+        description: Total number of the Advertiser records returned
+      totalPages:
+        type: integer
+        format: int32
+        description: Total number of returned pages
 schemes:
   - https
 securityDefinitions: {}

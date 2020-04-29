@@ -61,17 +61,16 @@ paths:
           in: query
           name: Last Modified DateTime
           description: Return Agencies that were added or changed since the date selected
+        - name: External Source System ID
+          in: query
+          description: External source system identifier of an Agency
+          required: false
+          type: string
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/Agency'
-          examples:
-            list of agencies:
-              id: 5df8c2334d9c000b9c875ab5
-              mdmId: 1121A
-              name: ABBVIE
-              modifiedOn: '2020-02-18T04:54:37.597'
+            $ref: '#/definitions/Page«Agencies»'
         '400':
           description: 'Bad Request. Please verify your request '
           schema:
@@ -108,6 +107,44 @@ definitions:
       name:
         type: string
         description: Agency name
+    description: Data object that contains attributes of an Agency
+  Page«Agencies»:
+    type: object
+    title: Page«Agencies»
+    x-examples:
+      example-1: {}
+    description: Data object that contains attributes of the Agency page returned by the API call
+    properties:
+      content:
+        type: array
+        description: Agency records returned by the API call
+        items:
+          $ref: '#/definitions/Agency'
+      size:
+        type: integer
+        format: int32
+        description: Number of Agency records returned per page
+      sort:
+        $ref: '#/definitions/Sort'
+      totalElements:
+        type: integer
+        format: int64
+        description: Total number of the Agency records returned
+      totalPages:
+        type: integer
+        format: int32
+        description: Total number of returned pages
+  Sort:
+    type: object
+    properties:
+      empty:
+        type: boolean
+      sorted:
+        type: boolean
+      unsorted:
+        type: boolean
+    title: Sort
+    description: Data object that contains sort paramters
 schemes:
   - https
 securityDefinitions: {}

@@ -22,8 +22,8 @@ paths:
     post:
       tags:
         - plan-header-workspace_external-controller
-      summary: Get weekly summary per demo
-      description: Get line totals per week per demo
+      summary: Get weekly summary by channel and daypart per demo
+      description: 'Get totals per channel, daypart, and week per demo'
       operationId: getWeeklySummarybyDemo
       consumes:
         - application/json
@@ -83,41 +83,22 @@ definitions:
     properties:
       id:
         type: string
-        description: AOS Identifier of the Channels - Stations MRD
-        example: '5e2540844d9c00600d5a000a, C4gyuWfTQZ-BtJLmLZE_rA'
+        description: AOS Identifier of the Channel - Stations MRD
       code:
         type: string
         description: Abbriviated name of the channel - call letters
       name:
         type: string
         description: Channel name
-  Period:
-    type: object
-    title: Period
-    x-examples:
-      period:
-        id: '18675'
-        name: 4Q20
-    description: 'Data object that contains attributes of a calendar period for the aggregation of weeks, like quarter'
-    properties:
-      id:
-        type: string
-        description: AOS ID of the period for aggregation of the weeks on the line -  Calendar MRD.
-      name:
-        type: string
-        description: Name of the calendar period for the weeks aggregation
   DemoValues:
     type: object
     title: DemoValues
-    description: Data object that contains information about various mesures available for the Plan Demo.
+    description: Data object that contains information about various measures available for the Plan Demo.
     properties:
       cpm:
         type: number
         format: double
         description: Cost per thousand impressions
-      factor:
-        type: number
-        format: double
       grps:
         type: number
         format: double
@@ -126,26 +107,23 @@ definitions:
         type: number
         format: double
         description: Estimated Impressions
-      index:
-        type: number
-        format: double
       nationalUE:
         type: number
         format: double
-        description: Estimated universe of all people subscribed to the channel
+        description: Estimated universe of all people watching TV
       vpvh:
         type: number
         format: double
         description: Viewers per viewing household
-      rcCpm:
-        type: number
-        description: Cost per thousand impressions calculated based on ratecard rate and estimated impressions.
       cpp:
         type: number
         description: Cost per rating point
       guaranteedImps:
         type: number
         description: Based on the line class. If guaranteed then guaranteed impressions
+      rcImps:
+        type: number
+        description: Ratecard impressions.
   UnitRates:
     type: object
     title: UnitRates
@@ -154,15 +132,15 @@ definitions:
       rate:
         type: number
         format: double
-        description: Total Rate of a all units in the week
+        description: Total Rate of a all units in a week
       rcRate:
         type: number
         format: double
-        description: Ratecard rate of a units in the week
+        description: Total Ratecard rate of all units in a week
       units:
         type: integer
         format: int64
-        description: Number of units in a week for a Plan Line
+        description: Total number of units in a week
   PeriodTotalRequest:
     type: object
     title: PeriodTotalRequest
@@ -178,34 +156,28 @@ definitions:
     title: PlanTotalDTO
     description: 'Data object that contains attributes of the Plan Line summarized by channel, daypart and week.'
     properties:
-      channelId:
-        $ref: '#/definitions/Channel'
-      demoValues:
-        type: object
-        additionalProperties:
-          $ref: '#/definitions/DemoValues'
-        description: Data object that contains demo attributes
-      lineId:
-        type: string
-        description: Plan Line ID
       planId:
         type: string
         description: Plan ID
-      unitRates:
+      UnitRates:
         $ref: '#/definitions/UnitRates'
       week:
         type: string
         description: Week start date.
         format: date
         example: '2020-04-19'
-      daypart:
-        $ref: '#/definitions/daypart'
-      period:
-        $ref: '#/definitions/Period'
-  daypart:
+      Daypart:
+        $ref: '#/definitions/Daypart'
+      DemoValues:
+        $ref: '#/definitions/DemoValues'
+      Channel:
+        $ref: '#/definitions/Channel'
+      Product:
+        $ref: '#/definitions/Product'
+  Daypart:
     type: object
-    title: daypart
-    description: Data object that contains attributes of the daypart
+    title: Daypart
+    description: Data object that contains attributes of a daypart
     properties:
       id:
         type: string
@@ -217,5 +189,20 @@ definitions:
       daypart:
         id: 5e8c31c34d9c001b67658d36
         name: Prime
+  Product:
+    type: object
+    title: Product
+    description: Data object that contains attributes of a product
+    properties:
+      id:
+        type: string
+        description: AOS ID of the Product
+      name:
+        type: string
+        description: Product Name
+    x-examples:
+      product:
+        id: 5e8c31c34d9c001b67658d36
+        name: Primetime News M-Su 10p
 schemes:
   - https

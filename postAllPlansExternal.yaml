@@ -1,22 +1,3 @@
-swagger: '2.0'
-info:
-  description: 'The API provides a paginated list of all plans based on the filters. <br> versionHistory <br> -------------- <br> 2020-Apr-28 Marina Yurovsky - Version - 1.0.0. - Initial version.'
-  version: '1.0'
-  title: List all Plans External API POST
-  contact:
-    name: API team
-    email: apiteam@operative.com
-  license:
-    name: Copyright 2020 Operative
-host: tvs-dev-gw.operativeone.com
-basePath: /external_planner
-tags:
-  - name: plan-list_external-controller
-    description: Plan List External Controller
-consumes:
-  - application/json
-produces:
-  - application/json
 paths:
   '/v1/{apiKey}/plan':
     post:
@@ -74,16 +55,36 @@ paths:
             items:
               $ref: '#/definitions/Plan'
       deprecated: false
+produces:
+  - application/json
+consumes:
+  - application/json
+tags:
+  - name: plan-list_external-controller
+    description: Plan List External Controller
+basePath: /external_planner
+host: tvs-dev-gw.operativeone.com
+info:
+  description: 'The API provides a paginated list of all plans based on the filters. <br> versionHistory <br> -------------- <br> 2020-Apr-28 Marina Yurovsky - Version - 1.0.0. - Initial version.'
+  version: '1.0'
+  title: List all Plans External API POST
+  contact:
+    name: API team
+    email: apiteam@operative.com
+  license:
+    name: Copyright 2020 Operative
+swagger: '2.0'
 definitions:
   Plan:
     type: object
+    title: Plan
     properties:
       createdBy:
         type: string
       createdDate:
         type: string
         format: date-time
-      header:
+      Header:
         $ref: '#/definitions/PlanHeader'
       id:
         type: string
@@ -97,30 +98,31 @@ definitions:
         format: int64
       revision:
         type: number
-    title: Plan
+    description: Data object that contains atrributes of the Plan
   PlanHeader:
     type: object
+    title: PlanHeader
     properties:
       accountExecutives:
         type: array
         items:
-          $ref: '#/definitions/AccountExecutive'
-      advertisers:
+          $ref: '#/definitions/AccountExecutives'
+      Advertisers:
         type: array
         items:
           $ref: '#/definitions/Advertiser'
-      agencies:
+      Agencies:
         type: array
         items:
-          $ref: '#/definitions/Agency'
+          $ref: '#/definitions/Agencies'
       approvalStatus:
         type: string
-      calendar:
+      Calendar:
         $ref: '#/definitions/Calendar'
-      channel:
+      Channels:
         type: array
         items:
-          $ref: '#/definitions/Channel'
+          $ref: '#/definitions/Channels'
       currentVersion:
         $ref: '#/definitions/Version'
       customFieldValues:
@@ -157,8 +159,6 @@ definitions:
         type: string
       operativeOneId:
         type: string
-      orderTimeZone:
-        $ref: '#/definitions/LabelKey'
       orderType:
         $ref: '#/definitions/LabelKey'
       planClass:
@@ -199,7 +199,7 @@ definitions:
         $ref: '#/definitions/Period'
       subdivision:
         $ref: '#/definitions/Division'
-      teams:
+      Team:
         type: array
         items:
           $ref: '#/definitions/Team'
@@ -209,4 +209,234 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Version'
-    title: PlanHeader
+      ExternalSourceSystem:
+        $ref: '#/definitions/ExternalSourceSystem'
+  ExternalSourceSystems:
+    type: object
+    title: ExternalSourceSystems
+    properties:
+      extSourceID:
+        type: string
+        description: AOS ID of the External Sysem
+      externalID:
+        type: string
+        description: 'Unique ID in the External system, like Opportunity ID'
+  Brand:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    title: Brand
+  Contact:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    title: Contact
+  PlanClass:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    title: PlanClass
+  CustomFields:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    title: CustomFields
+  RatingStream:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    title: RatingStream
+  Marketplace:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    title: Marketplace
+  DealYear:
+    type: object
+    title: DealYear
+    x-examples:
+      deal year:
+        id: pGEAriBjS_WjXyhOilJPTQ
+        name: 2020 DY
+        startDate: '2020-03-26'
+        endDate: '2021-03-01'
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      startDate:
+        type: string
+      endDate:
+        type: string
+  Advertiser:
+    type: object
+    title: Advertiser
+    x-examples:
+      advertiser:
+        id: 5dee3bae4d9c000a905b43ef
+        name: Zephyr Advertsers
+        categoryId: 5e7a15d24d9c0017f51d26bd
+        secCategoryId: 5e4e458f4d9c0028f7c3280f
+        Contact:
+          id: string
+          name: Joe Smith
+        Brand:
+          id: string
+          name: Best brand
+        address: null
+    description: Data Object that contains information for an Advertiser
+    properties:
+      id:
+        type: string
+        description: Advertiser Id
+      name:
+        type: string
+        description: Advertiser name
+      category:
+        type: string
+        description: Primary industry category for an Advertiser
+      subCategory:
+        type: string
+        description: Secondary industry category
+      Contact:
+        $ref: '#/definitions/Contact'
+      Brand:
+        $ref: '#/definitions/brand'
+      address:
+        type: string
+  Team:
+    type: object
+    title: Team
+    description: Object that contains information about the team that is managing a Plan.
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+  PlanListFilter:
+    type: object
+    title: PlanListFilter
+    description: Data object that contains all available filters for the Post List API
+    properties:
+      accountExecutives:
+        type: array
+        items:
+          $ref: '#/definitions/User'
+      Advertisers:
+        type: array
+        items:
+          $ref: '#/definitions/Advertiser'
+      Agencies:
+        type: array
+        items:
+          $ref: '#/definitions/Agency'
+      channel:
+        type: array
+        items:
+          $ref: '#/definitions/Channel'
+      dealYear:
+        type: array
+        items:
+          $ref: '#/definitions/DealYear'
+      demos:
+        type: array
+        items:
+          $ref: '#/definitions/Demo'
+      flightDate:
+        type: string
+      flightEndDate:
+        type: string
+        example: MM/dd/yyyy
+      flightStartDate:
+        type: string
+        example: MM/dd/yyyy
+      lastModifiedDate:
+        type: string
+      marketPlace:
+        type: array
+        items:
+          $ref: '#/definitions/Marketplace'
+      planClass:
+        type: array
+        items:
+          $ref: '#/definitions/PlanClass'
+      planId:
+        type: integer
+        format: int64
+      planName:
+        type: string
+      planStatus:
+        type: array
+        items:
+          $ref: '#/definitions/PlanStatus'
+      teams:
+        type: array
+        items:
+          $ref: '#/definitions/Team'
+  properties:
+    endDate:
+      type: string
+      format: date
+      description: Not required. If empty default the Flight End date
+    id:
+      type: string
+      description: if empty then API needs to assigned AOS User ID else TBD if email is ok for PITCH
+    isPrimary:
+      type: boolean
+      description: true if Account Executive is Primary
+    role:
+      type: array
+      description: 'Sales Position of the Account Executive. For example: ae, sales planner, sales assistant'
+      items:
+        type: string
+    split:
+      type: number
+      description: 'Not required. If empty default to 100%'
+    startDate:
+      type: string
+      format: date
+      description: Not required If empty default to Flight Start Date
+    team:
+      $ref: '#/definitions/Team'
+    name:
+      type: string
+      description: Account executive name
+  description: Data object contains information about Account exectives assigned to the Plan
+  x-examples:
+    Account Exec:
+      name: API User
+      id: '2'
+      isPrimary: true
+      startDate: null
+      endDate: null
+      split: 100
+      role: null
+      title: ae
+      teamId: ''
+      teamName: ''
+      effectiveDate: null
+      primary: true
+  title: AccountExecutives
+  type: object
+  AccountExecutives: null
+schemes:
+  - https

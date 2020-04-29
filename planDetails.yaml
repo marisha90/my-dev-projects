@@ -1,8 +1,8 @@
 swagger: '2.0'
 info:
-  description: 'The API provides an option to get Plan Lines weekly summary by channel, daypart and demo for a given Plan ID. <br> versionHistory <br> -------------- <br> 20202-Apr-11 Marina Yurovsky - Version - 1.0.0. - Initial version.'
+  description: 'The API provides an option to get Plan weekly summary by channel, daypart and demo for a given Plan ID. <br> versionHistory <br> -------------- <br> 20202-Apr-11 Marina Yurovsky - Version - 1.0.0. - Initial version.'
   version: '1.0'
-  title: Plan Details Weekly External API GET
+  title: Plan Details Weekly Summary External API GET
   contact:
     name: API team
     email: apiteam@operative.com
@@ -11,8 +11,8 @@ info:
 host: tvs-dev-gw.operativeone.com
 basePath: /external_planner
 tags:
-  - name: plan-header-workspace_external-controller
-    description: Plan Header and Workspalce External Controller
+  - name: plan-workspace_external-controller
+    description: Plan Details Weekly Summary External Controller
 consumes:
   - application/json
 produces:
@@ -21,7 +21,7 @@ paths:
   '/v1/{apiKey}/plan/{planId}/workspace/summary/week':
     post:
       tags:
-        - plan-header-workspace_external-controller
+        - plan-workspace_external-controller
       summary: Get weekly summary by channel and daypart per demo
       description: 'Get totals per channel, daypart, and week per demo'
       operationId: getWeeklySummarybyDemo

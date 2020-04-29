@@ -1,442 +1,232 @@
 paths:
-  '/v1/{apiKey}/plan':
-    post:
-      tags:
-        - plan-list_external-controller
-      summary: Get All Plan sorted by field
-      description: Get all Plans sorted by field
-      operationId: getPlanPageSortedByField
-      consumes:
-        - application/json
-      produces:
-        - '*/*'
-      parameters:
-        - name: Authorization
-          in: header
-          description: Authorization
-          required: true
-          type: string
-        - name: apiKey
-          in: path
-          description: apiKey
-          required: true
-          type: string
-        - name: fieldName
-          in: query
-          description: fieldName
-          required: true
-          type: string
-        - in: body
-          name: filter
-          description: Filter Proposal
-          required: false
-          schema:
-            $ref: '#/definitions/PlanListFilter'
-        - name: pageNo
-          in: query
-          description: pageNo
-          required: true
-          type: string
-        - name: pageSize
-          in: query
-          description: pageSize
-          required: true
-          type: string
-        - name: sortOrder
-          in: query
-          description: sortOrder
-          required: true
-          type: string
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Plan'
-      deprecated: false
+    '/v1/{apiKey}/plan':
+        post:
+            tags: [plan-list_external-controller]
+            summary: 'Get All Plan sorted by field'
+            description: 'Get all Plans sorted by field'
+            operationId: getPlanPageSortedByField
+            consumes: [application/json]
+            produces: ['*/*']
+            parameters: [{name: Authorization, in: header, description: Authorization, required: true, type: string}, {name: apiKey, in: path, description: apiKey, required: true, type: string}, {name: fieldName, in: query, description: fieldName, required: true, type: string}, {in: body, name: filter, description: 'Filter Proposal', required: false, schema: {$ref: '#/definitions/PlanListFilter'}}, {name: pageNo, in: query, description: pageNo, required: true, type: string}, {name: pageSize, in: query, description: pageSize, required: true, type: string}, {name: sortOrder, in: query, description: sortOrder, required: true, type: string}]
+            responses: {'200': {description: OK, schema: {type: array, items: {$ref: '#/definitions/Plan'}}}}
+            deprecated: false
 produces:
-  - application/json
+    - application/json
 consumes:
-  - application/json
+    - application/json
 tags:
-  - name: plan-list_external-controller
-    description: Plan List External Controller
+    -
+        name: plan-list_external-controller
+        description: 'Plan List External Controller'
 basePath: /external_planner
 host: tvs-dev-gw.operativeone.com
 info:
-  description: 'The API provides a paginated list of all plans based on the filters. <br> versionHistory <br> -------------- <br> 2020-Apr-28 Marina Yurovsky - Version - 1.0.0. - Initial version.'
-  version: '1.0'
-  title: List all Plans External API POST
-  contact:
-    name: API team
-    email: apiteam@operative.com
-  license:
-    name: Copyright 2020 Operative
+    description: 'The API provides a paginated list of all plans based on the filters. <br> versionHistory <br> -------------- <br> 2020-Apr-28 Marina Yurovsky - Version - 1.0.0. - Initial version.'
+    version: '1.0'
+    title: 'List all Plans External API POST'
+    contact:
+        name: 'API team'
+        email: apiteam@operative.com
+    license:
+        name: 'Copyright 2020 Operative'
 swagger: '2.0'
 definitions:
-  Plan:
-    type: object
-    title: Plan
-    properties:
-      createdBy:
-        type: string
-      createdDate:
-        type: string
-        format: date-time
-      Header:
-        $ref: '#/definitions/PlanHeader'
-      id:
-        type: string
-      lastModifiedBy:
-        type: string
-      lastModifiedDate:
-        type: string
-        format: date-time
-      planId:
-        type: integer
-        format: int64
-      revision:
-        type: number
-    description: Data object that contains atrributes of the Plan
-  PlanHeader:
-    type: object
-    title: PlanHeader
-    properties:
-      accountExecutives:
-        type: array
-        items:
-          $ref: '#/definitions/AccountExecutives'
-      Advertisers:
-        type: array
-        items:
-          $ref: '#/definitions/Advertiser'
-      Agencies:
-        type: array
-        items:
-          $ref: '#/definitions/Agencies'
-      approvalStatus:
-        type: string
-      Calendar:
-        $ref: '#/definitions/Calendar'
-      Channels:
-        type: array
-        items:
-          $ref: '#/definitions/Channels'
-      currentVersion:
-        $ref: '#/definitions/Version'
-      customFieldValues:
+    Plan:
         type: object
-      dealYear:
-        $ref: '#/definitions/DealYear'
-      demo:
-        type: array
-        items:
-          $ref: '#/definitions/Demo'
-      division:
-        $ref: '#/definitions/Division'
-      dueDate:
-        type: string
-        example: 'yyyy-MM-dd,hh:mm a'
-      endDate:
-        type: string
-        format: date
-      endPeriod:
-        $ref: '#/definitions/Period'
-      equivalised:
-        type: boolean
-      fluidity:
-        type: boolean
-      guaranteed:
-        type: boolean
-      hiatus:
-        type: array
-        items:
-          $ref: '#/definitions/DateRange'
-      marketPlace:
-        $ref: '#/definitions/Marketplace'
-      onAirId:
-        type: string
-      operativeOneId:
-        type: string
-      orderType:
-        $ref: '#/definitions/LabelKey'
-      planClass:
-        $ref: '#/definitions/PlanClass'
-      planName:
-        type: string
-      planNotes:
-        type: string
-      planStatus:
-        $ref: '#/definitions/PlanStatus'
-      platform:
-        type: string
-        enum:
-          - LINEAR
-          - DIGITAL
-          - CONVERGED
-      primaryVersion:
-        $ref: '#/definitions/Version'
-      primaryVersionId:
-        type: integer
-        format: int64
-      primaryVersionName:
-        type: string
-      ratecard:
-        type: array
-        items:
-          $ref: '#/definitions/RateCard'
-      ratingStream:
-        $ref: '#/definitions/LabelKey'
-      salesforceId:
-        type: string
-      spotLength:
-        $ref: '#/definitions/SpotLength'
-      startDate:
-        type: string
-        format: date
-      startPeriod:
-        $ref: '#/definitions/Period'
-      subdivision:
-        $ref: '#/definitions/Division'
-      Team:
-        type: array
-        items:
-          $ref: '#/definitions/Team'
-      templateId:
-        type: string
-      versions:
-        type: array
-        items:
-          $ref: '#/definitions/Version'
-      ExternalSourceSystem:
-        $ref: '#/definitions/ExternalSourceSystem'
-  ExternalSourceSystems:
-    type: object
-    title: ExternalSourceSystems
+        title: Plan
+        properties:
+            createdBy: {type: string}
+            createdDate: {type: string, format: date-time}
+            Header: {$ref: '#/definitions/PlanHeader'}
+            id: {type: string}
+            lastModifiedBy: {type: string}
+            lastModifiedDate: {type: string, format: date-time}
+            planId: {type: integer, format: int64}
+            revision: {type: number}
+        description: 'Data object that contains atrributes of the Plan'
+    PlanHeader:
+        type: object
+        title: PlanHeader
+        properties:
+            accountExecutives: {type: array, items: {$ref: '#/definitions/AccountExecutives'}}
+            Advertisers: {type: array, items: {$ref: '#/definitions/Advertiser'}}
+            Agencies: {type: array, items: {$ref: '#/definitions/Agencies'}}
+            approvalStatus: {type: string}
+            Calendar: {$ref: '#/definitions/Calendar'}
+            Channels: {type: array, items: {$ref: '#/definitions/Channels'}}
+            currentVersion: {$ref: '#/definitions/Version'}
+            customFieldValues: {type: object}
+            dealYear: {$ref: '#/definitions/DealYear'}
+            demo: {type: array, items: {$ref: '#/definitions/Demo'}}
+            division: {$ref: '#/definitions/Division'}
+            dueDate: {type: string, example: 'yyyy-MM-dd,hh:mm a'}
+            endDate: {type: string, format: date}
+            endPeriod: {$ref: '#/definitions/Period'}
+            equivalised: {type: boolean}
+            fluidity: {type: boolean}
+            guaranteed: {type: boolean}
+            hiatus: {type: array, items: {$ref: '#/definitions/DateRange'}}
+            marketPlace: {$ref: '#/definitions/Marketplace'}
+            onAirId: {type: string}
+            operativeOneId: {type: string}
+            orderType: {$ref: '#/definitions/LabelKey'}
+            planClass: {$ref: '#/definitions/PlanClass'}
+            planName: {type: string}
+            planNotes: {type: string}
+            planStatus: {$ref: '#/definitions/PlanStatus'}
+            platform: {type: string, enum: [LINEAR, DIGITAL, CONVERGED]}
+            primaryVersion: {$ref: '#/definitions/Version'}
+            primaryVersionId: {type: integer, format: int64}
+            primaryVersionName: {type: string}
+            ratecard: {type: array, items: {$ref: '#/definitions/RateCard'}}
+            ratingStream: {$ref: '#/definitions/LabelKey'}
+            salesforceId: {type: string}
+            spotLength: {$ref: '#/definitions/SpotLength'}
+            startDate: {type: string, format: date}
+            startPeriod: {$ref: '#/definitions/Period'}
+            subdivision: {$ref: '#/definitions/Division'}
+            Team: {type: array, items: {$ref: '#/definitions/Team'}}
+            templateId: {type: string}
+            versions: {type: array, items: {$ref: '#/definitions/Version'}}
+            ExternalSourceSystem: {$ref: '#/definitions/ExternalSourceSystem'}
+    ExternalSourceSystems:
+        type: object
+        title: ExternalSourceSystems
+        properties:
+            extSourceID: {type: string, description: 'AOS ID of the External Sysem'}
+            externalID: {type: string, description: 'Unique ID in the External system, like Opportunity ID'}
+    Brand:
+        type: object
+        properties:
+            id: {type: string}
+            name: {type: string}
+        title: Brand
+    Contact:
+        type: object
+        properties:
+            id: {type: string}
+            name: {type: string}
+        title: Contact
+    PlanClass:
+        type: object
+        properties:
+            id: {type: string}
+            name: {type: string}
+        title: PlanClass
+    CustomFields:
+        type: object
+        properties:
+            id: {type: string}
+            name: {type: string}
+        title: CustomFields
+    RatingStream:
+        type: object
+        properties:
+            id: {type: string}
+            name: {type: string}
+        title: RatingStream
+    Marketplace:
+        type: object
+        properties:
+            id: {type: string}
+            name: {type: string}
+        title: Marketplace
+    DealYear:
+        type: object
+        title: DealYear
+        x-examples:
+            'deal year': {id: pGEAriBjS_WjXyhOilJPTQ, name: '2020 DY', startDate: '2020-03-26', endDate: '2021-03-01'}
+        properties:
+            id: {type: string}
+            name: {type: string}
+            startDate: {type: string}
+            endDate: {type: string}
+    Advertiser:
+        type: object
+        title: Advertiser
+        x-examples:
+            advertiser: {id: 5dee3bae4d9c000a905b43ef, name: 'Zephyr Advertsers', categoryId: 5e7a15d24d9c0017f51d26bd, secCategoryId: 5e4e458f4d9c0028f7c3280f, Contact: {id: string, name: 'Joe Smith'}, Brand: {id: string, name: 'Best brand'}, address: null}
+        description: 'Data Object that contains information for an Advertiser'
+        properties:
+            id: {type: string, description: 'Advertiser Id'}
+            name: {type: string, description: 'Advertiser name'}
+            category: {type: string, description: 'Primary industry category for an Advertiser'}
+            subCategory: {type: string, description: 'Secondary industry category'}
+            Contact: {$ref: '#/definitions/Contact'}
+            Brand: {$ref: '#/definitions/brand'}
+            address: {type: string}
+    Team:
+        type: object
+        title: Team
+        description: 'Object that contains information about the team that is managing a Plan.'
+        properties:
+            id: {type: string}
+            name: {type: string}
+    PlanListFilter:
+        type: object
+        title: PlanListFilter
+        description: 'Data object that contains all available filters for the Post List API'
+        properties:
+            accountExecutives: {type: array, items: {$ref: '#/definitions/User'}}
+            Advertisers: {type: array, items: {$ref: '#/definitions/Advertiser'}}
+            Agencies: {type: array, items: {$ref: '#/definitions/Agency'}}
+            channel: {type: array, items: {$ref: '#/definitions/Channel'}}
+            dealYear: {type: array, items: {$ref: '#/definitions/DealYear'}}
+            demos: {type: array, items: {$ref: '#/definitions/Demo'}}
+            flightDate: {type: string}
+            flightEndDate: {type: string, example: MM/dd/yyyy}
+            flightStartDate: {type: string, example: MM/dd/yyyy}
+            lastModifiedDate: {type: string}
+            marketPlace: {type: array, items: {$ref: '#/definitions/Marketplace'}}
+            planClass: {type: array, items: {$ref: '#/definitions/PlanClass'}}
+            planId: {type: integer, format: int64}
+            planName: {type: string}
+            planStatus: {type: array, items: {$ref: '#/definitions/PlanStatus'}}
+            teams: {type: array, items: {$ref: '#/definitions/Team'}}
     properties:
-      extSourceID:
-        type: string
-        description: AOS ID of the External Sysem
-      externalID:
-        type: string
-        description: 'Unique ID in the External system, like Opportunity ID'
-  Brand:
-    type: object
-    properties:
-      id:
-        type: string
-      name:
-        type: string
-    title: Brand
-  Contact:
-    type: object
-    properties:
-      id:
-        type: string
-      name:
-        type: string
-    title: Contact
-  PlanClass:
-    type: object
-    properties:
-      id:
-        type: string
-      name:
-        type: string
-    title: PlanClass
-  CustomFields:
-    type: object
-    properties:
-      id:
-        type: string
-      name:
-        type: string
-    title: CustomFields
-  RatingStream:
-    type: object
-    properties:
-      id:
-        type: string
-      name:
-        type: string
-    title: RatingStream
-  Marketplace:
-    type: object
-    properties:
-      id:
-        type: string
-      name:
-        type: string
-    title: Marketplace
-  DealYear:
-    type: object
-    title: DealYear
+        endDate:
+            type: string
+            format: date
+            description: 'Not required. If empty default the Flight End date'
+        id:
+            type: string
+            description: 'if empty then API needs to assigned AOS User ID else TBD if email is ok for PITCH'
+        isPrimary:
+            type: boolean
+            description: 'true if Account Executive is Primary'
+        role:
+            type: array
+            description: 'Sales Position of the Account Executive. For example: ae, sales planner, sales assistant'
+            items: {type: string}
+        split:
+            type: number
+            description: 'Not required. If empty default to 100%'
+        startDate:
+            type: string
+            format: date
+            description: 'Not required If empty default to Flight Start Date'
+        team:
+            $ref: '#/definitions/Team'
+        name:
+            type: string
+            description: 'Account executive name'
+    description: 'Data object contains information about Account exectives assigned to the Plan'
     x-examples:
-      deal year:
-        id: pGEAriBjS_WjXyhOilJPTQ
-        name: 2020 DY
-        startDate: '2020-03-26'
-        endDate: '2021-03-01'
-    properties:
-      id:
-        type: string
-      name:
-        type: string
-      startDate:
-        type: string
-      endDate:
-        type: string
-  Advertiser:
+        'Account Exec':
+            name: 'API User'
+            id: '2'
+            isPrimary: true
+            startDate: null
+            endDate: null
+            split: 100
+            role: null
+            title: ae
+            teamId: ""
+            teamName: ""
+            effectiveDate: null
+            primary: true
+    title: AccountExecutives
     type: object
-    title: Advertiser
-    x-examples:
-      advertiser:
-        id: 5dee3bae4d9c000a905b43ef
-        name: Zephyr Advertsers
-        categoryId: 5e7a15d24d9c0017f51d26bd
-        secCategoryId: 5e4e458f4d9c0028f7c3280f
-        Contact:
-          id: string
-          name: Joe Smith
-        Brand:
-          id: string
-          name: Best brand
-        address: null
-    description: Data Object that contains information for an Advertiser
-    properties:
-      id:
-        type: string
-        description: Advertiser Id
-      name:
-        type: string
-        description: Advertiser name
-      category:
-        type: string
-        description: Primary industry category for an Advertiser
-      subCategory:
-        type: string
-        description: Secondary industry category
-      Contact:
-        $ref: '#/definitions/Contact'
-      Brand:
-        $ref: '#/definitions/brand'
-      address:
-        type: string
-  Team:
-    type: object
-    title: Team
-    description: Object that contains information about the team that is managing a Plan.
-    properties:
-      id:
-        type: string
-      name:
-        type: string
-  PlanListFilter:
-    type: object
-    title: PlanListFilter
-    description: Data object that contains all available filters for the Post List API
-    properties:
-      accountExecutives:
-        type: array
-        items:
-          $ref: '#/definitions/User'
-      Advertisers:
-        type: array
-        items:
-          $ref: '#/definitions/Advertiser'
-      Agencies:
-        type: array
-        items:
-          $ref: '#/definitions/Agency'
-      channel:
-        type: array
-        items:
-          $ref: '#/definitions/Channel'
-      dealYear:
-        type: array
-        items:
-          $ref: '#/definitions/DealYear'
-      demos:
-        type: array
-        items:
-          $ref: '#/definitions/Demo'
-      flightDate:
-        type: string
-      flightEndDate:
-        type: string
-        example: MM/dd/yyyy
-      flightStartDate:
-        type: string
-        example: MM/dd/yyyy
-      lastModifiedDate:
-        type: string
-      marketPlace:
-        type: array
-        items:
-          $ref: '#/definitions/Marketplace'
-      planClass:
-        type: array
-        items:
-          $ref: '#/definitions/PlanClass'
-      planId:
-        type: integer
-        format: int64
-      planName:
-        type: string
-      planStatus:
-        type: array
-        items:
-          $ref: '#/definitions/PlanStatus'
-      teams:
-        type: array
-        items:
-          $ref: '#/definitions/Team'
-  properties:
-    endDate:
-      type: string
-      format: date
-      description: Not required. If empty default the Flight End date
-    id:
-      type: string
-      description: if empty then API needs to assigned AOS User ID else TBD if email is ok for PITCH
-    isPrimary:
-      type: boolean
-      description: true if Account Executive is Primary
-    role:
-      type: array
-      description: 'Sales Position of the Account Executive. For example: ae, sales planner, sales assistant'
-      items:
-        type: string
-    split:
-      type: number
-      description: 'Not required. If empty default to 100%'
-    startDate:
-      type: string
-      format: date
-      description: Not required If empty default to Flight Start Date
-    team:
-      $ref: '#/definitions/Team'
-    name:
-      type: string
-      description: Account executive name
-  description: Data object contains information about Account exectives assigned to the Plan
-  x-examples:
-    Account Exec:
-      name: API User
-      id: '2'
-      isPrimary: true
-      startDate: null
-      endDate: null
-      split: 100
-      role: null
-      title: ae
-      teamId: ''
-      teamName: ''
-      effectiveDate: null
-      primary: true
-  title: AccountExecutives
-  type: object
-  AccountExecutives: null
+    AccountExecutives: null
 schemes:
-  - https
+    - https

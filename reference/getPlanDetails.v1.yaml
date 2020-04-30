@@ -20,7 +20,7 @@ paths:
     get:
       tags:
         - plan-header-external-controller
-      summary: Get Plan Header
+      summary: Get Plan Header and Lines
       description: Get Plan Details with the given Plan Id
       operationId: getPlanHeaderByPlanId
       produces:
@@ -648,6 +648,46 @@ definitions:
       daypart:
         id: 5e8c31c34d9c001b67658d36
         name: Prime
+  PlanTotalDTO:
+    type: object
+    title: PlanTotalDTO
+    description: 'Data object that contains attributes of the Plan Line summarized by channel, daypart and week.'
+    properties:
+      planId:
+        type: string
+        description: Plan ID
+      UnitRates:
+        $ref: '#/definitions/UnitRates'
+      week:
+        type: string
+        description: Week start date.
+        format: date
+        example: '2020-04-19'
+      Daypart:
+        $ref: '#/definitions/Daypart'
+      DemoValues:
+        $ref: '#/definitions/DemoValues'
+      Channel:
+        $ref: '#/definitions/Channel'
+      Product:
+        $ref: '#/definitions/Product'
+  UnitRates:
+    type: object
+    title: UnitRates
+    description: Data object that contains information about units and rates
+    properties:
+      rate:
+        type: number
+        format: double
+        description: Total Rate of a all units in a week
+      rcRate:
+        type: number
+        format: double
+        description: Total Ratecard rate of all units in a week
+      units:
+        type: integer
+        format: int64
+        description: Total number of units in a week
   DemoValues:
     type: object
     title: DemoValues
@@ -682,23 +722,6 @@ definitions:
       rcImps:
         type: number
         description: Ratecard impressions.
-  UnitRates:
-    type: object
-    title: UnitRates
-    description: Data object that contains information about units and rates
-    properties:
-      rate:
-        type: number
-        format: double
-        description: Total Rate of a all units in a week
-      rcRate:
-        type: number
-        format: double
-        description: Total Ratecard rate of all units in a week
-      units:
-        type: integer
-        format: int64
-        description: Total number of units in a week
   Channel:
     type: object
     title: Channel
@@ -718,29 +741,6 @@ definitions:
       name:
         type: string
         description: Channel name
-  PlanTotalDTO:
-    type: object
-    title: PlanTotalDTO
-    description: 'Data object that contains attributes of the Plan Line summarized by channel, daypart and week.'
-    properties:
-      planId:
-        type: string
-        description: Plan ID
-      UnitRates:
-        $ref: '#/definitions/UnitRates'
-      week:
-        type: string
-        description: Week start date.
-        format: date
-        example: '2020-04-19'
-      Daypart:
-        $ref: '#/definitions/Daypart'
-      DemoValues:
-        $ref: '#/definitions/DemoValues'
-      Channel:
-        $ref: '#/definitions/Channel'
-      Product:
-        $ref: '#/definitions/Product'
 tags:
   - name: plan-header-external-controller
     description: Plan Header and Workspalce External Controller

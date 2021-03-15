@@ -4,7 +4,7 @@ info:
     Planner application is a proposal system enables user to create, manage plan .  
     It also enables network user to publish plan 
   version: '1.0'
-  title: Planner API
+  title: Canonical Sales Planner API
   contact:
     name: API team
     email: apiteam@operative.com

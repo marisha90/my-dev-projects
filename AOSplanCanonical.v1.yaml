@@ -58,7 +58,7 @@ tags:
   - name: Troubleshoot Apis
     description: Troubleshoot Controller
 paths:
-  '/v1/{apiKey}/plans':
+  '/v1/{apiKey}/canonicalPlans':
     post:
       tags:
         - Plan Header APIs
@@ -104,6 +104,7 @@ paths:
         '500':
           description: Internal Server Error. Response body would contain more details
       deprecated: false
+    parameters: []
 definitions:
   PlanRequest:
     type: object

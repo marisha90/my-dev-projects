@@ -1570,3 +1570,7 @@ definitions:
     title: RateCardType
 schemes:
   - https
+produces:
+  - application/json
+consumes:
+  - application/json

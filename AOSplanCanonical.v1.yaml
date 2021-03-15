@@ -1,0 +1,1614 @@
+swagger: '2.0'
+info:
+  description: |-
+    Planner application is a proposal system enables user to create, manage plan .  
+    It also enables network user to publish plan 
+  version: '1.0'
+  title: Planner API
+  contact:
+    name: API team
+    email: apiteam@operative.com
+  license:
+    name: Copyright © 2020 Operative
+host: aos-dev-gw.operativeone.com
+basePath: /unifiedplanner
+tags:
+  - name: Plan Header APIs
+    description: Plan Controller
+  - name: Plan Header Template APIs
+    description: Plan Template Controller
+  - name: Plan Integration APIs
+    description: Plan Integration Controller
+  - name: Plan Linear Workspace Products
+    description: Plan Linear Workspace Product Controller
+  - name: Plan Metadata
+    description: Meta Data Controller
+  - name: Plan Migration APIs
+    description: Planner Migration Controller
+  - name: Plan Remix Reweight
+    description: Plan Remix Reweight Controller
+  - name: Plan Search APIs
+    description: Plan Search Controller
+  - name: Plan Spot Link
+    description: Plan Spot Link Controller
+  - name: Plan Version APIs
+    description: Plan Version Controller
+  - name: Plan Workspace
+    description: Plan Workspace Controller
+  - name: Plan Workspace Digital Products
+    description: Plan Digital Product Controller
+  - name: Plan Workspace Spots
+    description: Plan Spot Controller
+  - name: Plan Workspace Summary
+    description: Plan Workspace Totals Controller
+  - name: Plan Workspace Validation
+    description: Validation Controller
+  - name: Planner TenantSettings APIs
+    description: Tenant Settings Controller
+  - name: Planner TimeZone API
+    description: Time Zone Controller
+  - name: Planner Workflow Api
+    description: Workflow Controller
+  - name: Save Copy/Save Restore APIs
+    description: Plan Backup Controller
+  - name: Separation APIs
+    description: Separation Controller
+  - name: Snapshot API's
+    description: Snapshot Controller
+  - name: Troubleshoot Apis
+    description: Troubleshoot Controller
+paths:
+  '/v1/{apiKey}/plans':
+    post:
+      tags:
+        - Plan Header APIs
+      summary: Create Plan
+      description: Create Plan.
+      operationId: createPlan
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer token
+          required: true
+          type: string
+        - name: apiKey
+          in: path
+          description: Api Key associated with the tenant
+          required: true
+          type: string
+        - in: body
+          name: planRequest
+          description: Plan
+          required: true
+          schema:
+            $ref: '#/definitions/PlanRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/GenericResponse'
+        '201':
+          description: Sucessfully created the plan. Response body would contain plan details
+          schema:
+            $ref: '#/definitions/GenericResponse'
+        '400':
+          description: Bad Request. Response body would contain more details
+        '401':
+          description: Unauthorized.
+        '422':
+          description: Unprocessable Entity. Response body would contain more details
+        '500':
+          description: Internal Server Error. Response body would contain more details
+      deprecated: false
+definitions:
+  PlanRequest:
+    type: object
+    title: PlanRequest
+    description: This object represents plan and contains the list of body parameters used to create a Plan Header.
+    x-examples:
+      example-1:
+        accountExecutives:
+          - endDate: string
+            primary: true
+            role: ACCOUNT_EXECUTIVE
+            split: 0
+            startDate: string
+            teamId: string
+            userName: string
+        advertisers:
+          - address: string
+            addresses:
+              - active: true
+                addressId: string
+                addressLine1: string
+                addressLine2: string
+                addressType: string
+                aosId: string
+                city: string
+                country: string
+                endDate: '2020-12-31'
+                externalTrafficSystems:
+                  - active: true
+                    extId: string
+                    extName: string
+                postalCode: string
+                primary: true
+                roles:
+                  - string
+                startDate: '2020-01-01'
+                state: string
+            brandId: string
+            categoryId: 5ed61f6c21704a4012e899bc
+            contactId: 5ed62151a51ba2409edd3155
+            contacts:
+              - active: true
+                address: string
+                addressExternalTrafficSystems:
+                  - active: true
+                    extId: string
+                    extName: string
+                addresses:
+                  - active: true
+                    addressId: string
+                    addressLine1: string
+                    addressLine2: string
+                    addressType: string
+                    aosId: string
+                    city: string
+                    country: string
+                    endDate: '2020-12-31'
+                    externalTrafficSystems:
+                      - active: true
+                        extId: string
+                        extName: string
+                    postalCode: string
+                    primary: true
+                    roles:
+                      - string
+                    startDate: '2020-01-01'
+                    state: string
+                contactId: string
+                endDate: '2020-12-31'
+                name: string
+                officeType: string
+                roles:
+                  - string
+                startDate: '2020-01-01'
+            endDate: '2020-12-31'
+            expiryDate: '2019-08-24'
+            id: 5ed62151a51ba2409edd3158
+            roles:
+              - string
+            secCategoryId: string
+            startDate: '2020-01-01'
+        agencies:
+          - accountRoles:
+              - string
+            address: string
+            addressExternalTrafficSystems:
+              - active: true
+                extId: string
+                extName: string
+            addresses:
+              - active: true
+                addressId: string
+                addressLine1: string
+                addressLine2: string
+                addressType: string
+                aosId: string
+                city: string
+                country: string
+                endDate: '2020-12-31'
+                externalTrafficSystems:
+                  - active: true
+                    extId: string
+                    extName: string
+                postalCode: string
+                primary: true
+                roles:
+                  - string
+                startDate: '2020-01-01'
+                state: string
+            commission: 15
+            contactId: string
+            contacts:
+              - active: true
+                address: string
+                addressExternalTrafficSystems:
+                  - active: true
+                    extId: string
+                    extName: string
+                addresses:
+                  - active: true
+                    addressId: string
+                    addressLine1: string
+                    addressLine2: string
+                    addressType: string
+                    aosId: string
+                    city: string
+                    country: string
+                    endDate: '2020-12-31'
+                    externalTrafficSystems:
+                      - active: true
+                        extId: string
+                        extName: string
+                    postalCode: string
+                    primary: true
+                    roles:
+                      - string
+                    startDate: '2020-01-01'
+                    state: string
+                contactId: string
+                endDate: '2020-12-31'
+                name: string
+                officeType: string
+                roles:
+                  - string
+                startDate: '2020-01-01'
+            endDate: '2020-12-31'
+            expiryDate: '2019-08-24'
+            id: 5ed62151a51ba2409edd3158
+            roles:
+              - string
+            startDate: '2020-01-01'
+        billingTermsId: string
+        calendarId: string
+        channels:
+          - demoPostBuyId: string
+            divisionId: string
+            hhPostBuyId: string
+            id: string
+            primary: true
+            subDivisionId: string
+        contractCloseDate: string
+        currencyId: string
+        currentDate: string
+        customFieldValues: {}
+        dealTimeZone:
+          - id: US/Eastern
+        dealYearId: DY2020-2030
+        demos:
+          - corporate: true
+            id: string
+            primary: true
+        dueDate: string
+        endDate: '2020-09-02'
+        endPeriodId: 4Q20
+        equivalised: true
+        externalPORef: string
+        externalSourceSystems:
+          - externalId: string
+            externalSourceId: string
+        fluidity: true
+        guaranteed: true
+        hiatus:
+          - endDate: '2019-08-24'
+            startDate: '2019-08-24'
+        inCompletePlan: true
+        linkId: 0
+        linkName: string
+        marketPlaceId: Broadcast upfront
+        orderTypeId: string
+        planClassId: string
+        planName: Deal for new Mustang Mach-E model
+        planNotes: string
+        platform: LINEAR
+        ratecards:
+          - asOfDate: string
+            channelId: string
+            id: string
+            revision: string
+        ratingStreamId: string
+        salesStageId: string
+        startDate: '2020-06-02'
+        startPeriodId: 3Q20
+        team: string
+        versionName: version 1
+    properties:
+      accountExecutives:
+        type: array
+        description: The list of details for the account executives
+        items:
+          $ref: '#/definitions/AccountExecutiveRequest'
+      advertisers:
+        type: array
+        description: The list of details for the advertisers.
+        items:
+          $ref: '#/definitions/AdvertiserRequest'
+      agencies:
+        type: array
+        description: The list of details for the agencies.
+        items:
+          $ref: '#/definitions/AgencyRequest'
+      billingTermsId:
+        type: string
+        description: billingTermsId
+      calendarId:
+        type: string
+        description: The AOS identifier of the calendar.
+      channels:
+        type: array
+        description: The list of channel details.
+        items:
+          $ref: '#/definitions/ChannelRequest'
+      contractCloseDate:
+        type: string
+        description: contractCloseDate
+      currencyId:
+        type: string
+        description: currencyId
+      currentDate:
+        type: string
+      customFieldValues:
+        type: object
+        description: A data object that contains attributes for the custom field values.
+      dealTimeZone:
+        type: array
+        description: A data object that contains the attributes of the timezone
+        items:
+          $ref: '#/definitions/DealTimeZone'
+      dealYearId:
+        type: string
+        example: DY2020-2030
+        description: The list of deal year details.
+      demos:
+        type: array
+        description: The list of details for the demos.
+        items:
+          $ref: '#/definitions/DemoRequest'
+      dueDate:
+        type: string
+        description: 'The due date of the Plan, in UTC time format - ''yyyy-MM-dd, hh:mm a''.'
+      endDate:
+        type: string
+        example: '2020-09-02'
+        description: 'The end date of the Plan flight, in yyyy-MM-dd format.'
+      endPeriodId:
+        type: string
+        example: 4Q20
+        description: The AOS identifier of the Plan end period.
+      equivalised:
+        type: boolean
+        description: 'A boolean that indicates whether or not impressions and ratings values are assigned to split spots according to the relevant unit index. If FALSE, the system copies the ratings values of the original spot to the new spots.'
+      externalPORef:
+        type: string
+        description: externalPORef
+      externalSourceSystems:
+        type: array
+        description: A list of details for the external source system.
+        items:
+          $ref: '#/definitions/ExternalSourceSystem'
+      fluidity:
+        type: boolean
+        description: 'A boolean that indicates whether or not the portion of the plan can be allocated on the DIGITAL platform (if true). If false, the plan will be used only on the LINEAR platform.'
+      guaranteed:
+        type: boolean
+        description: A boolean that indicates whether or not the plan is guaranteed for impressions and other guidelines.
+      hiatus:
+        type: array
+        description: The dates and/or date ranges of the hiatus dates.
+        items:
+          $ref: '#/definitions/DateRange'
+      inCompletePlan:
+        type: boolean
+        description: inCompletePlan
+      linkId:
+        type: integer
+        format: int64
+        description: linkId
+      linkName:
+        type: string
+        description: linkName
+      marketPlaceId:
+        type: string
+        example: Broadcast upfront
+        description: The list of marketplace details.
+      orderTypeId:
+        type: string
+        description: The AOS identifier of the order type. Order types are used in Digital orders. The order type value defaults to 'Default' for Linear Plans.
+      planClassId:
+        type: string
+        description: planClassId
+      planName:
+        type: string
+        example: Deal for new Mustang Mach-E model
+        description: The name of the Plan.
+      planNotes:
+        type: string
+        description: The notes for the Plan. A free text that can be printed on the reports.
+      platform:
+        type: string
+        description: The main platform for the Plan.
+        enum:
+          - LINEAR
+          - DIGITAL
+          - CONVERGED
+      ratecards:
+        type: array
+        description: ratecards
+        items:
+          $ref: '#/definitions/RatecardRequest'
+      ratingStreamId:
+        type: string
+        description: The AOS identifier of the rating stream.
+      salesStageId:
+        type: string
+        description: salesStageId
+      startDate:
+        type: string
+        example: '2020-06-02'
+        description: 'The start date of the Plan flight, in yyyy-MM-dd format.'
+      startPeriodId:
+        type: string
+        example: 3Q20
+        description: The AOS identifier of the Plan start period.
+      team:
+        type: string
+        description: team
+      versionName:
+        type: string
+        example: version 1
+        description: The name of the Plan version.
+    required:
+      - accountExecutives
+      - advertisers
+      - agencies
+      - channels
+      - dealYearId
+      - endDate
+      - endPeriodId
+      - planClassId
+      - planName
+      - platform
+      - startDate
+      - startPeriodId
+  PlanResponse:
+    type: object
+    properties:
+      accountExecutives:
+        type: array
+        description: A data object that contains the attributes for the account executives who are managing the Plan.
+        items:
+          $ref: '#/definitions/AccountExecutive'
+      advertisers:
+        type: array
+        description: A data object that contains the attributes for the advertisers assigned to the Plan.
+        items:
+          $ref: '#/definitions/Advertiser'
+      agencies:
+        type: array
+        description: A data object the contains attributes for the agency assigned to the Plan.
+        items:
+          $ref: '#/definitions/Agency'
+      audit:
+        type: array
+        description: audit
+        items:
+          $ref: '#/definitions/Audit'
+      billingTerms:
+        type: array
+        description: BillingTerms
+        items:
+          $ref: '#/definitions/BillingTerms'
+      calendar:
+        type: array
+        description: calendar
+        items:
+          $ref: '#/definitions/Calendar'
+      channels:
+        type: array
+        description: A data object that contains attributes for the channels that will air the ads for the Plan.
+        items:
+          $ref: '#/definitions/Channel'
+      contractCloseDate:
+        type: string
+        description: Contract close date in yyyy-MM-dd format
+      currency:
+        description: Currency
+        items:
+          $ref: '#/definitions/Currency'
+      customFieldValues:
+        type: object
+        description: A data object that contains attributes for the custom field values.
+      dealTimeZone:
+        type: array
+        description: dealTimeZone
+        items:
+          $ref: '#/definitions/DealTimeZoneResponse'
+      dealYear:
+        description: dealYear
+        items:
+          $ref: '#/definitions/DealYear'
+      demos:
+        type: array
+        description: The data object the contains the demo attributes of the Plan.
+        items:
+          $ref: '#/definitions/Demo'
+      dueDate:
+        type: string
+        description: 'The due date of the Plan, in UTC time format - ''yyyy-MM-dd, hh:mm a''.'
+      endDate:
+        type: string
+        example: '2021-12-26'
+        description: 'The end date of the Plan flight, in yyyy-MM-dd format.'
+      endPeriod:
+        description: endPeriod
+        items:
+          $ref: '#/definitions/Period'
+      equivalised:
+        type: boolean
+        example: true
+        description: 'A boolean that indicates whether or not impressions and ratings values are assigned to split spots according to the relevant unit index. If FALSE, the system copies the ratings values of the original spot to the new spots.'
+      externalPORef:
+        type: string
+        description: externalPORef
+      externalSourceSystems:
+        type: array
+        description: A list of details for the external source system.
+        items:
+          $ref: '#/definitions/ExternalSourceSystem'
+      fluidity:
+        type: boolean
+        example: true
+        description: 'A boolean that indicates whether or not the portion of the plan can be allocated on the DIGITAL platform (if true). If false, the plan will be used only on the LINEAR platform.'
+      guaranteed:
+        type: boolean
+        example: false
+        description: A boolean that indicates whether or not the plan is guaranteed for impressions and other guidelines.
+      hiatus:
+        type: array
+        description: The dates and/or date ranges of the hiatus dates.
+        items:
+          $ref: '#/definitions/DateRange'
+      id:
+        type: string
+        example: 5f4623167a5f9c24f409eeb1
+        description: The MongoDB identifier of the Plan - a combination of 17 letters and numbers.
+      inCompleteESPlan:
+        type: boolean
+        example: false
+        description: Indicate whether ElasticSearch planResponse Entity is in complete state
+      inCompletePlan:
+        type: boolean
+        example: false
+        description: Indicate whether plan is in complete state
+      linkId:
+        type: integer
+        format: int64
+        description: linkId
+      linkName:
+        type: string
+        description: linkName
+      marketPlace:
+        description: marketPlace
+        items:
+          $ref: '#/definitions/Marketplace'
+      orderType:
+        description: orderType
+        items:
+          $ref: '#/definitions/OrderType'
+      planClass:
+        description: planClass
+        items:
+          $ref: '#/definitions/PlanClass'
+      planId:
+        type: integer
+        format: int64
+        example: 13
+        description: The AOS identifier of the Plan. PlanID is a human readable identifier that is often referenced by the Plan users.
+      planName:
+        type: string
+        example: Deal for new Mustang Mach-E model
+        description: The name of the Plan.
+      planNotes:
+        type: string
+        description: The notes for the Plan. A free text that can be printed on the reports.
+      planStatus:
+        description: planStatus
+        items:
+          $ref: '#/definitions/PlanStatus'
+      platform:
+        type: string
+        example: LINEAR
+        description: The main platform for the Plan.
+        enum:
+          - LINEAR
+          - DIGITAL
+          - CONVERGED
+      primaryVersion:
+        description: primaryVersion
+        items:
+          $ref: '#/definitions/Version'
+      ratecards:
+        type: array
+        description: A list of ratecard details.
+        items:
+          $ref: '#/definitions/RateCard'
+      ratingStream:
+        description: ratingStream
+        items:
+          $ref: '#/definitions/RatingStream'
+      refDataId:
+        type: string
+        example: 5f4623167a5f9c24f409eeb1
+        description: The MongoDB identifier of the Plan - a combination of 17 letters and numbers.
+      salesStage:
+        description: salesStage
+        items:
+          $ref: '#/definitions/SalesStage'
+      startDate:
+        type: string
+        example: '2021-06-28'
+        description: 'The start date of the Plan flight, in yyyy-MM-dd format.'
+      startPeriod:
+        description: startPeriod
+        items:
+          $ref: '#/definitions/Period'
+      team:
+        description: team
+        items:
+          $ref: '#/definitions/Team'
+    title: PlanResponse
+    description: ' This data object contains attributes of the Plan Header.'
+  GenericResponse:
+    type: object
+    properties:
+      errorMsg:
+        type: array
+        items:
+          type: string
+      httpStatusCode:
+        type: string
+        enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+      id:
+        type: string
+      response:
+        type: object
+      successMsg:
+        type: string
+    title: GenericResponse
+  AccountExecutiveRequest:
+    type: object
+    properties:
+      endDate:
+        type: string
+        description: 'The end date when the account executive is assigned to the Plan, in yyyy-MM-dd format.'
+      primary:
+        type: boolean
+        description: A boolean that indicates whether or not the account executive is primary ('true' if the account executive is primary).
+      role:
+        type: string
+        description: The position of the account executive.
+        enum:
+          - ACCOUNT_EXECUTIVE
+          - SALES_PLANNER
+          - SALES_ADMIN
+      split:
+        type: number
+        description: The percentage of the split.
+      startDate:
+        type: string
+        description: 'The start date when the account executive is assigned to the Plan, in yyyy-MM-dd format.'
+      teamId:
+        type: string
+        description: The AOS identifier of the team.
+      userName:
+        type: string
+        description: The user name of the account executive.
+    title: AccountExecutiveRequest
+    description: A data object that contains details for the account executive request.
+  AdvertiserRequest:
+    type: object
+    properties:
+      address:
+        type: string
+        description: The address of the advertiser.
+      addresses:
+        type: array
+        description: The address of the advertiser.
+        items:
+          $ref: '#/definitions/Address'
+      brandId:
+        type: string
+        description: The AOS identifier of the brand.
+      categoryId:
+        type: string
+        example: 5ed61f6c21704a4012e899bc
+        description: The AOS identifier of the primary industry category for the advertiser.
+      contactId:
+        type: string
+        example: 5ed62151a51ba2409edd3155
+        description: The AOS identifier of the advertiser contact in the MDM (Master Data Management).
+      contacts:
+        type: array
+        description: contacts
+        items:
+          $ref: '#/definitions/Contact'
+      endDate:
+        type: string
+        example: '2020-12-31'
+        description: 'The end date of the time range when this particular agency manages the sales for the advertiser, in yyyy-MM-dd format.'
+      expiryDate:
+        type: string
+        format: date
+        description: expiryDate
+      id:
+        type: string
+        example: 5ed62151a51ba2409edd3158
+        description: The AOS identifier of the advertiser in the MDM (Master Data Management).
+      roles:
+        type: array
+        description: The list of roles assigned to the advertiser.
+        items:
+          type: string
+      secCategoryId:
+        type: string
+        description: The secondary industry category for the advertiser.
+      startDate:
+        type: string
+        example: '2020-01-01'
+        description: 'The start date of the time range when this particular agency manages the sales for the advertiser, in yyyy-MM-dd format.'
+    title: AdvertiserRequest
+  AgencyRequest:
+    type: object
+    properties:
+      accountRoles:
+        type: array
+        description: The list of roles assigned to the account.
+        items:
+          type: string
+      address:
+        type: string
+        description: address
+      addressExternalTrafficSystems:
+        type: array
+        description: Address External System
+        items:
+          $ref: '#/definitions/ExternalTrafficSystem'
+      addresses:
+        type: array
+        description: address
+        items:
+          $ref: '#/definitions/Address'
+      commission:
+        type: number
+        example: 15
+        description: The commission charged by the agency.
+      contactId:
+        type: string
+        description: contactId
+      contacts:
+        type: array
+        description: contact
+        items:
+          $ref: '#/definitions/Contact'
+      endDate:
+        type: string
+        example: '2020-12-31'
+        description: 'The end date of the time range when this particular agency manages the sales for the advertiser, in yyyy-MM-dd format.'
+      expiryDate:
+        type: string
+        format: date
+        description: expiryDate
+      id:
+        type: string
+        example: 5ed62151a51ba2409edd3158
+        description: The AOS identifier for the agency in the MDM (Master Data Management).
+      roles:
+        type: array
+        description: The list of roles assigned to the agencies.
+        items:
+          type: string
+      startDate:
+        type: string
+        example: '2020-01-01'
+        description: 'The start date of the time range when this particular agency manages the sales for the advertiser, in yyyy-MM-dd format.'
+    title: AgencyRequest
+    description: A data object that contains attributes of the agencies assigned to the Plan. A plan can have multiple agencies assigned for the duration of the plan.
+  ChannelRequest:
+    type: object
+    properties:
+      demoPostBuyId:
+        type: string
+        description: The AOS identifier of the channel demoPost.
+      divisionId:
+        type: string
+        description: The AOS identifier of the channel division.
+      hhPostBuyId:
+        type: string
+        description: The AOS identifier of the channel hhPost.
+      id:
+        type: string
+        description: The AOS identifier of the channel.
+      primary:
+        type: boolean
+        description: A boolean that indicates whether or not the channel is a primary channel.
+      subDivisionId:
+        type: string
+        description: The AOS identifier of the channel subdivision.
+    title: ChannelRequest
+    description: A data object that contains channel request attributes.
+  DealTimeZone:
+    type: object
+    properties:
+      id:
+        type: string
+        example: US/Eastern
+        description: The identifier of the deal timezone
+    title: DealTimeZone
+    description: A data object that contains attributes for the deal timezone.
+  DemoRequest:
+    type: object
+    properties:
+      corporate:
+        type: boolean
+        description: A boolean that indicates whether or not the demo is corporate.
+      id:
+        type: string
+        description: A comma-separated list of AOS demographic identifiers. The first element in the list is the ID of the primary demo.
+      primary:
+        type: boolean
+        description: A boolean that indicates whether or not the demo is a primary demo for the Plan.
+    title: DemoRequest
+    description: A data object that contains demo request attributes for the Plan.
+  DateRange:
+    type: object
+    properties:
+      endDate:
+        type: string
+        format: date
+      startDate:
+        type: string
+        format: date
+    title: DateRange
+  RatecardRequest:
+    type: object
+    properties:
+      asOfDate:
+        type: string
+        description: 'The date as of which a particular published version of the ratecard is used in planning, in yyyy-MM-dd format. Users can select a particular version of the ratecard or the values as of a certain date. All the values have to be on published products and published versions.'
+      channelId:
+        type: string
+        description: The AOS identifier of the channel.
+      id:
+        type: string
+        description: The AOS identifier of the ratecard.
+      revision:
+        type: string
+        description: The revision number of the ratecard.
+    title: RatecardRequest
+    description: A data object that contains attributes for the ratecard request.
+  Agency:
+    type: object
+    properties:
+      accountRoles:
+        type: array
+        description: The list of roles assigned to the account.
+        items:
+          type: string
+      addresses:
+        type: array
+        description: The address of the agency.
+        items:
+          $ref: '#/definitions/Address'
+      commission:
+        type: number
+        description: The commission charged by the agency.
+      contact:
+        description: contact
+        items:
+          $ref: '#/definitions/Contact'
+      contacts:
+        type: array
+        description: The contacts of the agency.
+        items:
+          $ref: '#/definitions/Contact'
+      endDate:
+        type: string
+        description: 'The end date of the time range when this particular agency manages the sales for the advertiser, in yyyy-MM-dd format.'
+      expiryDate:
+        type: string
+        format: date
+      id:
+        type: string
+        description: The AOS identifier for the agency in the MDM (Master Data Management).
+      name:
+        type: string
+        description: The name of the agency.
+      roles:
+        type: array
+        description: The list of roles assigned to the agencies.
+        items:
+          type: string
+      startDate:
+        type: string
+        description: 'The start date of the time range when this particular agency manages the sales for the advertiser, in yyyy-MM-dd format.'
+    title: Agency
+    description: A data object that contains attributes of the agencies assigned to the Plan. A plan can have multiple agencies assigned for the duration of the plan.
+  ExternalSourceSystem:
+    type: object
+    properties:
+      externalId:
+        type: string
+        description: 'The unique identifier in the external system, such as ''Opportunity ID''.'
+      externalSourceId:
+        type: string
+        description: The source identifier of the external system.
+    title: ExternalSourceSystem
+    description: A data object that contains attributes for the external system.
+  ExternalTrafficSystem:
+    type: object
+    properties:
+      active:
+        type: boolean
+      extId:
+        type: string
+      extName:
+        type: string
+    title: ExternalTrafficSystem
+  AccountExecutive:
+    type: object
+    properties:
+      endDate:
+        type: string
+        description: 'The end date when the account executive is assigned to the Plan, in yyyy-MM-dd format.'
+      name:
+        type: string
+        description: The name of the account executive.
+      primary:
+        type: boolean
+        description: A boolean that indicates whether or not the account executive is primary ('true' if the account executive is primary).
+      role:
+        type: string
+        description: The position of the account executive.
+        enum:
+          - ACCOUNT_EXECUTIVE
+          - SALES_PLANNER
+          - SALES_ADMIN
+      split:
+        type: number
+        description: The percentage of the split.
+      startDate:
+        type: string
+        description: 'The start date when the account executive is assigned to the Plan, in yyyy-MM-dd format.'
+      team:
+        description: team
+        items:
+          $ref: '#/definitions/Team'
+      userName:
+        type: string
+        description: The user name of the account executive.
+    title: AccountExecutive
+    description: A data object that contains information about the account executives assigned to the Plan.
+  Advertiser:
+    type: object
+    properties:
+      addresses:
+        type: array
+        description: The address of the advertiser.
+        items:
+          $ref: '#/definitions/Address'
+      brand:
+        description: brand
+        items:
+          $ref: '#/definitions/Brand'
+      category:
+        $ref: '#/definitions/Category'
+      contact:
+        $ref: '#/definitions/Contact'
+      contacts:
+        type: array
+        items:
+          $ref: '#/definitions/Contact'
+      endDate:
+        type: string
+        example: '2020-12-31'
+        description: 'The end date of the time range when this particular agency manages the sales for the advertiser, in yyyy-MM-dd format.'
+      expiryDate:
+        type: string
+        format: date
+      id:
+        type: string
+        description: The AOS identifier of the advertiser in the MDM (Master Data Management).
+      name:
+        type: string
+      roles:
+        type: array
+        description: The list of roles assigned to the advertiser.
+        items:
+          type: string
+      secondaryCategory:
+        $ref: '#/definitions/Category'
+      startDate:
+        type: string
+        example: '2020-01-01'
+        description: 'The start date of the time range when this particular agency manages the sales for the advertiser, in yyyy-MM-dd format.'
+    title: Advertiser
+    description: A data object that contains attributes for the advertiser.
+  Calendar:
+    type: object
+    properties:
+      calendarBase:
+        type: string
+        description: The calendar base. AOS supports Broadcast-based and Gregorian-based calendars.
+      downstreamModules:
+        type: array
+        description: The list of downstream modules.
+        items:
+          type: string
+      endDate:
+        type: string
+        description: The end date of the calendar in yyyy-MM-dd format.
+      id:
+        type: string
+        description: The AOS identifier of the calendar.
+      name:
+        type: string
+        description: The name of the calendar.
+      startDate:
+        type: string
+        description: The start date of the calendar in yyyy-MM-dd format.
+    title: Calendar
+    description: A data object that contains attributes for the calendar.
+  Channel:
+    type: object
+    properties:
+      code:
+        type: string
+        description: The code for the channel.
+      demoPostMethod:
+        $ref: '#/definitions/LabelKey'
+      division:
+        description: division
+        items:
+          $ref: '#/definitions/Division'
+      divisions:
+        type: array
+        description: divisions
+        items:
+          $ref: '#/definitions/Division'
+      hHPostMethod:
+        $ref: '#/definitions/LabelKey'
+      id:
+        type: string
+        description: The AOS identifier of the channel.
+      name:
+        type: string
+        description: The name of the channel.
+      primary:
+        type: boolean
+        description: A boolean that indicates whether or not the channel is a primary channel.
+      subDivision:
+        description: subDivision
+        items:
+          $ref: '#/definitions/Division'
+    title: Channel
+    description: A data object that contains channel attributes.
+  DealYear:
+    type: object
+    properties:
+      active:
+        type: boolean
+      endDate:
+        type: string
+        description: The end date of the deal year in yyyy-MM-dd format.
+      id:
+        type: string
+        description: The AOS identifier for the deal year of the Plan.
+      marketplaceId:
+        type: string
+        description: The AOS identifier of the marketplace for the Plan.
+      name:
+        type: string
+        description: The name of the deal year.
+      startDate:
+        type: string
+        description: The start date of the deal year in yyyy-MM-dd format.
+    title: DealYear
+    description: A data object that contains attributes for the deal year of the Plan.
+  Demo:
+    type: object
+    properties:
+      corporate:
+        type: boolean
+      edi:
+        type: boolean
+        description: A boolean that indicates whether or not the demo is eligible for inclusion in the EDI file export.
+      id:
+        type: string
+        description: A comma-separated list of AOS demographic identifiers. The first element in the list is the ID of the primary demo.
+      metrics:
+        type: array
+        description: The list of demo metrics.
+        items:
+          type: string
+      name:
+        type: string
+        description: The name of the demo.
+      postby:
+        type: boolean
+        description: A boolean that indicates whether or not the current demo should be included in the Post By file export.
+      primary:
+        type: boolean
+        description: A boolean that indicates whether or not the demo is a primary demo for the Plan.
+    title: Demo
+    description: A data object that contains the demo attributes of the Plan.
+  Period:
+    type: object
+    properties:
+      endDate:
+        type: string
+        description: 'The end date of the calendar period in, yyyy-MM-dd format.'
+      id:
+        type: string
+        description: The AOS identifier of the calendar period in MRD.
+      name:
+        type: string
+        description: The name of the calendar period.
+      startDate:
+        type: string
+        description: 'The start date of the calendar period, in yyyy-MM-dd format.'
+    title: Period
+    description: A data object that contains attributes for the calendar period.
+  Marketplace:
+    type: object
+    properties:
+      active:
+        type: boolean
+        description: The status of the marketplace for the Plan.
+      id:
+        type: string
+        description: The AOS identifier of the marketplace.
+      name:
+        type: string
+        description: The name of the marketplace for the Plan.
+    title: Marketplace
+    description: A data object that contains marketplace attributes for the Plan.
+  PlanClass:
+    type: object
+    properties:
+      id:
+        type: string
+        description: The AOS identifier of the plan class.
+      name:
+        type: string
+        description: The name of the plan class.
+    title: PlanClass
+    description: A data object that contains attributes for the plan class of the Plan. A plan class provides a general categorization of the type of business that the Plan represents.
+  OrderType:
+    type: object
+    properties:
+      id:
+        type: string
+        description: The AOS identifier of the order type in MRD.
+      name:
+        type: string
+        description: The name of the order type. Order types are used in Digital orders. The order type value defaults to 'Default' for Linear Plans.
+    title: OrderType
+    description: A data object that contains attributes for the order type. Order types are used in Digital orders.
+  RateCard:
+    type: object
+    properties:
+      asOfDate:
+        type: string
+        format: date-time
+        description: 'The date as of which a particular published version of the ratecard is used in planning, in ISO 8601 format � yyyy-MM-ddTHH:mm:ss.fffZ. Users can select a particular version of the ratecard or the values as of a certain date. All the values have to be on published products and published versions.'
+      channelId:
+        type: string
+        description: The AOS identifier of the channel.
+      channelName:
+        type: string
+        description: The name of the channel.
+      id:
+        type: string
+        description: The AOS identifier of the ratecard.
+      name:
+        type: string
+        description: The name of the ratecard.
+      rateCardType:
+        $ref: '#/definitions/RateCardType'
+      revision:
+        type: string
+        description: The revision number of the ratecard.
+    title: RateCard
+    description: A data object that contains attributes for the ratecard applied to the Plan.
+  Version:
+    type: object
+    properties:
+      audit:
+        description: audit
+        items:
+          $ref: '#/definitions/Audit'
+      deleted:
+        type: boolean
+      disablePrimary:
+        type: boolean
+      externalSourceSystems:
+        type: array
+        items:
+          $ref: '#/definitions/ExternalSourceSystem'
+      id:
+        type: integer
+        format: int64
+        description: The AOS identifier of the Plan version.
+      maxDigitalLineId:
+        type: integer
+        format: int64
+      maxLineId:
+        type: integer
+        format: int64
+      maxLinkId:
+        type: integer
+        format: int64
+      name:
+        type: string
+        description: The name of the Plan version.
+      primary:
+        type: boolean
+        description: 'A boolean that indicates whether or not this is the primary version of the Plan. A primary version is the main version on the Plan. If multiple versions were created for one Plan, the planner can select which version is the Primary. A plan can only have one primary version.'
+      ratecards:
+        type: array
+        items:
+          $ref: '#/definitions/RatecardRequest'
+      secondary:
+        type: boolean
+        description: A boolean that indicates whether or not this is the secondary version of the Plan.
+      totalDollars:
+        type: number
+        format: double
+        description: Total Dollars
+    title: Version
+    description: 'A data object that contains attributes for the Plan version. A primary version is the main version on the Plan. If multiple versions were created for one Plan, the planner can select which version is the Primary. A plan can only have one primary version.'
+  RatingStream:
+    type: object
+    properties:
+      id:
+        type: string
+        description: The AOS identifier of the rating stream.
+      name:
+        type: string
+        description: The name of the rating stream.
+    title: RatingStream
+    description: A data object that contains attributes for the rating stream for the Plan.
+  Team:
+    type: object
+    properties:
+      id:
+        type: string
+        description: The AOS identifier of the sales team for the account executive.
+      isdefault:
+        type: boolean
+        description: A boolean that indicates whether or not this is the default sales team.
+      name:
+        type: string
+        description: The name of the sales team for the account executive.
+    title: Team
+    description: A data object that contains information about the sales team that is managing the Plan.
+  SalesStage:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    title: SalesStage
+  Category:
+    type: object
+    properties:
+      categoryType:
+        type: string
+        description: The type of industry category.
+        enum:
+          - PRIMARY
+          - SECONDARY
+      id:
+        type: string
+        description: The AOS identifier of the industry category.
+      name:
+        type: string
+        description: The name of the industry category.
+    title: Category
+    description: A data object that contains industry category details for the advertiser.
+  Brand:
+    type: object
+    properties:
+      id:
+        type: string
+        description: The AOS identifier of the brand.
+      name:
+        type: string
+        description: The name of the brand.
+    title: Brand
+    description: A data object that contains attributes for the brand.
+  Address:
+    type: object
+    properties:
+      active:
+        type: boolean
+        description: active
+      addressId:
+        type: string
+        description: addressId
+      addressLine1:
+        type: string
+        description: addressLine1
+      addressLine2:
+        type: string
+        description: addressLine2
+      addressType:
+        type: string
+        description: addressType
+      aosId:
+        type: string
+        description: aosId
+      city:
+        type: string
+        description: city
+      country:
+        type: string
+        description: country
+      endDate:
+        type: string
+        example: '2020-12-31'
+        description: 'The end date of the time range, in yyyy-MM-dd format.'
+      externalTrafficSystems:
+        type: array
+        description: externalTrafficSystems
+        items:
+          $ref: '#/definitions/ExternalTrafficSystem'
+      postalCode:
+        type: string
+        description: postalCode
+      primary:
+        type: boolean
+        description: primary
+      roles:
+        type: array
+        description: The list of roles assigned to the Address.
+        items:
+          type: string
+      startDate:
+        type: string
+        example: '2020-01-01'
+        description: 'The start date of the time range, in yyyy-MM-dd format.'
+      state:
+        type: string
+        description: state
+    title: Address
+    description: Hold mdm address of agency
+  Division:
+    type: object
+    properties:
+      id:
+        type: string
+        description: The AOS identifier of the channel division.
+      name:
+        type: string
+        description: The name of the channel division.
+      subdivisions:
+        type: array
+        description: The name of the channel division subdivisions.
+        items:
+          $ref: '#/definitions/Division'
+    title: Division
+    description: A data object that contains attributes for the channel division.
+  BillingTerms:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    title: BillingTerms
+  Currency:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    title: Currency
+  Contact:
+    type: object
+    properties:
+      active:
+        type: boolean
+      address:
+        type: string
+        description: The contact address.
+      addressExternalTrafficSystems:
+        type: array
+        description: Address External System
+        items:
+          $ref: '#/definitions/ExternalTrafficSystem'
+      addresses:
+        type: array
+        description: The contact address.
+        items:
+          $ref: '#/definitions/Address'
+      contactId:
+        type: string
+        description: The AOS identifier of the agency/advertiser contact in the MDM (Master Data Management).
+      endDate:
+        type: string
+        example: '2020-12-31'
+        description: 'The end date of the time range, in yyyy-MM-dd format.'
+      name:
+        type: string
+        description: The name of the agency/advertiser contact.
+      officeType:
+        type: string
+      roles:
+        type: array
+        description: The list of roles assigned to the contact.
+        items:
+          type: string
+      startDate:
+        type: string
+        example: '2020-01-01'
+        description: 'The start date of the time range, in yyyy-MM-dd format.'
+    title: Contact
+    description: A data object that contains contact attributes for the agency/advertiser.
+  PlanStatus:
+    type: object
+    properties:
+      color:
+        type: string
+      downStreamPlanStatusId:
+        type: string
+        description: The AOS identifier of the downstream plan status.
+      errorMsg:
+        type: string
+      pressureType:
+        type: string
+      statusId:
+        type: string
+        description: The AOS identifier of the plan status.
+      statusName:
+        type: string
+        description: The name of the plan status.
+    title: PlanStatus
+    description: A data object that contains attributes for the plan status.
+  LabelKey:
+    type: object
+    properties:
+      id:
+        type: string
+        description: The AOS identifier of the label key.
+      name:
+        type: string
+        description: The name of the label key.
+    title: LabelKey
+    description: A data object that contains attributes for the label key.
+  DealTimeZoneResponse:
+    type: object
+    properties:
+      displayName:
+        type: string
+        description: This field holds display name of timezone.
+      id:
+        type: array
+        description: This field holds timezone ID information.
+      value:
+        description: A data object that contains the details of the deal timezone.
+        items:
+          $ref: '#/definitions/DealTimeZoneValueResponse'
+    title: DealTimeZoneResponse
+    description: A data object that contains timezone attributes.
+  DealTimeZoneValueResponse:
+    type: object
+    properties:
+      daylightTimeAdjustedOffset:
+        type: string
+        description: The daylight adjusted offset of the deal timezone.
+      offset:
+        type: string
+        description: The offset of the deal timezone.
+      offsetType:
+        type: string
+        description: The offset type of the timezone.
+      timeZoneIDs:
+        type: array
+        description: The list of deal timezone IDs.
+        items:
+          type: string
+    title: DealTimeZoneValueResponse
+    description: A data object that contains timezone details.
+  Audit:
+    type: object
+    properties:
+      createdBy:
+        type: string
+        description: The user name of the user who created the Plan.
+      createdDate:
+        type: string
+        description: 'The date and time when the Plan was created, in ''yyyy-MM-dd,hh:mm:ss a'' format.'
+      lastModifiedBy:
+        type: string
+        description: The user name of the user who last modified the Plan.
+      lastModifiedDate:
+        type: string
+        description: 'The date and time when the Plan was last modified, in ''yyyy-MM-dd,hh:mm:ss a'' format.'
+    title: Audit
+    description: A data object that contains audit information about the Plan.
+  RateCardType:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    title: RateCardType
+schemes:
+  - https

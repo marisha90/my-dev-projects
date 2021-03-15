@@ -15,48 +15,6 @@ basePath: /unifiedplanner
 tags:
   - name: Plan Header APIs
     description: Plan Controller
-  - name: Plan Header Template APIs
-    description: Plan Template Controller
-  - name: Plan Integration APIs
-    description: Plan Integration Controller
-  - name: Plan Linear Workspace Products
-    description: Plan Linear Workspace Product Controller
-  - name: Plan Metadata
-    description: Meta Data Controller
-  - name: Plan Migration APIs
-    description: Planner Migration Controller
-  - name: Plan Remix Reweight
-    description: Plan Remix Reweight Controller
-  - name: Plan Search APIs
-    description: Plan Search Controller
-  - name: Plan Spot Link
-    description: Plan Spot Link Controller
-  - name: Plan Version APIs
-    description: Plan Version Controller
-  - name: Plan Workspace
-    description: Plan Workspace Controller
-  - name: Plan Workspace Digital Products
-    description: Plan Digital Product Controller
-  - name: Plan Workspace Spots
-    description: Plan Spot Controller
-  - name: Plan Workspace Summary
-    description: Plan Workspace Totals Controller
-  - name: Plan Workspace Validation
-    description: Validation Controller
-  - name: Planner TenantSettings APIs
-    description: Tenant Settings Controller
-  - name: Planner TimeZone API
-    description: Time Zone Controller
-  - name: Planner Workflow Api
-    description: Workflow Controller
-  - name: Save Copy/Save Restore APIs
-    description: Plan Backup Controller
-  - name: Separation APIs
-    description: Separation Controller
-  - name: Snapshot API's
-    description: Snapshot Controller
-  - name: Troubleshoot Apis
-    description: Troubleshoot Controller
 paths:
   '/v1/{apiKey}/plans':
     post:
